@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block title %} Login to the Shop Manager App {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+ <div class="card mx-auto w-25 mt-4">
+    <h5 class="card-header">Login</h5>
+    <div class="card-body">
+        <form class="form-with-validation p-2" method="POST" action="">
+                {% csrf_token %}
+                
+            {{ form }}
+
+            <button class="form-submit">Login</button>
+            <input type="hidden" name="next" value="{{ next }}">
+                 
+                
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

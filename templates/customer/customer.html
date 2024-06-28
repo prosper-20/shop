@@ -1,0 +1,103 @@
+{% extends 'base.html' %} {% block title %} Customer Page {% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <h3>Welcome to the Customer Masterdata Site</h3>
+    </div>
+    <div class="row justify-content-center">
+                <div class="col-md-2">
+                            <div class="card  mb-3">
+                                    <div class="card-header">Customer</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Active</h5>
+                                        <p class="card-text">{{ count }}</p>
+                                    </div>
+                            </div>
+                </div>
+
+                <div class="col-md-10">
+                    <table class="table table-hover  table-striped table-borderless">
+                        <thead class="table-dark border-bottom">
+                            <tr>
+                                <td>ID</td>
+                                <td>Name</td>
+                                <td>Business </td>
+                                <td>Contract Date</td>
+                                <td>Email</td>
+                                <td>Phone No</td>
+                                 <td>Status</td>
+                                <td>  <a href="form/" class="btn btn-danger">Add Customer</a></td>
+                            </tr>
+                        </thead>
+    
+                        <tbody>
+                            {% for customer in customer_list %}
+                            <tr>
+    
+                            <td>{{customer.no}}</td>
+                            <td>{{customer.name}}</td>
+                            <td>{{customer.business}}</td>
+                            <td>{{customer.date}}</td>
+                            <td>{{customer.email}}</td>
+                            <td>{{customer.phone}}</td>
+                            <td>{{customer.status}}</td>
+                            <td>
+                             <a href="{% url 'customer_update' customer.id %}" class="btn text-secondary px-0">
+                             EDIT
+                             </a>
+                            </td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                        </table>
+                </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <h5>Distribution of Customers By Business</h5>
+            <canvas id="businessNatureChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('businessNatureChart').getContext('2d');
+        var businessNatureChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: 'Number of Customers',
+                    data: {{ data|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            callback: function(value) {
+                                return Number.isInteger(value) ? value : '';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

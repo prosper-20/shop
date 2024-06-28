@@ -1,0 +1,102 @@
+{% extends 'base.html' %} {% block title %} Customer Account Page {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container ml-3 mr-3">
+    <div class="row">
+            <h3>Welcome to the Customer Account  Page</h3>
+    </div>
+
+
+    <div class="row">
+            <div class="col-md-4">
+                    <div class="card mx-auto">
+                        <div class="card-header">Post Customer Invoice</div>
+                            <div class="card-body">
+                                <h5 class="card-title"> Rent Receivable</h5>
+                                <p class="card-text">
+                                    <form action="" method="POST" autocomplete="off">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {% csrf_token %}
+                                                        {{form.date|as_crispy_field}}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{form.rent_invoice|as_crispy_field}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        {{form.description|as_crispy_field}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {{form.shop|as_crispy_field}}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{form.customer|as_crispy_field}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    
+                                                    <div class="col-md-12">
+                                                        {{ message }}
+                                                        <br/>
+                                                        <button  type="submit" class="btn btn-success w-100">Submit</button>
+                                                    </div>
+                                                </div>
+                                    </form>
+
+                                   
+                                </p>
+                               
+                            </div>
+                            
+                    </div>
+                    
+            </div>
+            <div class="col-md-8">
+                <table class="table table-hover  table-striped table-borderless">
+                    <thead class="table-dark border-bottom">
+                        <tr>
+                            <td>Date</td>
+                            <td>Description</td>
+                            <td>Shop </td>
+                            <td>Customer</td>
+                            <td>Rent Payable</td>
+                            <td>Outstanding</td>
+                            <td>Status</td>
+                            <td><a href="form/" class="btn btn-danger">Receive Payment</a></td>
+                          
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for account in accountlist %}
+                        <tr>
+
+                        <td>{{account.date}}</td>
+                        <td>{{account.description}}</td>
+                        <td>{{account.shop}}</td>
+                        <td>{{account.customer}}</td>
+                        <td>{{account.rent_invoice}}</td>
+                        <td>{{account.outstanding}}</td>
+                        <td>{{account.status}}</td>
+                        
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                    </table>
+            </div>
+
+    </div>
+
+    
+
+</div>
+{% endblock %}

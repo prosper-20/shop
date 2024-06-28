@@ -1,0 +1,66 @@
+{% extends 'base.html' %} {% block title %} Customer Receipts Page {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container ml-3 mr-3 mt-3">
+    <div class="row">
+        
+            <h3>Post Customer Receipts</h3>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4 mt-3 mx-auto">
+        <div class="card mb-3">
+            <div class="card-header">Post Payment Received</div>
+                    <div class="card-body p-4 border" >
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{form.date|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{form.invoice|as_crispy_field}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{form.shop|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{form.customer|as_crispy_field}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{form.account|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{form.amount|as_crispy_field}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ message }}
+                                        <br/>
+                                        <button  type="submit" class="btn btn-success w-100">Submit</button>
+                                    </div>                    
+                                </div>
+                                                             
+                               
+                            </form>
+                    </div>
+            </div>
+        </div>
+        </div>
+
+           
+    </div>
+
+    
+
+</div>
+{% endblock %}

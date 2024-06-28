@@ -1,0 +1,410 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<title>Shop Manager | Home</title>
+	<!--
+
+    Template 2106 Soft Landing
+
+	http://www.tooplate.com/view/2106-soft-landing
+
+    -->
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="team" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{% static 'web/web_home/css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'web/web_home/css/owl.carousel.css' %}">
+     <link rel="stylesheet" href="{% static 'web/web_home/css/owl.theme.default.min.css' %}">
+     <link rel="stylesheet" href="{% static 'web/web_home/css/font-awesome.min.css' %}">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="{% static 'web/web_home/css/tooplate-style.css' %}">
+
+</head>
+<body>
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+
+               <span class="spinner-rotate"></span>
+               
+          </div>
+     </section>
+
+
+     <!-- MENU -->
+     <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand">Shop Manager</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                         <li><a href="{% url 'home' %}" class="smoothScroll">Home</a></li>
+                         <li><a href="#feature" class="smoothScroll">Features</a></li>
+                         <li><a href="#about" class="smoothScroll">About us</a></li>
+                         <li><a href="#pricing" class="smoothScroll">Pricing</a></li>
+                         <li><a href="#contact" class="smoothScroll">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#"><span>info@ninasky.com</span></a></li>
+                    </ul>
+               </div>
+
+          </div>
+     </section>
+
+
+     <!-- FEATURE -->
+     <section id="home" data-stellar-background-ratio="0.5">
+          <div class="overlay"></div>
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-offset-3 col-md-6 col-sm-12">
+                         <div class="home-info">
+                              <h3>professional shop management</h3>
+                              <h1>We help you manage your shops and resource</h1>
+                              <form action="" method="get" class="online-form">
+                                   <input type="email" name="email" class="form-control" placeholder="Enter your email" required="">
+                                   <button type="submit" class="form-control">Get started</button>
+                              </form>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+
+     <!-- FEATURE -->
+     <section id="feature" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h1>What you get</h1>
+                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <ul class="nav nav-tabs" role="tablist">
+                              <li class="active"><a href="#tab01" aria-controls="tab01" role="tab" data-toggle="tab">Responsive</a></li>
+
+                              <li><a href="#tab02" aria-controls="tab02" role="tab" data-toggle="tab">Mobile</a></li>
+
+                              <li><a href="#tab03" aria-controls="tab03" role="tab" data-toggle="tab">Support</a></li>
+                         </ul>
+
+                         <div class="tab-content">
+                              <div class="tab-pane active" id="tab01" role="tabpanel">
+                                   <div class="tab-pane-item">
+                                        <h2>Inventory Management</h2>
+                                        <p>Generate reports on inventory turnover, sales trends, and stock status for informed decision-making.</p>
+                                   </div>
+                                   <div class="tab-pane-item">
+                                        <h2>Order Tracking</h2>
+                                        <p>Track orders from placement to fulfillment, providing updates to customers and internal stakeholders.</p>
+                                   </div>
+                              </div>
+
+
+                              <div class="tab-pane" id="tab02" role="tabpanel">
+                                   <div class="tab-pane-item">
+                                        <h2>Business Insights</h2>
+                                        <p>Generate comprehensive reports and analytics on various aspects of the business, such as sales performance, profitability, and customer behavior.</p>
+                                   </div>
+                                   <div class="tab-pane-item">
+                                        <h2>Forecasting</h2>
+                                        <p>Use historical data and trends to forecast future sales, inventory needs, and business growth.</p>
+                                   </div>
+                                   <!-- <div class="tab-pane-item">
+                                        <h2>HTML5 & CSS3</h2>
+                                        <p>In viverra ipsum ornare sapien rhoncus ullamcorper. Vivamus vitae risus ac mi vehicula sagittis. Nulla dictum magna sit amet pharetra aliquam.</p>
+                                   </div> -->
+                              </div>
+
+                              <div class="tab-pane" id="tab03" role="tabpanel">
+                                   <div class="tab-pane-item">
+                                        <h2>Customer Mangement</h2>
+                                        <p> Maintain a database of customer information, including purchase history, preferences, and contact details. This helps in building customer relationships and running targeted marketing campaigns.</p>
+                                   </div>
+                                   <div class="tab-pane-item">
+                                        <h2>Managed Staff</h2>
+                                        <p>Schedule shifts, track employee performance, manage payroll, and assign roles and permissions within the app.</p>
+                                   </div>
+                              </div>
+                         </div>
+
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <div class="feature-image">
+                              <img src="{% static 'web/web_home/images/feature-mockup.png' %}" class="img-responsive" alt="Thin Laptop">                             
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+
+     <!-- ABOUT -->
+     <section id="about" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-offset-3 col-md-6 col-sm-12">
+                         <div class="section-title">
+                              <h1>Professional Team for you</h1>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="team-thumb">
+                              <!-- <img src="{% static 'web/web_home/images/team-image1.jpg' %}" class="img-responsive" alt="Andrew Orange"> -->
+                              <img src="https://img.freepik.com/premium-photo/african-american-business-woman_1000823-116897.jpg" class="img-responsive" alt="Andrew Orange">
+                              <div class="team-info team-thumb-up">
+                                   <h2>Shola Kuti</h2>
+                                   <small>Board Member</small>
+                                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing eiusmod tempor incididunt ut labore et dolore magna.</p>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="team-thumb">
+                              <div class="team-info team-thumb-down">
+                                   <h2>Ngozi Adaora</h2>
+                                   <small>Senior Manager</small>
+                                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing eiusmod tempor incididunt ut labore et dolore magna.</p>
+                              </div>
+                              <img src="https://img.freepik.com/premium-photo/portrait-black-woman-leader-arms-crossed-manager-serious-look-office-african-american-female-ceo-entrepreneur-business-employee-corporate-deal-company-career-vision_590464-122772.jpg" class="img-responsive" alt="Catherine Soft">
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                         <div class="team-thumb">
+                              <img src="https://img.freepik.com/premium-photo/businessman-portrait-happy-executive-with-arms-crossed-ceo-corporate-manager-entrepreneur-black-man-face-professional-company-employee-with-pride-confidence-vision-business_590464-191850.jpg" class="img-responsive" alt="Jack Wilson">
+                              <div class="team-info team-thumb-up">
+                                   <h2>Ben Wilson</h2>
+                                   <small>CEO / Founder</small>
+                                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing eiusmod tempor incididunt ut labore et dolore magna.</p>
+                              </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>
+
+
+     <!-- TESTIMONIAL -->
+     <section id="testimonial" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-6 col-sm-12">
+                         <div class="testimonial-image"></div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                         <div class="testimonial-info">
+                              
+                              <div class="section-title">
+                                   <h1>What People Say</h1>
+                              </div>
+
+                              <div class="owl-carousel owl-theme">
+                                   <div class="item">
+                                        <h3>Using Shop Manager has transformed how I run my boutique. I can effortlessly track inventory, manage sales, and keep in touch with my customers. It's intuitive and saves me hours of paperwork each week!<h3>
+                                        <div class="testimonial-item">
+                                             <img src="{% static 'web/web_home/images/tst-image1.jpg' %}" class="img-responsive" alt="Michael">
+                                             
+                                             <h4>Michael</h4>
+                                        </div>
+                                   </div>
+
+                                   <div class="item">
+                                        <h3>As a retail manager, Shop Manager has been a game-changer. It integrates seamlessly with our POS system, allowing us to handle transactions smoothly and track our inventory in real-time. The reporting features have helped us optimize our stock levels and boost sales</h3>
+                                        <div class="testimonial-item">
+                                             <img src="{% static 'web/web_home/images/tst-image2.jpg' %}" class="img-responsive" alt="Sofia">
+                                             <h4>Sofia</h4>
+                                        </div>
+                                   </div>
+
+                                   <div class="item">
+                                        <h3>Shop Manager's e-commerce integration has been invaluable for our online store. We can manage both our online and offline inventory from one platform, which has streamlined our operations and improved our customer service<h3>
+                                        <div class="testimonial-item">
+                                             <img src="{% static 'web/web_home/images/tst-image3.jpg' %}" class="img-responsive" alt="Monica">
+                                             <h4>Monica</h4>
+                                        </div>
+                                   </div>
+                              </div>
+
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>
+
+
+     <!-- PRICING -->
+     <section id="pricing" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h1>Choose any plan</h1>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="pricing-thumb">
+                             <div class="pricing-title">
+                                  <h2>Basic Plan</h2>
+                             </div>
+                             <div class="pricing-info">
+                                   <p>10 tools for tracking stock levels and managing products</p>
+                                   <p>Basic reports on monthly sales (doesn't include statistics)</p>
+                                   <p>1GB storage for storing customer information</p>
+                                   <p>1 email support during business hours</p>
+                                   <p>Admin controls to add, remove, and manage staff accounts</p>
+                             </div>
+                             <div class="pricing-bottom">
+                                   <span class="pricing-dollar">₦50,000/mo</span>
+                                   <a href="#" class="section-btn pricing-btn">Register now</a>
+                             </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="pricing-thumb">
+                             <div class="pricing-title">
+                                  <h2>Business</h2>
+                             </div>
+                             <div class="pricing-info">
+                                   <p>50 tools for tracking stock levels and managing products</p>
+                                   <p>Basic reports on weekly and monthly sales </p>
+                                   <p>5GB storagefor storing customer information</p>
+                                   <p>5 email support during business hours</p>
+                                   <p>Admin controls to add, remove, and manage staff accounts</p>
+                             </div>
+                             <div class="pricing-bottom">
+                                   <span class="pricing-dollar">₦100,000/mo</span>
+                                   <a href="#" class="section-btn pricing-btn">Register now</a>
+                             </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                         <div class="pricing-thumb">
+                             <div class="pricing-title">
+                                  <h2>Professional</h2>
+                             </div>
+                             <div class="pricing-info">
+                              <p>100 tools for tracking stock levels and managing products</p>
+                              <p>Detailed reports on daily, weekly, and monthly sales</p>
+                              <p>10GB storage for storing customer information</p>
+                              <p>10 email support during business hours</p>
+                              <p>Admin controls to add, remove, and manage staff accounts</p>
+                             </div>
+                             <div class="pricing-bottom">
+                                   <span class="pricing-dollar">₦200,000/mo</span>
+                                   <a href="#" class="section-btn pricing-btn">Register now</a>
+                             </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>   
+
+
+     <!-- CONTACT -->
+     <section id="contact" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-offset-1 col-md-10 col-sm-12">
+                         <form id="contact-form" role="form" action="" method="post">
+                              {% csrf_token %}
+                              <div class="section-title">
+                                   <h1>Say hello to us</h1>
+                              </div>
+
+                              <div class="col-md-4 col-sm-4">
+                                   <input type="text" class="form-control" placeholder="Full name" name="name" required="">
+                              </div>
+                              <div class="col-md-4 col-sm-4">
+                                   <input type="email" class="form-control" placeholder="Email address" name="email" required="">
+                              </div>
+                              <div class="col-md-4 col-sm-4">
+                                   <input type="submit" class="form-control" name="send message" value="Send Message">
+                              </div>
+                              <div class="col-md-12 col-sm-12">
+                                   <textarea class="form-control" rows="8" placeholder="Your message" name="message" required=""></textarea>
+                              </div>
+                         </form>
+                    </div>
+
+               </div>
+          </div>
+     </section>       
+
+
+     <!-- FOOTER -->
+     <footer id="footer" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="copyright-text col-md-12 col-sm-12">
+                         <div class="col-md-6 col-sm-6">
+                              <p>Copyright &copy; 2024 Nina Sky
+                				<!-- <a rel="nofollow" href="http://tooplate.com">Tooplate</a></p> -->
+                         </div>
+
+                         <div class="col-md-6 col-sm-6">
+                              <ul class="social-icon">
+                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                   <li><a href="#" class="fa fa-twitter"></a></li>
+                                   <li><a href="#" class="fa fa-instagram"></a></li>
+                              </ul>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </footer>
+
+
+     <!-- SCRIPTS -->
+     <script src="{% static 'web/web_home/js/jquery.js' %}"></script>
+     <script src="{% static 'web/web_home/js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'web/web_home/js/jquery.stellar.min.js' %}"></script>
+     <script src="{% static 'web/web_home/js/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'web/web_home/js/smoothscroll.js' %}"></script>
+     <script src="{% static 'web/web_home/js/custom.js' %}"></script>
+
+</body>
+</html>
