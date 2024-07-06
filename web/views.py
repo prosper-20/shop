@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .models import Contact
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 def custom_login(request):
@@ -42,8 +43,8 @@ def home(request):
 
 
 def dashboard(request):
-    custom_users = U
-    return render(request, "web/dashboard.html")
+    users = User.objects.all()
+    return render(request, "web/dashboard.html", {"users": users})
 
 
 
