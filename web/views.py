@@ -38,6 +38,12 @@ def home(request):
         return redirect(reverse("home"))
     else:
         return render(request, "web/home.html")
+    
+
+
+def dashboard(request):
+    custom_users = U
+    return render(request, "web/dashboard.html")
 
 
 
