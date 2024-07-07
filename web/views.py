@@ -6,6 +6,9 @@ from .models import Contact
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from account.decorators import admin_required
+from .forms import RetrieveCustomerProfileForm
+
+
 User = get_user_model()
 
 def staff_login(request):
@@ -18,7 +21,7 @@ def staff_login(request):
         if user is not None:
             if user.is_staff == False:
                 messages.error(request, 'You are not authorized to login')
-                return redirect("web/login/customer/")
+                return redirect(reverse('login'))
             else:
                 login(request, user)
                 # Redirect to a success page, or wherever you want
@@ -168,6 +171,29 @@ def edit_profile(request):
 #     }
 
 #     return render(request, 'users/profile.html', context)
+
+
+@admin_required
+def fetch_profile(request):
+    if request.method == 'POST':
+        form = RetrieveCustomerProfileForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = get_object_or_404(User, email=email)
+                profile = get_object_or_404(Profile, user=user)
+                return render(request, 'web/new_profile.html', {'profile': profile})
+            except User.DoesNotExist:
+                error_message = "User with this email does not exist."
+                return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
+            except Profile.DoesNotExist:
+                error_message = "Profile does not exist for this user."
+                return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
+    else:
+        form = RetrieveCustomerProfileForm()
+    
+    return render(request, 'web/fetch_profile.html', {'form': form})
+
 
 
 

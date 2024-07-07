@@ -26,3 +26,8 @@ class ProfileEditForm(forms.ModelForm):
             profile.user.save()
             profile.save()
         return profile
+    
+
+
+class RetrieveCustomerProfileForm(forms.Form):
+    email = forms.EmailField(label='Enter your email', required=True)
