@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from shop.models import Shop
 
 from .managers import CustomUserManager
 
@@ -112,6 +113,7 @@ class Profile(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
+    shop = models.ManyToManyField(Shop, blank=True, null=True)
     image = models.ImageField(default="user.jpg", upload_to="profile_pics")
 
     def __str__(self):

@@ -32,3 +32,9 @@ from django.contrib import messages
         
 #         form = ReceiptForm()
 #     return render(request, 'account/account_form.html', {'form': form})
+
+
+
+# views.py
+
+

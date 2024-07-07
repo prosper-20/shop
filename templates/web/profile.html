@@ -1,0 +1,30 @@
+<!-- profile.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+    <h2>User Profile: {{ profile.user.username }}</h2>
+    <p>Role: {{ profile.role }}</p>
+    <p>Phone: {{ profile.phone }}</p>
+    <p>Address: {{ profile.address }}</p>
+    
+    {% if profile.shop.all %}
+    <p>Shops:</p>
+    <ul>
+        {% for shop in profile.shop.all %}
+        <li>{{ shop.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if profile.image %}
+    <img src="{{ profile.image.url }}" alt="Profile Image">
+    {% else %}
+    <p>No profile image available.</p>
+    {% endif %}
+</body>
+</html>

@@ -97,6 +97,41 @@ def dashboard(request):
 
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from account.models import Profile
+from .forms import ProfileEditForm
+
+
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from account.models import Profile
+
+@login_required
+def view_profile(request):
+    # Retrieve the profile associated with the current logged-in user
+    profile = get_object_or_404(Profile, user=request.user)
+    
+    # Render the profile details in a template
+    return render(request, 'web/profile.html', {'profile': profile})
+
+
+@login_required
+def edit_profile(request):
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_view')  # Redirect to profile view page after saving
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'web/edit_profile.html', {'form': form})
+
+
+
 
 
 

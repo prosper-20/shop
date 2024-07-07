@@ -42,3 +42,7 @@
 #             'date': forms.DateInput(attrs={'type': 'date'}),
 #         }
 
+
+
+# forms.py
+
