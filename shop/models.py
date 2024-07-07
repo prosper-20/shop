@@ -1,5 +1,8 @@
 from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Shop(models.Model):
  
@@ -25,6 +28,7 @@ class Shop(models.Model):
      
        
     ]
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10, choices=Type)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -33,6 +37,7 @@ class Shop(models.Model):
     floor = models.CharField(max_length=20, choices=Floor)
     size = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUS, default='vacant')
+    is_paid = models.BooleanField(default=False)
     
     
     def __str__(self):

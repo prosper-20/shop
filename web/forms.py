@@ -8,7 +8,7 @@ class ProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['role', 'phone', 'address', 'shop', 'image', ]
+        fields = ['role', 'phone', 'address',  'image', ]
 
     def __init__(self, *args, **kwargs):
         super(ProfileEditForm, self).__init__(*args, **kwargs)
