@@ -25,6 +25,7 @@ def staff_login(request):
                 return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
         else:
             messages.error(request, "Invalid username or password.")
+            return redirect(reverse('home'))
     else:
         return render(request, 'web/login.html')
     
@@ -43,6 +44,7 @@ def customer_login(request):
             return redirect(reverse('home'))  # Replace 'home' with your desired URL name
         else:
             messages.error(request, "Invalid email address or password.")
+            return redirect(reverse('login'))
     else:
         return render(request, 'web/login.html')
     return render(request, 'web/login.html')

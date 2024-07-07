@@ -1,7 +1,14 @@
 from django.contrib import admin
-from .models import Profile, Role
+from .models import Profile, Role, CustomUser
 from shop.models import Shop, Rate
 from customer.models import Customer
+
+
+class  CustomUserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'email', 'is_approved']
+
+
+admin.site.register(CustomUser, CustomUserAdmin)
 
 class RoleAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
