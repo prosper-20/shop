@@ -182,7 +182,8 @@ def fetch_profile(request):
             try:
                 user = get_object_or_404(User, email=email)
                 profile = get_object_or_404(Profile, user=user)
-                return render(request, 'web/new_profile.html', {'profile': profile})
+                form = ProfileEditForm(instance=profile)
+                return render(request, 'web/new_profile.html', {'profile': profile, "form": form})
             except User.DoesNotExist:
                 error_message = "User with this email does not exist."
                 return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
