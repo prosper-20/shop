@@ -6,7 +6,7 @@ from .models import Contact
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-def custom_login(request):
+def staff_login(request):
     if request.method == 'POST':
         username = request.POST.get('email_address')
         password = request.POST.get('password')
@@ -16,7 +16,25 @@ def custom_login(request):
         if user is not None:
             login(request, user)
             # Redirect to a success page, or wherever you want
-            return redirect(reverse('home'))  # Replace 'home' with your desired URL name
+            return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
+        else:
+            messages.error(request, "Invalid username or password.")
+    else:
+        return render(request, 'web/login.html')
+    
+
+
+def customer_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('email_address')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page, or wherever you want
+            return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
         else:
             messages.error(request, "Invalid username or password.")
     else:

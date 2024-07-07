@@ -11,6 +11,7 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(unique=True, max_length=25)
     email = models.EmailField(_("email address"), unique=True)
     is_approved = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -18,7 +19,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["username"]
 
     objects = CustomUserManager()
 
