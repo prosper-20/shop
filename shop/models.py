@@ -12,8 +12,27 @@ class Shop(models.Model):
         ('F', 'Type F'),
     ]
 
-    name = models.CharField(max_length=10, choices=Type)
+    Floor = [
+        ('G', 'Ground Floor'),
+        ('1', 'First Floor'),
+        ('2', 'Second Floor'),
+       
+    ]
+
+    STATUS = [
+        ('vacant', 'Vacant'),
+        ('allocated', 'Allocated'),
+     
+       
+    ]
+    name = models.CharField(max_length=255)
+    type = models.CharField(max_length=10, choices=Type)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    no = models.CharField(max_length=5, default=0)
+    address = models.CharField(max_length=300)
+    floor = models.CharField(max_length=20, choices=Floor)
+    size = models.IntegerField()
+    status = models.CharField(max_length=10, choices=STATUS, default='vacant')
     
     
     def __str__(self):
