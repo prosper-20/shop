@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, get_user_model
 from .models import Contact
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from account.decorators import admin_required
 User = get_user_model()
 
 def staff_login(request):
@@ -16,9 +16,13 @@ def staff_login(request):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            # Redirect to a success page, or wherever you want
-            return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
+            if user.is_staff == False:
+                messages.error(request, 'You are not authorized to login')
+                return redirect("web/login/customer/")
+            else:
+                login(request, user)
+                # Redirect to a success page, or wherever you want
+                return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
         else:
             messages.error(request, "Invalid username or password.")
     else:
@@ -36,9 +40,9 @@ def customer_login(request):
         if user is not None:
             login(request, user)
             # Redirect to a success page, or wherever you want
-            return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
+            return redirect(reverse('home'))  # Replace 'home' with your desired URL name
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, "Invalid email address or password.")
     else:
         return render(request, 'web/login.html')
     return render(request, 'web/login.html')
@@ -85,7 +89,7 @@ def home(request):
         return render(request, "web/home.html")
     
 
-
+@admin_required
 def dashboard(request):
     users = User.objects.all()
     users_count = users.count()

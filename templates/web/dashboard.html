@@ -652,6 +652,8 @@
                     aria-expanded="false"
                   >
                     {% if user.is_authenticated %}
+                      {% if user.profile.image %}
+
                     <div class="avatar-sm">
                       <img
                         src="{{ user.profile.image.url }}"
@@ -659,6 +661,15 @@
                         class="avatar-img rounded-circle"
                       />
                     </div>
+                    {% else %}
+                    <div class="avatar-sm">
+                      <img
+                        src="/user.jpg"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    {% endif %}
                     
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
@@ -1134,6 +1145,7 @@
                       </div> -->
                       {% for user in users %}
                       <div class="item-list">
+                        {% if user.profile.image %}
                         <div class="avatar">
                           <img
                             src="{{ user.profile.image.url }}"
@@ -1141,6 +1153,15 @@
                             class="avatar-img rounded-circle"
                           />
                         </div>
+                        {% else %}
+                        <div class="avatar">
+                          <img
+                            src="/user.jpg"
+                            alt="..."
+                            class="avatar-img rounded-circle"
+                          />
+                        </div>
+                        {% endif %}
                         <div class="info-user ms-3">
                           <div class="username">{{ user.username|title }}</div>
                           <div class="status">{{ user.profile.role }}</div>
