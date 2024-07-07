@@ -159,3 +159,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL  = "/web-home/"
 
 LOGIN_URL = '/web/login/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = 'your_api_token'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+DEFAULT_FROM_EMAIL 
