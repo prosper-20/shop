@@ -111,6 +111,17 @@ from account.models import Profile
 def view_profile(request):
     # Retrieve the profile associated with the current logged-in user
     profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect(reverse('profile'))  # Redirect to profile view page after saving
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'web/new_profile.html', {'form': form, 'profile': profile})
     
     # Render the profile details in a template
     # return render(request, 'web/profile.html', {'profile': profile})
@@ -119,17 +130,45 @@ def view_profile(request):
 
 @login_required
 def edit_profile(request):
-    profile = Profile.objects.get(user=request.user)
+    profile = get_object_or_404(Profile, user=request.user)
 
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile_view')  # Redirect to profile view page after saving
+            messages.success(request, f'Your account has been updated!')
+            return redirect(reverse('profile'))  # Redirect to profile view page after saving
     else:
         form = ProfileEditForm(instance=profile)
 
-    return render(request, 'web/edit_profile.html', {'form': form})
+    return render(request, 'web/new_profile.html', {'form': form})
+
+
+
+# if request.method == 'POST':
+#         u_form = UserUpdateForm(request.POST, instance=request.user)
+#         p_form = ProfileUpdateForm(request.POST,
+#                                    request.FILES,
+#                                    instance=request.user.profile)
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             p_form.save()
+#             messages.success(request, f'Your account has been updated!')
+#             return redirect('profile')
+
+#     else:
+#         u_form = UserUpdateForm(instance=request.user)
+#         p_form = ProfileUpdateForm(instance=request.user.profile)
+
+#     context = {
+#         'u_form': u_form,
+#         'p_form': p_form
+#     }
+
+#     return render(request, 'users/profile.html', context)
+
+
+
 
 
 
