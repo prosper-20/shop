@@ -113,7 +113,8 @@ def view_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     
     # Render the profile details in a template
-    return render(request, 'web/profile.html', {'profile': profile})
+    # return render(request, 'web/profile.html', {'profile': profile})
+    return render(request, 'web/new_profile.html', {'profile': profile})
 
 
 @login_required

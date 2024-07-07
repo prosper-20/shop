@@ -36,6 +36,7 @@ class Shop(models.Model):
     
     
     def __str__(self):
+        return f"{self.type}, {self.name}"
         return f"{self.price:,.2f}"
 
 
