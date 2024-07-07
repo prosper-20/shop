@@ -651,21 +651,32 @@
                     href="#"
                     aria-expanded="false"
                   >
+                    {% if user.is_authenticated %}
                     <div class="avatar-sm">
                       <img
-                        src="{% static 'web/web_dashboard/assets/img/profile.jpg' %}"
+                        src="{{ user.profile.image.url }}"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
                     </div>
-                    {% if user.is_authenticated %}
+                    
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
                       <span class="fw-bold">{{ user.username|title }}</span>
                     {% else %}
+                    <div class="avatar-sm">
+                        <img
+                          src="/user.jpg"
+                          alt="..."
+                          class="avatar-img rounded-circle"
+                        />
+                      </div>
+                      
                     <span class="profile-username">
-                        <span class="op-7">Hi,</span>
-                        <span class="fw-bold">Anonymous</span>
+                        <!-- <a href=""></a> -->
+                        <span class="op-7"><a href="{% url 'login' %}">Login</a></span>
+                         <!-- <a href="{% url 'login' %}"><span class="fw-bold">Pls Login</span></a> -->
+                        
                       </span>
                     </span>
                     {% endif %}
@@ -1038,7 +1049,7 @@
                 <div class="card card-round">
                   <div class="card-body">
                     <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">Customers</div>
+                      <div class="card-title">Staff ({{ users_count}})</div>
                       <div class="card-tools">
                         <div class="dropdown">
                           <button
@@ -1125,14 +1136,14 @@
                       <div class="item-list">
                         <div class="avatar">
                           <img
-                            src="{% static 'web/web_dashboard/assets/img/chadengle.jpg' %}"
+                            src="{{ user.profile.image.url }}"
                             alt="..."
                             class="avatar-img rounded-circle"
                           />
                         </div>
                         <div class="info-user ms-3">
                           <div class="username">{{ user.username|title }}</div>
-                          <div class="status">CEO Zelen</div>
+                          <div class="status">{{ user.profile.role }}</div>
                         </div>
                         <button class="btn btn-icon btn-link op-8 me-1">
                           <i class="far fa-envelope"></i>
@@ -1347,7 +1358,7 @@
               <ul class="nav">
                 <li class="nav-item">
                   <a class="nav-link" href="http://www.themekita.com">
-                    ThemeKita
+                    Alternate Media
                   </a>
                 </li>
                 <li class="nav-item">
@@ -1358,14 +1369,14 @@
                 </li>
               </ul>
             </nav>
-            <div class="copyright">
+            <!-- <div class="copyright">
               2024, made with <i class="fa fa-heart heart text-danger"></i> by
               <a href="http://www.themekita.com">ThemeKita</a>
             </div>
             <div>
               Distributed by
               <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-            </div>
+            </div> -->
           </div>
         </footer>
       </div>

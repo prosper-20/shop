@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 def custom_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('email_address')
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
@@ -44,7 +44,8 @@ def home(request):
 
 def dashboard(request):
     users = User.objects.all()
-    return render(request, "web/dashboard.html", {"users": users})
+    users_count = users.count()
+    return render(request, "web/dashboard.html", {"users": users, "users_count": users_count})
 
 
 

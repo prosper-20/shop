@@ -102,6 +102,8 @@ DATABASES = {
 
 USE_THOUSAND_SEPARATOR = True
 
+AUTH_USER_MODEL = "account.CustomUser"
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
