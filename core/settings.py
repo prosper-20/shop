@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -165,8 +165,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'live.smtp.mailtrap.io'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'api'
-EMAIL_HOST_PASSWORD = 'your_api_token'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-DEFAULT_FROM_EMAIL 
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')

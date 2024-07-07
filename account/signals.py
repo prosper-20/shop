@@ -1,6 +1,5 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
 from .models import Profile
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -9,6 +8,11 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.contrib.auth import get_user_model
+import mailtrap as mt
+from decouple import config
+
+User = get_user_model()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -22,13 +26,37 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+@receiver(post_save, sender=User)
+def send_approval_email(sender, instance, **kwargs):
+    message = f""" 
+                    Hi {instance.username}, your account has been approved"""
+    mail = mt.Mail(
+        sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
+        to=[mt.Address(email=instance.email)],
+        subject="Profile Approval",
+        text=message,
+        category="Integration Test",
+        )
 
-@receiver(post_save, sender=Profile)
-def send_approval_email(sender, instance, created, **kwargs):
-    if instance.is_approved:
-        subject = 'Profile Approved'
-        html_message = render_to_string('web/profile_approved_email.html', {'user': instance.user})
-        plain_message = strip_tags(html_message)
-        from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = instance.user.email
-        send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+    client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
+    client.send(mail)
+    
+    # mail = mt.Mail(
+    #     sender=mt.Address(email="mailtrap@example.com", name="Mailtrap Test"),
+    #     to=[mt.Address(email="your@email.com")],
+    #     subject="You are awesome!",
+    #     text="Congrats for sending test email with Mailtrap!",
+    # )
+
+    # # create client and send
+    # client = mt.MailtrapClient(token="your-api-key")
+    # client.send(mail)
+# @receiver(post_save, sender=User)
+# def send_approval_email(sender, instance, created, **kwargs):
+#     if instance.is_approved:
+#         subject = 'Profile Approved'
+#         html_message = render_to_string('web/profile_approved_email.html', {'user': instance.username})
+#         plain_message = strip_tags(html_message)
+#         from_email = settings.DEFAULT_FROM_EMAIL
+#         to_email = instance.email
+#         send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
