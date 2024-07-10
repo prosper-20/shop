@@ -1060,7 +1060,7 @@
                 <div class="card card-round">
                   <div class="card-body">
                     <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">Staff ({{ users_count}})</div>
+                      <div class="card-title">Customers ({{ users_count}})</div>
                       <div class="card-tools">
                         <div class="dropdown">
                           <button
@@ -1167,7 +1167,8 @@
                           <div class="status">{{ user.profile.role }}</div>
                         </div>
                         <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
+                          <a href="{% url 'user-profile' user.username %}"><i class="fas fa-user"></i></a>
+
                         </button>
                         <button class="btn btn-icon btn-link btn-danger op-8">
                           <i class="fas fa-ban"></i>

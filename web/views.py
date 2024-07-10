@@ -139,6 +139,26 @@ def view_profile(request):
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
 
+    
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect(reverse('profile'))  # Redirect to profile view page after saving
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'web/new_profile.html', {'form': form})
+
+
+
+@login_required
+def new_profile(request, *args, **kwargs):
+    username = kwargs.get("username")
+    profile = get_object_or_404(Profile, user__username=username)
+
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
