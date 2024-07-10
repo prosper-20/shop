@@ -49,7 +49,8 @@ class Rent(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.Model)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
-    date_paid = models.DateTimeField(auto_now_add=True)
+    date_paid = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
     date_due = models.DateField()
     managed_by = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='rents_managed')
 
@@ -57,8 +58,6 @@ class Rent(models.Model):
         return self.shop.name
     
     
-    
-
 
 class Rate(models.Model): 
 

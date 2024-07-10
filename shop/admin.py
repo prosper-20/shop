@@ -5,6 +5,7 @@ from .models import Shop, Rate
 class RentAdmin(admin.ModelAdmin):
     list_display = ["shop", "customer", "rent_type", "date_paid", "date_due"]
     list_filter = ["customer", "rent_type", "date_due"]
+    list_editable = ["managed_by"]
 
 class ShopAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
