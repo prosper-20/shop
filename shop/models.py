@@ -50,7 +50,9 @@ class Shop(models.Model):
     
     @staticmethod
     def expected_rent_fees():
-        return Shop.objects.filter(status='allocated').aggregate(total_sum=Sum('price'))['total_sum'] or 0
+        allocated_shops_sum = Shop.objects.filter(status='allocated').aggregate(total_sum=Sum('price'))['total_sum'] or 0
+        formatted_sum = formatted_sum = '{:.2f}'.format(allocated_shops_sum)
+        return formatted_sum
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),
