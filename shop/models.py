@@ -41,6 +41,9 @@ class Shop(models.Model):
     status = models.CharField(max_length=10, choices=STATUS, default='vacant')
     is_paid = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),

@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Shop, Rate
+from .models import Shop, Rate, Rent
 # Register your models here.
 
+@admin.register(Rent)
 class RentAdmin(admin.ModelAdmin):
-    list_display = ["shop", "customer", "rent_type", "date_paid", "date_due"]
+    list_display = ["shop", "customer", "rent_type", "date_paid", "date_due", "managed_by"]
     list_filter = ["customer", "rent_type", "date_due"]
     list_editable = ["managed_by"]
 
