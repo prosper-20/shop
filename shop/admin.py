@@ -4,9 +4,11 @@ from .models import Shop, Rate, Rent
 
 @admin.register(Rent)
 class RentAdmin(admin.ModelAdmin):
-    list_display = ["shop", "customer", "rent_type", "date_paid", "date_due", "managed_by"]
+    list_display = ["shop", "customer", "rent_type", "date_paid", "date_due", "managed_by_username"]
     list_filter = ["customer", "rent_type", "date_due"]
-    list_editable = ["managed_by"]
+    
+    def managed_by_username(self, obj):
+        return str(obj.managed_by.username).upper()
 
 class ShopAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
