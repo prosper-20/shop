@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from account.decorators import admin_required
 from .forms import RetrieveCustomerProfileForm
-from shop.models import Shop
+from shop.models import Shop, Rent
 
 User = get_user_model()
 
@@ -98,8 +98,9 @@ def home(request):
 def dashboard(request):
     users = User.objects.all()
     users_count = users.count()
+    no_of_due_rents = Rent.rents_due_count()
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers}
+    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "no_of_due_rents": no_of_due_rents}
     return render(request, "web/dashboard.html", context)
 
 

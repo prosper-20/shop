@@ -1,6 +1,9 @@
 from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+
 User = get_user_model()
 
 class Shop(models.Model):
@@ -56,6 +59,16 @@ class Rent(models.Model):
 
     def __str__(self):
         return self.shop.name
+    
+    @property
+    def is_due(self):
+        today = timezone.now().date()
+        return today > self.date_due
+
+    @staticmethod
+    def rents_due_count():
+        today = timezone.now().date()
+        return Rent.objects.filter(date_due__lt=today).count()
     
     
 
