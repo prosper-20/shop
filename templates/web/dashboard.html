@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -900,7 +901,7 @@
                   </div>
                   <div class="card-body pb-0">
                     <div class="mb-4 mt-2">
-                      <h1>₦ {{expected_rent_fees }}</h1>
+                      <h1>₦ {{expected_rent_fees|intcomma }}</h1>
                     </div>
                     <div class="pull-in">
                       <canvas id="dailySalesChart"></canvas>
