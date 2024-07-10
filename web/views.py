@@ -96,11 +96,15 @@ def home(request):
 
 @admin_required
 def dashboard(request):
-    users = User.objects.all()
-    users_count = users.count()
+    users = User.objects.filter(is_staff=False)
+    users_count = User.objects.filter(is_staff=False).count()
     no_of_due_rents = Rent.rents_due_count()
+    no_of_paid_rents = Rent.rents_paid_count()
+    no_of_shops = Shop.objects.all().count()
+    allocated_shops = Shop.allocated_shops_count
+    expected_rent_fees = Shop.expected_rent_fees
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "no_of_due_rents": no_of_due_rents}
+    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees}
     return render(request, "web/dashboard.html", context)
 
 

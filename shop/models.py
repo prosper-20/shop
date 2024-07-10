@@ -2,7 +2,7 @@ from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-
+from django.db.models import Sum
 
 User = get_user_model()
 
@@ -43,7 +43,14 @@ class Shop(models.Model):
 
     def __str__(self):
         return self.name
-
+    
+    @staticmethod
+    def allocated_shops_count():
+        return Shop.objects.filter(status="allocated").count()
+    
+    @staticmethod
+    def expected_rent_fees():
+        return Shop.objects.filter(status='allocated').aggregate(total_sum=Sum('price'))['total_sum'] or 0
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),
@@ -72,6 +79,12 @@ class Rent(models.Model):
     def rents_due_count():
         today = timezone.now().date()
         return Rent.objects.filter(date_due__lt=today).count()
+    
+    @staticmethod
+    def rents_paid_count():
+        return Rent.objects.filter(is_paid=True).count()
+    
+   
     
     
 
