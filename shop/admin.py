@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import Shop, Rate
 # Register your models here.
 
+class RentAdmin(admin.ModelAdmin):
+    list_display = ["shop", "customer", "rent_type", "date_paid", "date_due"]
+    list_filter = ["customer", "rent_type", "date_due"]
 
 class ShopAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')

@@ -1,7 +1,6 @@
 from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
 from django.contrib.auth import get_user_model
-
 User = get_user_model()
 
 class Shop(models.Model):
@@ -38,11 +37,27 @@ class Shop(models.Model):
     size = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUS, default='vacant')
     is_paid = models.BooleanField(default=False)
-    
-    
+
+
+RENT_TYPE = (
+    ("Monthly", "Monthly"),
+    ("Yearly", "Yearly"),
+    ("Lease", "Lease")
+)
+
+class Rent(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.Model)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
+    date_paid = models.DateTimeField(auto_now_add=True)
+    date_due = models.DateField()
+    managed_by = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='rents_managed')
+
     def __str__(self):
-        return f"{self.type}, {self.name}"
-        return f"{self.price:,.2f}"
+        return self.shop.name
+    
+    
+    
 
 
 class Rate(models.Model): 
