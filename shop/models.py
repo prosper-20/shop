@@ -53,6 +53,12 @@ class Shop(models.Model):
         allocated_shops_sum = Shop.objects.filter(status='allocated').aggregate(total_sum=Sum('price'))['total_sum'] or 0
         formatted_sum = formatted_sum = '{:.2f}'.format(allocated_shops_sum)
         return formatted_sum
+    
+    @staticmethod
+    def total_paid_shops_price():
+        total_paid_price = Shop.objects.filter(is_paid=True).aggregate(Sum('price'))['price__sum'] or 0.0
+        formatted_sum = formatted_sum = '{:.2f}'.format(total_paid_price)
+        return formatted_sum
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),

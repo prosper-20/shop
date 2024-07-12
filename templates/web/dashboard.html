@@ -100,7 +100,7 @@
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
-                <h4 class="text-section">Components</h4>
+                <!-- <h4 class="text-section">Components</h4>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
@@ -315,7 +315,7 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -488,7 +488,7 @@
                     </li>
                   </ul>
                 </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
+                <!-- <li class="nav-item topbar-icon dropdown hidden-caret">
                   <a
                     class="nav-link dropdown-toggle"
                     href="#"
@@ -643,7 +643,7 @@
                       </div>
                     </div>
                   </div>
-                </li>
+                </li> -->
 
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a
@@ -762,7 +762,7 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Shops</p>
+                          <p class="card-category"><strong>Shops</strong></p>
                           <h4 class="card-title">{{ no_of_shops }}</h4>
                         </div>
                       </div>
@@ -783,7 +783,7 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Allocated</p>
+                          <p class="card-category"><strong>Allocated</strong></p>
                           <h4 class="card-title">{{ allocated_shops }}</h4>
                         </div>
                       </div>
@@ -804,7 +804,7 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Paid Rents</p>
+                          <p class="card-category"><strong>Paid Rents</strong></p>
                           <h4 class="card-title">{{ no_of_paid_rents }}</h4>
                         </div>
                       </div>
@@ -825,7 +825,7 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Due Rents</p>
+                          <p class="card-category"><strong>Due Rents</strong></p>
                           <h4 class="card-title">{{ no_of_due_rents }}</h4>
                         </div>
                       </div>
@@ -910,9 +910,9 @@
                 </div>
                 <div class="card card-round">
                   <div class="card-body pb-0">
-                    <div class="h1 fw-bold float-end text-primary">+5%</div>
-                    <h2 class="mb-2">{{</h2>
-                    <p class="text-muted">Paid Rent</p>
+                    <!-- <div class="h1 fw-bold float-end text-primary">+5%</div> -->
+                    <h2 class="mb-2">₦ {{ sum_of_paid_rents|intcomma }}</h2>
+                    <p class="text-muted"><strong>Paid Rent</strong></p>
                     <div class="pull-in sparkline-fix">
                       <div id="lineChart"></div>
                     </div>
