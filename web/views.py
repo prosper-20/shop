@@ -103,8 +103,9 @@ def dashboard(request):
     no_of_shops = Shop.objects.all().count()
     allocated_shops = Shop.allocated_shops_count
     expected_rent_fees = Shop.expected_rent_fees
+    sum_of_paid_rents = Rent.total_paid_rents()
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees}
+    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees, "sum_of_paid_rents": sum_of_paid_rents}
     return render(request, "web/dashboard.html", context)
 
 

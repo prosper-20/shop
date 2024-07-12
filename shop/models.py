@@ -76,6 +76,14 @@ class Rent(models.Model):
     def is_due(self):
         today = timezone.now().date()
         return today > self.date_due
+    
+    def total_paid_rents(self):
+        total_paid_rents = Rent.objects.filter(
+            shop=self,  # Filter by the current shop instance
+            is_paid=True  # Only consider rents that have been paid
+        ).aggregate(Sum('rent_amount'))['rent_amount__sum'] or 0.0
+
+        return total_paid_rents
 
     @staticmethod
     def rents_due_count():
