@@ -104,6 +104,21 @@ class Role(models.Model):
         return self.name
 
 
+NATURE = [
+        ('Supermarket', 'Supermarket'),
+        ('Laundry', 'Laundry'),
+        ('Pharmacy', 'Pharmacy'),
+        ('Courier/Dispatch', 'Courier/Dispatch'),
+        ('Banking/Insurance', 'Banking/Insurance'),
+        ('Barbing/Salon', 'Barbing/Salon'),
+        
+    ]
+
+STATUS = [
+        ('new', 'new'),
+        ('renewal', 'renewal'),   
+        ('exited', 'exited'),    
+    ]
 
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -111,6 +126,12 @@ class Profile(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(default="user.jpg", upload_to="profile_pics")
+    dob = models.DateField(default=None)
+    address = models.CharField(max_length=225)
+    state = models.CharField(max_length=225, default='')
+    occupation = models.CharField(max_length=50)
+    nature = models.CharField(max_length=25, choices=NATURE, default="")
+    status = models.CharField(max_length=10, choices=STATUS, default='')
 
     def __str__(self):
         return self.user.username
