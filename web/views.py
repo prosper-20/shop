@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, logout,  get_user_model
 from .models import Contact
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -31,6 +31,13 @@ def staff_login(request):
             return redirect(reverse('home'))
     else:
         return render(request, 'web/login.html')
+    
+
+def staff_logout(request):
+    logout(request)
+
+    # Redirect to a different page after logout (optional)
+    return redirect(reverse('home')) 
     
 
 

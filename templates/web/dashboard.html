@@ -407,7 +407,7 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    <i class="fa fa-envelope"></i>
+                    <i class="fas fa-power-off"></i>
                   </a>
                   <ul
                     class="dropdown-menu messages-notif-box animated fadeIn"
@@ -1172,7 +1172,7 @@
 
                         </button>
                         <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
+                          <i class="fas fa-phone"></i>
                         </button>
                       </div>
                       {% endfor %}
@@ -1220,7 +1220,7 @@
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">Owing Customers</div>
+                      <div class="card-title">Owing Customers ({{ owing_customers_count }})</div>
                       <div class="card-tools">
                         <div class="dropdown">
                           <button
@@ -1260,6 +1260,7 @@
                           </tr>
                         </thead>
                         <tbody>
+                          {% for customer in owing_customers %}
                           <tr>
                             <th scope="row">
                               <button
@@ -1267,13 +1268,15 @@
                               >
                                 <i class="fa fa-home"></i>
                               </button>
-                              Payment from #10231
+                              {{ customer.shop.name }}
                             </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
+                            <td class="text-end">{{ customer.date_due }}</td>
+                            <td class="text-end">₦ {{ customer.shop.price }}</td>
                             <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
+                              <span class="text-end">{{ customer.customer.username|capfirst }}</span>
                             </td>
+                          </tr>
+                          {% endfor %}
                           <!-- </tr>
                           <tr>
                             <th scope="row">
