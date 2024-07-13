@@ -168,6 +168,7 @@ def edit_profile(request):
 @login_required
 def new_profile(request, *args, **kwargs):
     username = kwargs.get("username")
+    print(username)
     profile = get_object_or_404(Profile, user__username=username)
 
     if request.method == 'POST':
@@ -179,7 +180,7 @@ def new_profile(request, *args, **kwargs):
     else:
         form = ProfileEditForm(instance=profile)
 
-    return render(request, 'web/new_profile.html', {'form': form})
+    return render(request, 'web/new_profile.html', {'form': form, 'profile': profile})
 
 
 

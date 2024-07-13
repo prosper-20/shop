@@ -1084,7 +1084,7 @@
                         {% endif %}
                         <div class="info-user ms-3">
                           <div class="username">{{ user.username|title }}</div>
-                          <div class="status">{{ user.profile.role }}</div>
+                          <div class="status">{{ user.profile.occupation }}</div>
                         </div>
                         <button class="btn btn-icon btn-link op-8 me-1">
                           <a href="{% url 'user-profile' user.username %}"><i class="fas fa-user"></i></a>
