@@ -35,7 +35,7 @@ def staff_login(request):
 
 def staff_logout(request):
     logout(request)
-    return redirect(reverse('home')) 
+    return redirect("/web/home/") 
     
 
 
@@ -84,8 +84,6 @@ def customer_signup(request):
 
 
 
-
-@login_required
 def home(request):
     if request.method == "POST":
         name = request.POST.get("name")
