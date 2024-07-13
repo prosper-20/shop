@@ -73,7 +73,7 @@ def customer_signup(request):
                 return redirect(reverse('login'))
         else:
             messages.error(request, "Both passwords must match!")
-            return redirect(reverse('login'))
+            return redirect(reverse('signup'))
 
     return render(request, 'web/customer_signup.html')
 

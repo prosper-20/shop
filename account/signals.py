@@ -26,39 +26,39 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-@receiver(post_save, sender=User)
-def send_approval_email(sender, instance, **kwargs):
-    if instance.is_approved:
-        message = f""" 
-                            Hi {instance.username}, your account has been approved"""
-        mail = mt.Mail(
-                sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
-                to=[mt.Address(email=instance.email)],
-                subject="Profile Approval",
-                text=message,
-                category="Integration Test",
-                )
+# @receiver(post_save, sender=User)
+# def send_approval_email(sender, instance, **kwargs):
+#     if instance.is_approved:
+#         message = f""" 
+#                             Hi {instance.username}, your account has been approved"""
+#         mail = mt.Mail(
+#                 sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
+#                 to=[mt.Address(email=instance.email)],
+#                 subject="Profile Approval",
+#                 text=message,
+#                 category="Integration Test",
+#                 )
 
-        client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
-        client.send(mail)
+#         client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
+#         client.send(mail)
 
 
-@receiver(post_save, sender=User)
-def send_creation_email(sender, created, instance, **kwargs):
-    if created:
-        message = f""" 
-                        Hi {instance.username}, your account has been created. Kindly wait for an
-                        approval email"""
-        mail = mt.Mail(
-            sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
-            to=[mt.Address(email=instance.email)],
-            subject="Signup Successful",
-            text=message,
-            category="Integration Test",
-            )
+# @receiver(post_save, sender=User)
+# def send_creation_email(sender, created, instance, **kwargs):
+#     if created:
+#         message = f""" 
+#                         Hi {instance.username}, your account has been created. Kindly wait for an
+#                         approval email"""
+#         mail = mt.Mail(
+#             sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
+#             to=[mt.Address(email=instance.email)],
+#             subject="Signup Successful",
+#             text=message,
+#             category="Integration Test",
+#             )
 
-        client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
-        client.send(mail)
+#         client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
+#         client.send(mail)
     
     # mail = mt.Mail(
     #     sender=mt.Address(email="mailtrap@example.com", name="Mailtrap Test"),
