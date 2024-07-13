@@ -35,8 +35,6 @@ def staff_login(request):
 
 def staff_logout(request):
     logout(request)
-
-    # Redirect to a different page after logout (optional)
     return redirect(reverse('home')) 
     
 
