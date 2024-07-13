@@ -68,7 +68,7 @@ RENT_TYPE = (
 
 class Rent(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.Model)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': False})
     rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
     date_paid = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     is_paid = models.BooleanField(default=False)
