@@ -3,6 +3,8 @@ from decimal import Decimal, ROUND_HALF_UP
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db.models import Sum
+from customer.models import Customer
+
 
 User = get_user_model()
 
@@ -68,10 +70,11 @@ RENT_TYPE = (
 
 class Rent(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.Model)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': False})
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
     date_paid = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     is_paid = models.BooleanField(default=False)
+    is_expired = models.BooleanField(default=False)  # New field
     date_due = models.DateField()
     managed_by = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='rents_managed')
 
