@@ -73,8 +73,8 @@ class Customer(models.Model):
     status = models.CharField(max_length=10, choices=STATUS, default='')
     date = models.DateField()
     approval =models.BooleanField(default=False)
-    exitdate = models.DateField()
-    nextdue = models.DateField()
+    exitdate = models.DateField(blank=True, null=True)
+    nextdue = models.DateField(blank=True, null=True)
 
 
     def __str__(self):

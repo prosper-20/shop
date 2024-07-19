@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from account.decorators import admin_required
 from .forms import RetrieveCustomerProfileForm
 from shop.models import Shop, Rent
+from customer.forms import CustomerForm
 
 User = get_user_model()
 
@@ -228,6 +229,22 @@ def fetch_profile(request):
         form = RetrieveCustomerProfileForm()
     
     return render(request, 'web/fetch_profile.html', {'form': form})
+
+
+@admin_required
+def create_customer(request):
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            customer = form.save()
+            messages.success(request, "Customer created successfully!")
+            return redirect(reverse('dashboard'))
+        else:
+            messages.error(request, "Something went wrong!")
+            return render(request, 'web/my_customer_signup_form.html', {'form': form})
+    else:
+        form = CustomerForm()
+    return render(request, "web/my_customer_signup_form.html", {"form": form})
 
 
 

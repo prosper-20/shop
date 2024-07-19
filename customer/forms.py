@@ -5,7 +5,7 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('no', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'approval', 'status', 'exitdate')
+        fields = ('no', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'status', 'nextdue') # You removed approval form the list and  exitdate
         labels = {
             'no': 'Customer ID',
             'business': 'Business Name',
@@ -17,14 +17,16 @@ class CustomerForm(forms.ModelForm):
             'state': 'State of Origin',
             'address': 'House Address',
             'occupation': 'Occupation',
-            'exitdate': 'Exit Date',
-            'approval': 'Approve',
+            # 'exitdate': 'Exit Date',
+            'nextdue': 'Due Date'
+            # 'approval': 'Approve',
         }
 
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'dob': forms.DateInput(attrs={'type': 'date'}),
             'exitdate': forms.DateInput(attrs={'type': 'date'}),
+            'nextdue': forms.DateInput(attrs={'type': 'date'})
         }
 
     def __init__(self, *args, **kwargs):

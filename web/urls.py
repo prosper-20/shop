@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import staff_login, new_profile, customer_signup, staff_logout, fetch_profile, view_profile, home, dashboard, customer_login, edit_profile
+from .views import staff_login, new_profile, customer_signup, staff_logout, fetch_profile, view_profile, home, dashboard, customer_login, edit_profile, create_customer
 
 urlpatterns = [
     path("login/customer/", customer_login, name="login"),
     path("signup/customer/", customer_signup, name='customer-signup'),
+    path("create/customer/", create_customer, name="create-customer"),
     path('login/staff/', staff_login, name='staff-login'),
     path('logout/staff/', staff_logout, name='staff-logout'),
     path("dashboard/", dashboard, name="dashboard"),
