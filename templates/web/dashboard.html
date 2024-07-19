@@ -653,6 +653,17 @@
           <!-- End Navbar -->
         </div>
 
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
         <div class="container">
           <div class="page-inner">
             <div
@@ -665,7 +676,8 @@
               <div class="ms-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
                 <!-- <a href="{% url 'customer-signup' %}" class="btn btn-primary btn-round">Add Customer</a> -->
-                <a href="{% url 'customer_form' %}" class="btn btn-primary btn-round">Add Customer</a>
+                <!-- <a href="{% url 'customer_form' %}" class="btn btn-primary btn-round">Add Customer</a> -->
+                <a href="{% url 'create-customer' %}" class="btn btn-primary btn-round">Add Customer</a>
               </div>
             </div>
             <div class="row">
@@ -981,7 +993,7 @@
                 <div class="card card-round">
                   <div class="card-body">
                     <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">Customers ({{ users_count}})</div>
+                      <div class="card-title">Customers ({{ all_customers_count}})</div>
                       <div class="card-tools">
                         <div class="dropdown">
                           <button
@@ -1064,7 +1076,7 @@
                           <i class="fas fa-ban"></i>
                         </button>
                       </div> -->
-                      {% for user in users %}
+                      {% for user in all_customers %}
                       <div class="item-list">
                         {% if user.profile.image %}
                         <div class="avatar">
@@ -1084,16 +1096,23 @@
                         </div>
                         {% endif %}
                         <div class="info-user ms-3">
-                          <div class="username">{{ user.username|title }}</div>
-                          <div class="status">{{ user.profile.occupation }}</div>
+                          <div class="username">{{ user.name|title }}</div>
+                          <div class="status">{{ user.occupation }}</div>
                         </div>
                         <button class="btn btn-icon btn-link op-8 me-1">
-                          <a href="{% url 'user-profile' user.username %}"><i class="fas fa-user"></i></a>
+                          <a href=""><i class="fas fa-user"></i></a>
 
                         </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-phone"></i>
+                        {% if user.approval %}
+                        <button class="btn btn-icon btn-link btn-primary op-8">
+                          <i class="fas fa-check-circle"></i>
                         </button>
+                        {% else %}
+                        <button class="btn btn-icon btn-link btn-danger op-8">
+                          <i class="fas fa-times-circle"></i>
+                        </button>
+                        {% endif %}
+
                       </div>
                       {% endfor %}
                       <!-- <div class="item-list">

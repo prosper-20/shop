@@ -9,6 +9,7 @@ from account.decorators import admin_required
 from .forms import RetrieveCustomerProfileForm
 from shop.models import Shop, Rent
 from customer.forms import CustomerForm
+from customer.models import Customer
 
 User = get_user_model()
 
@@ -105,13 +106,15 @@ def dashboard(request):
     no_of_due_rents = Rent.rents_due_count()
     no_of_paid_rents = Rent.rents_paid_count()
     no_of_shops = Shop.objects.all().count()
+    all_customers = Customer.objects.all()
+    all_customers_count = Customer.objects.all().count()
     allocated_shops = Shop.allocated_shops_count
     expected_rent_fees = Shop.expected_rent_fees
     sum_of_paid_rents = Shop.total_paid_shops_price()
     owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
     owing_customers_count = owing_customers.count()
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees, "sum_of_paid_rents": sum_of_paid_rents, "owing_customers": owing_customers, "owing_customers_count": owing_customers_count}
+    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees, "sum_of_paid_rents": sum_of_paid_rents, "owing_customers": owing_customers, "owing_customers_count": owing_customers_count, "all_customers_count": all_customers_count}
     return render(request, "web/dashboard.html", context)
 
 
