@@ -30,5 +30,6 @@ class CustomerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CustomerForm, self).__init__(*args, **kwargs)
         self.fields['nature'].choices = [('', 'Select')] + list(self.fields['nature'].choices)
+        self.fields['state'].choices = [('', 'Select')] + list(self.fields['state'].choices)
        
        
