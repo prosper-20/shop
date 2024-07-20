@@ -771,7 +771,7 @@
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
-                      <div class="card-title">User Statistics</div>
+                      <div class="card-title">Customers Awaiting Approval ({{ customers_awaiting_approval_count }})</div>
                       <div class="card-tools">
                         <a
                           href="#"
@@ -793,7 +793,42 @@
                   </div>
                   <div class="card-body">
                     <div class="chart-container" style="min-height: 375px">
-                      <canvas id="statisticsChart"></canvas>
+                      
+                        
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Phone</th>
+                              <!-- <th scope="col">Handle</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for customer in customers_awaiting_approval %}
+                            <tr>
+                              <th scope="row">{{ customer.no }}</th>
+                              <td>{{ customer.name }}</td>
+                              <td>{{ customer.phone }}</td>
+                              <!-- <td>@mdo</td> -->
+                            </tr>
+                            {% endfor %}
+                            <!-- <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>Larry</td>
+                              <td>the Bird</td>
+                              <td>@twitter</td>
+                            </tr> -->
+                          </tbody>
+                        </table>
+                      
+                      <!-- <canvas id="statisticsChart"></canvas> -->
                     </div>
                     <div id="myChartLegend"></div>
                   </div>
@@ -993,7 +1028,7 @@
                 <div class="card card-round">
                   <div class="card-body">
                     <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">Customers ({{ all_customers_count}})</div>
+                      <div class="card-title">All Customers ({{ all_customers_count}})</div>
                       <div class="card-tools">
                         <div class="dropdown">
                           <button
