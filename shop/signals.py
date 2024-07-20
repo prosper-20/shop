@@ -22,6 +22,23 @@ def update_shop_is_paid(sender, instance, created, **kwargs):
         shop.save()
 
 
+@receiver(post_save, sender=Rent)
+def update_shop_is_not_paid(sender, instance, **kwargs):
+    if instance.is_paid==False:
+        shop = instance.shop
+        shop.is_paid = False
+        shop.status = "allocated"
+        shop.save()
+
+@receiver(post_save, sender=Rent)
+def update_shop_is_not_paid_again(sender, instance, **kwargs):
+    if instance.is_paid==True:
+        shop = instance.shop
+        shop.is_paid = True
+        shop.status = "allocated"
+        shop.save()
+
+
 @receiver(pre_save, sender=Rent)
 def check_due_date(sender, instance, **kwargs):
     today = timezone.now().date()
