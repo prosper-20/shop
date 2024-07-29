@@ -23,12 +23,21 @@ class ShopForm(forms.ModelForm):
 class MyShopForm(forms.ModelForm):
     class Meta:
         model = Shop
-        fields = ('no', 'floor', 'price', 'size')
+        fields = ('no', 'type', 'floor', 'price', 'size')
         labels = {
             'no': 'Shop No',
+            'type': 'Shop Type',
             'floor': 'Shop Floor',
             'price': 'Shop Price',
             'size' : 'Shop Size',
         }
+
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Initial price set here in case of an existing instance
+        if self.instance and self.instance.type:
+            self.fields['price'].initial = self.instance.TYPE_PRICES.get(self.instance.type, 0)
+
     
     

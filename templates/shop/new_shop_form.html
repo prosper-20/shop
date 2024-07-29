@@ -6,9 +6,9 @@
 
 <div class="container mt-3">
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-12">
         <div class="card mx-auto">
-            <div class="card-header">Shop Creation</div>
+            <div class="card-header"><h3>Shop Creation</h3></div>
             <div class="card-body">
                 <h5 class="card-title">Master Record</h5>
                 <p class="card-text">
@@ -19,6 +19,9 @@
                                 <div class="col">
                                      {{form.no|as_crispy_field}}
                                 </div>
+                                <div class="col">
+                                    {{form.type|as_crispy_field}}
+                               </div>
                                 <div class="col">
                                      {{form.floor|as_crispy_field}}
                                 </div>
@@ -45,15 +48,41 @@
         </div>
     </div>
 
-    <div class="col-md-9">
+    <!-- <div class="col-md-9">
            
         <img src="{% static 'images/shop.jpg' %}" class="card-img-top w-75 mx-auto"  alt="...">
              
-    </div>
+    </div> -->
 
     
 </div>
 </div>
 
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeField = document.getElementById('id_type');
+        const priceField = document.getElementById('id_price');
+
+        const TYPE_PRICES = {
+            'A': 1000.00,
+            'B': 1500.00,
+            'C': 2000.00,
+            'D': 2500.00,
+            'E': 3000.00,
+            'F': 3500.00,
+        };
+
+        function updatePrice() {
+            const selectedType = typeField.value;
+            const price = TYPE_PRICES[selectedType] || 0;
+            priceField.value = price.toFixed(2); // Ensure price is displayed with two decimal places
+        }
+
+        typeField.addEventListener('change', updatePrice);
+
+        // Initial update in case a type is already selected
+        updatePrice();
+    });
+</script>
 {% endblock %}
