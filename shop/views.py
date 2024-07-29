@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Rate
+from .models import Rate, Shop
 from django.db.models import Count
 from .forms import ShopForm, MyShopForm
 from django.core.paginator import Paginator
@@ -32,6 +32,13 @@ def shop (request):
     }
 
     return render(request, 'shop/shop.html', context)
+
+
+@login_required
+def myshops(request):
+    all_shops = Shop.objects.all()
+    context = {"all_shops": all_shops}
+    return render(request, "shop/myshop.html", context)
 
 
 @login_required

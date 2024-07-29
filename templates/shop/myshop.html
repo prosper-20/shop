@@ -1,0 +1,133 @@
+{% extends 'base.html' %} {% block title %} Shop Page {% endblock %}
+
+{% block content %}
+
+<div class="container ml-3 mr-3">
+    <div class ="row">
+                    <div class="col-md-9">
+                        <h3>Welcome to the Shop Management Site</h3>
+                    </div>
+                    <div class="col-md-3">
+                    
+                    </div>
+    </div>
+
+    <div class ="row">
+            <div class="col-md-4">      
+                        
+                    <div class="card mb-3">
+                        <div class="card-header">Shop Allocation Chart</div>
+                        <div class="card-body">
+                            <canvas id="allocationChart"></canvas>
+                        </div>
+                </div>
+             
+                    </div>
+
+            <div class="col-md-8">
+                <table class="table  table-hover  table-striped table-borderless">
+                    <thead class="table-dark border-bottom font-weight-bold">
+                        <tr>
+                            <td>Shop No</td>
+                            <td>Shop Status</td>
+                            <td>Shop Price</td>
+                            <td>Shop Size</td>
+                            <td>Shop Rent</td>
+                            <td>  <a href="form/" class="btn btn-danger">Add Shop</a></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for rate in shops %}
+                        <tr>
+
+                        <td>{{rate.no}}</td>
+                        <td>{{rate.status}}</td>
+                        <td>{{rate.price}}</td>
+                        <td>{{rate.size}}</td>
+                        <td>{{rate.shop_rent}}</td>
+                        <td>
+                         <a href="{% url 'shop_update' rate.id %}" class="btn text-secondary px-0">
+                         EDIT
+                         </a>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                   
+                   
+                    </table>
+                    <br/></br>
+                  
+
+                    {% if shops.has_previous %}
+                        <a href="?page=1"&laquo First<< </a>
+                        <a href="?page={{ shops.previous_page_numer }}">Previous</a>
+                    {% endif %}
+                    Page {{ shops.number }} of {{ shops.pagintor.num_pages }}
+
+                    {% if shops.has_next %}
+                        <a href="?page={{shops.next_page_number }}">next</a>
+                        <a href="?page={{ shops.paginator.num_pages }}">Last &raquo </a>
+                    {% endif %}
+                </div>
+                </div>
+
+        </div>
+    <div class="row">
+            <div class="col-md-4">
+                                          
+                       
+            </div>
+
+     </div>
+
+    
+
+</div>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('allocationChart').getContext('2d');
+        var allocationChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Allocated', 'Vacant'],
+                datasets: [{
+                    data: [{{ allocated_count }}, {{ vacant_count }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}
