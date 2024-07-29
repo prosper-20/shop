@@ -11,7 +11,9 @@ class RentAdmin(admin.ModelAdmin):
         return str(obj.managed_by.username).upper()
 
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price')
+    list_display = ('no', 'price', 'type')
+    list_filter = ('type', 'price')
+    list_editable = ('type',)
 
 
 class RateAdmin(admin.ModelAdmin):

@@ -35,7 +35,7 @@ class Shop(models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10, choices=Type)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    no = models.CharField(max_length=5, default=0)
+    no = models.CharField(max_length=5, unique=True)
     address = models.CharField(max_length=300)
     floor = models.CharField(max_length=20, choices=Floor)
     size = models.IntegerField()
