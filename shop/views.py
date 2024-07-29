@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Rate
 from django.db.models import Count
-from .forms import ShopForm
+from .forms import ShopForm, MyShopForm
 from django.core.paginator import Paginator
+from django.contrib import messages
+
 
 def home(request):
     return render(request, 'index.html')
@@ -50,6 +52,20 @@ def shop_form(request, id=0):
         if form.is_valid():
             form.save()
         return redirect('shop')
+    
+
+
+@login_required
+def new_shop_form(request):
+    if request.method == "GET":
+        form = MyShopForm()
+    else:
+        form = MyShopForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Shop Creation Successful")
+            return redirect('shop')
+    return render(request, 'shop/new_shop_form.html', {'form':form})
 
 
 

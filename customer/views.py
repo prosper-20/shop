@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Customer
 from .forms import CustomerForm
 from collections import Counter    
+from django.contrib import messages
+
 
 # Create your views here.
 @login_required
@@ -34,3 +36,16 @@ def customer_form(request, id=0):
         if form.is_valid():
             form.save()
         return redirect('customer')
+    
+
+@login_required
+def new_customer_form(request):
+    if request.method == "GET":
+        form = CustomerForm()
+    else:
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Customer Account Successful")
+            return redirect('customer')
+    return render(request, "customer/customer_form.html", {"form": form})

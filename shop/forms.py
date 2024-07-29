@@ -17,5 +17,18 @@ class ShopForm(forms.ModelForm):
         super(ShopForm, self).__init__(*args, **kwargs)
         self.fields['price'].empty_label = "Select"
         self.fields['floor'].choices = [('', 'Select')] + list(self.fields['floor'].choices)
+
+
+
+class MyShopForm(forms.ModelForm):
+    class Meta:
+        model = Shop
+        fields = ('no', 'floor', 'price', 'size')
+        labels = {
+            'no': 'Shop No',
+            'floor': 'Shop Floor',
+            'price': 'Shop Price',
+            'size' : 'Shop Size',
+        }
     
     

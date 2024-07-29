@@ -102,7 +102,7 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
+# DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -168,7 +168,7 @@ LOGIN_REDIRECT_URL  = "/web-home/"
 
 LOGIN_REDIRECT_URL = "/web-home/"
 
-LOGIN_URL = '/web/login/'
+LOGIN_URL = '/web/login/staff/'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

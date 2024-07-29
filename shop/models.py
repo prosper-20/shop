@@ -32,7 +32,6 @@ class Shop(models.Model):
      
        
     ]
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10, choices=Type)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -76,7 +75,6 @@ class Rent(models.Model):
     is_paid = models.BooleanField(default=False)
     is_expired = models.BooleanField(default=False)  # New field
     date_due = models.DateField()
-    managed_by = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='rents_managed')
 
     def __str__(self):
         return self.shop.name
@@ -173,4 +171,14 @@ class Rate(models.Model):
     @property
     def renewal_rent(self):
         return round(self.shop_rent + self.shop_charges, 2)
+    
+
+
+
+# 32,000.00
+# 29,000.00
+# 28,000.00
+# 25,000.00
+# 22,000.00
+# 19,000.00
 
