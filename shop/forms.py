@@ -39,5 +39,13 @@ class MyShopForm(forms.ModelForm):
         if self.instance and self.instance.type:
             self.fields['price'].initial = self.instance.TYPE_PRICES.get(self.instance.type, 0)
 
-    
+
+
+# 32,000.00
+# 29,000.00
+# 28,000.00
+# 25,000.00
+# 22,000.00
+# 19,000.00
+
     

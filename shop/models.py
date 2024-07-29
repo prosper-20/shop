@@ -43,7 +43,7 @@ class Shop(models.Model):
     is_paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return f"Shop {self.no}"
     
     @staticmethod
     def allocated_shops_count():
