@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Customer
-from .forms import CustomerForm
+from django.urls import reverse
+from .forms import CustomerForm, EditCustomerForm
 from collections import Counter    
 from django.contrib import messages
 
@@ -49,3 +50,18 @@ def new_customer_form(request):
             messages.success(request, "Customer Account Successful")
             return redirect('customer')
     return render(request, "customer/customer_form.html", {"form": form})
+
+
+
+@login_required
+def update_customer_form(request, customer_no):
+    customer = get_object_or_404(Customer, no=customer_no)
+    if request.method == "GET":
+        form = EditCustomerForm()
+    else:
+        form = EditCustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Customer Account Updated Successfully")
+            return redirect(reverse("customer"))
+    return render(request, "customer/customer_admin_update_customer_form.html", {"form": form})
