@@ -41,6 +41,22 @@ class MyShopForm(forms.ModelForm):
 
 
 
+class EditMyShopForm(forms.ModelForm):
+    class Meta:
+        model = Shop
+        fields = ('no', 'type', 'floor', 'price', 'size')
+        labels = {
+            'no': 'Shop No',
+            'type': 'Shop Type',
+            'floor': 'Shop Floor',
+            'price': 'Shop Price',
+            'size' : 'Shop Size',
+        }
+
+    
+
+
+
 # 32,000.00
 # 29,000.00
 # 28,000.00

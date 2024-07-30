@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Rate, Shop
 from django.db.models import Count
-from .forms import ShopForm, MyShopForm
+from .forms import ShopForm, MyShopForm, EditMyShopForm
 from django.core.paginator import Paginator
 from django.contrib import messages
 
@@ -73,6 +73,24 @@ def new_shop_form(request):
             messages.success(request, "Shop Creation Successful")
             return redirect('shop')
     return render(request, 'shop/new_shop_form.html', {'form':form})
+
+
+@login_required
+def edit_shop_form(request, shop_no):
+    # Fetch the Shop instance using the shop number
+    shop = get_object_or_404(Shop, no=shop_no)
+
+    if request.method == 'POST':
+        form = EditMyShopForm(request.POST, instance=shop)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Shop details updated successfully")
+            return redirect('shop')  # Redirect to the shop list or detail view
+    else:
+        form = EditMyShopForm(instance=shop)
+
+    return render(request, 'shop/edit_shop_form.html', {'form': form})
+
 
 
 

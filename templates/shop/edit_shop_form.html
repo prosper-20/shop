@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% block title %} Shop Form {% endblock %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container mt-3">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mx-auto">
+            <div class="card-header"><h3>Shop Creation</h3></div>
+            <div class="card-body">
+                <h5 class="card-title">Master Record</h5>
+                <p class="card-text">
+                    <form action="" method="POST" autocomplete="off">
+
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col">
+                                     {{form.no|as_crispy_field}}
+                                </div>
+                                <div class="col">
+                                    {{form.type|as_crispy_field}}
+                               </div>
+                                <div class="col">
+                                     {{form.floor|as_crispy_field}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                            {{form.price|as_crispy_field}}
+                                </div>
+                                <div class="col">
+                            {{form.size|as_crispy_field}}
+                                </div>
+                            </div>
+                        </br>
+                        <div class="row">
+                            <button  type="submit" class="btn btn-success">Submit</button>
+                        </div>
+
+
+                    </form>
+                
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-9">
+           
+        <img src="{% static 'images/shop.jpg' %}" class="card-img-top w-75 mx-auto"  alt="...">
+             
+    </div> -->
+
+    
+</div>
+</div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeField = document.getElementById('id_type');
+        const priceField = document.getElementById('id_price');
+
+        const TYPE_PRICES = {
+            'A': 32000.00,
+            'B': 29000.00,
+            'C': 28000.00,
+            'D': 25000.00,
+            'E': 22000.00,
+            'F': 19000.00,
+        };
+
+        function updatePrice() {
+            const selectedType = typeField.value;
+            const price = TYPE_PRICES[selectedType] || 0;
+            priceField.value = price.toFixed(2); // Ensure price is displayed with two decimal places
+        }
+
+        typeField.addEventListener('change', updatePrice);
+
+        // Initial update in case a type is already selected
+        updatePrice();
+    });
+</script>
+{% endblock %}

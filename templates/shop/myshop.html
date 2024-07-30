@@ -32,22 +32,22 @@
                             <td>Shop Status</td>
                             <td>Shop Price</td>
                             <td>Shop Size</td>
-                            <td>Shop Rent</td>
-                            <td>  <a href="form/" class="btn btn-danger">Add Shop</a></td>
+                            <!-- <td>Shop Rent</td> -->
+                            <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {% for rate in shops %}
+                        {% for shop in all_shops %}
                         <tr>
 
-                        <td>{{rate.no}}</td>
-                        <td>{{rate.status}}</td>
-                        <td>{{rate.price}}</td>
-                        <td>{{rate.size}}</td>
-                        <td>{{rate.shop_rent}}</td>
+                        <td>{{shop.no}}</td>
+                        <td>{{shop.status}}</td>
+                        <td>{{shop.price}}</td>
+                        <td>{{shop.size}}</td>
+                        <!-- <td>{{shop.shop_rent}}</td> -->
                         <td>
-                         <a href="{% url 'shop_update' rate.id %}" class="btn text-secondary px-0">
+                         <a href="" class="btn text-secondary px-0">
                          EDIT
                          </a>
                         </td>
