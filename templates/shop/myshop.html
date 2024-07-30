@@ -12,8 +12,9 @@
                     </div>
     </div>
 
+    <br><br>
     <div class ="row">
-            <div class="col-md-4">      
+            <!-- <div class="col-md-4">      
                         
                     <div class="card mb-3">
                         <div class="card-header">Shop Allocation Chart</div>
@@ -22,9 +23,9 @@
                         </div>
                 </div>
              
-                    </div>
+                    </div> -->
 
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <table class="table  table-hover  table-striped table-borderless">
                     <thead class="table-dark border-bottom font-weight-bold">
                         <tr>
@@ -32,6 +33,7 @@
                             <td>Shop Type</td>
                             <td>Shop Price</td>
                             <td>Shop Size</td>
+                            <td>Approval Status</td>
                             <!-- <td>Shop Rent</td> -->
                             <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
                         </tr>
@@ -45,6 +47,8 @@
                         <td>{{shop.type}}</td>
                         <td>{{shop.price}}</td>
                         <td>{{shop.size}}</td>
+                        <td>{{ shop.approval }}</td>
+
                         <!-- <td>{{shop.shop_rent}}</td> -->
                         <td>
                          <a href="{% url 'shop-edit' shop.no %}" class="btn text-secondary px-0">
