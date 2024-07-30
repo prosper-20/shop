@@ -21,10 +21,10 @@ def staff_login(request):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            if user.is_staff == False:
-                messages.error(request, 'You are not authorized to login')
-                return redirect(reverse('login'))
-            else:
+            # if user.is_staff == False:
+            #     messages.error(request, 'You are not authorized to login')
+            #     return redirect(reverse('login'))
+            # else:
                 login(request, user)
                 # Redirect to a success page, or wherever you want
                 return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
