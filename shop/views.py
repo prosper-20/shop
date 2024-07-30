@@ -71,7 +71,7 @@ def new_shop_form(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Shop Creation Successful")
-            return redirect('shop')
+            return redirect('all-shop')
     return render(request, 'shop/new_shop_form.html', {'form':form})
 
 
@@ -85,7 +85,7 @@ def edit_shop_form(request, shop_no):
         if form.is_valid():
             form.save()
             messages.success(request, "Shop details updated successfully")
-            return redirect('shop')  # Redirect to the shop list or detail view
+            return redirect('all-shops')  # Redirect to the shop list or detail view
     else:
         form = EditMyShopForm(instance=shop)
 

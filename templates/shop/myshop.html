@@ -29,7 +29,7 @@
                     <thead class="table-dark border-bottom font-weight-bold">
                         <tr>
                             <td>Shop No</td>
-                            <td>Shop Status</td>
+                            <td>Shop Type</td>
                             <td>Shop Price</td>
                             <td>Shop Size</td>
                             <!-- <td>Shop Rent</td> -->
@@ -42,12 +42,12 @@
                         <tr>
 
                         <td>{{shop.no}}</td>
-                        <td>{{shop.status}}</td>
+                        <td>{{shop.type}}</td>
                         <td>{{shop.price}}</td>
                         <td>{{shop.size}}</td>
                         <!-- <td>{{shop.shop_rent}}</td> -->
                         <td>
-                         <a href="" class="btn text-secondary px-0">
+                         <a href="{% url 'shop-edit' shop.no %}" class="btn text-secondary px-0">
                          EDIT
                          </a>
                         </td>
