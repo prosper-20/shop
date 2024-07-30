@@ -6,7 +6,7 @@ from .models import Contact
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from account.decorators import admin_required
-from .forms import RetrieveCustomerProfileForm
+# from .forms import RetrieveCustomerProfileForm
 from shop.models import Shop, Rent
 from customer.forms import CustomerForm
 from customer.models import Customer
@@ -123,70 +123,70 @@ def dashboard(request):
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from account.models import Profile
-from .forms import ProfileEditForm
+# from account.models import Profile
+# from .forms import ProfileEditForm
 
 
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from account.models import Profile
 
-@login_required
-def view_profile(request):
-    # Retrieve the profile associated with the current logged-in user
-    profile = get_object_or_404(Profile, user=request.user)
 
-    if request.method == 'POST':
-        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your account has been updated!')
-            return redirect(reverse('profile'))  # Redirect to profile view page after saving
-    else:
-        form = ProfileEditForm(instance=profile)
+# @login_required
+# def view_profile(request):
+#     # Retrieve the profile associated with the current logged-in user
+#     profile = get_object_or_404(Profile, user=request.user)
 
-    return render(request, 'web/new_profile.html', {'form': form, 'profile': profile})
+#     if request.method == 'POST':
+#         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f'Your account has been updated!')
+#             return redirect(reverse('profile'))  # Redirect to profile view page after saving
+#     else:
+#         form = ProfileEditForm(instance=profile)
+
+#     return render(request, 'web/new_profile.html', {'form': form, 'profile': profile})
     
     # Render the profile details in a template
     # return render(request, 'web/profile.html', {'profile': profile})
-    return render(request, 'web/new_profile.html', {'profile': profile})
+    # return render(request, 'web/new_profile.html', {'profile': profile})
 
 
-@login_required
-def edit_profile(request):
-    profile = get_object_or_404(Profile, user=request.user)
+# @login_required
+# def edit_profile(request):
+#     profile = get_object_or_404(Profile, user=request.user)
 
     
 
-    if request.method == 'POST':
-        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your account has been updated!')
-            return redirect(reverse('profile'))  # Redirect to profile view page after saving
-    else:
-        form = ProfileEditForm(instance=profile)
+#     if request.method == 'POST':
+#         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f'Your account has been updated!')
+#             return redirect(reverse('profile'))  # Redirect to profile view page after saving
+#     else:
+#         form = ProfileEditForm(instance=profile)
 
-    return render(request, 'web/new_profile.html', {'form': form})
+#     return render(request, 'web/new_profile.html', {'form': form})
 
 
 
-@login_required
-def new_profile(request, *args, **kwargs):
-    username = kwargs.get("username")
-    print(username)
-    profile = get_object_or_404(Profile, user__username=username)
+# @login_required
+# def new_profile(request, *args, **kwargs):
+#     username = kwargs.get("username")
+#     print(username)
+#     profile = get_object_or_404(Profile, user__username=username)
 
-    if request.method == 'POST':
-        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your account has been updated!')
-            return redirect(reverse('profile'))  # Redirect to profile view page after saving
-    else:
-        form = ProfileEditForm(instance=profile)
+#     if request.method == 'POST':
+#         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f'Your account has been updated!')
+#             return redirect(reverse('profile'))  # Redirect to profile view page after saving
+#     else:
+#         form = ProfileEditForm(instance=profile)
 
-    return render(request, 'web/new_profile.html', {'form': form, 'profile': profile})
+#     return render(request, 'web/new_profile.html', {'form': form, 'profile': profile})
 
 
 
@@ -213,27 +213,27 @@ def new_profile(request, *args, **kwargs):
 #     return render(request, 'users/profile.html', context)
 
 
-@admin_required
-def fetch_profile(request):
-    if request.method == 'POST':
-        form = RetrieveCustomerProfileForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            try:
-                user = get_object_or_404(User, email=email)
-                profile = get_object_or_404(Profile, user=user)
-                form = ProfileEditForm(instance=profile)
-                return render(request, 'web/new_profile.html', {'profile': profile, "form": form})
-            except User.DoesNotExist:
-                error_message = "User with this email does not exist."
-                return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
-            except Profile.DoesNotExist:
-                error_message = "Profile does not exist for this user."
-                return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
-    else:
-        form = RetrieveCustomerProfileForm()
+# @admin_required
+# def fetch_profile(request):
+#     if request.method == 'POST':
+#         form = RetrieveCustomerProfileForm(request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data['email']
+#             try:
+#                 user = get_object_or_404(User, email=email)
+#                 profile = get_object_or_404(Profile, user=user)
+#                 form = ProfileEditForm(instance=profile)
+#                 return render(request, 'web/new_profile.html', {'profile': profile, "form": form})
+#             except User.DoesNotExist:
+#                 error_message = "User with this email does not exist."
+#                 return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
+#             except Profile.DoesNotExist:
+#                 error_message = "Profile does not exist for this user."
+#                 return render(request, 'web/new_profile.html', {'form': form, 'error_message': error_message})
+#     else:
+#         form = RetrieveCustomerProfileForm()
     
-    return render(request, 'web/fetch_profile.html', {'form': form})
+#     return render(request, 'web/fetch_profile.html', {'form': form})
 
 
 @admin_required

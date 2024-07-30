@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Role, CustomUser
+from .models import Role, CustomUser
 from shop.models import Shop, Rate
 from customer.models import Customer
 
@@ -15,9 +15,9 @@ class RoleAdmin(admin.ModelAdmin):
 
 admin.site.register(Role, RoleAdmin)
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'address']
+# @admin.register(Profile)
+# class ProfileAdmin(admin.ModelAdmin):
+#     list_display = ['user', 'address']
 
 # # Register your models here.
 # class AccountAdmin(admin.ModelAdmin):

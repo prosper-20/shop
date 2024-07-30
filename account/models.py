@@ -120,20 +120,20 @@ STATUS = [
         ('exited', 'exited'),    
     ]
 
-class Profile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=True, null=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    address = models.CharField(max_length=100, blank=True, null=True)
-    image = models.ImageField(default="user.jpg", upload_to="profile_pics")
-    dob = models.DateField(default=None)
-    address = models.CharField(max_length=225)
-    state = models.CharField(max_length=225, default='')
-    occupation = models.CharField(max_length=50)
-    nature = models.CharField(max_length=25, choices=NATURE, default="")
-    status = models.CharField(max_length=10, choices=STATUS, default='')
+# class Profile(models.Model):
+#     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+#     role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=True, null=True)
+#     phone = models.CharField(max_length=20, blank=True, null=True)
+#     address = models.CharField(max_length=100, blank=True, null=True)
+#     image = models.ImageField(default="user.jpg", upload_to="profile_pics")
+#     dob = models.DateField(default=None)
+#     address = models.CharField(max_length=225)
+#     state = models.CharField(max_length=225, default='')
+#     occupation = models.CharField(max_length=50)
+#     nature = models.CharField(max_length=25, choices=NATURE, default="")
+#     status = models.CharField(max_length=10, choices=STATUS, default='')
 
-    def __str__(self):
-        return self.user.username
+#     def __str__(self):
+#         return self.user.username
 
     
