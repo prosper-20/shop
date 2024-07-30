@@ -32,10 +32,6 @@ class Shop(models.Model):
      
     ]
 
-    APPROVAL_STATUS = [
-        ('In review', 'In review'),
-        ('Pending Approval', 'Pending Approval'),
-    ]
 
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10, choices=Type)
@@ -46,7 +42,7 @@ class Shop(models.Model):
     size = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUS, default='vacant')
     is_paid = models.BooleanField(default=False)
-    shop_approval = models.CharField(max_length=100, choices=APPROVAL_STATUS)
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Shop {self.no}"
