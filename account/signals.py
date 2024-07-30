@@ -16,21 +16,21 @@ import mailtrap as mt
 from decouple import config
 
 
-@receiver(post_save, sender=Customer)
-def send_approval_email(sender, instance, **kwargs):
-    if instance.approval:
-        message = f""" 
-                        Hi {instance.name}, your account has been approved. """
-        mail = mt.Mail(
-            sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
-            to=[mt.Address(email=instance.email)],
-            subject="Account Approval",
-            text=message,
-            category="Integration Test",
-            )
+# @receiver(post_save, sender=Customer)
+# def send_approval_email(sender, instance, **kwargs):
+#     if instance.approval:
+#         message = f""" 
+#                         Hi {instance.name}, your account has been approved. """
+#         mail = mt.Mail(
+#             sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
+#             to=[mt.Address(email=instance.email)],
+#             subject="Account Approval",
+#             text=message,
+#             category="Integration Test",
+#             )
 
-        client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
-        client.send(mail)
+#         client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
+#         client.send(mail)
 
 User = get_user_model()
 

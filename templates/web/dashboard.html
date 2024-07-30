@@ -702,7 +702,7 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category"><strong>Shops</strong></p>
+                          <p class="card-category"><a href="{% url 'all-shops' %}"><strong>Shops</strong></a></p>
                           <h4 class="card-title">{{ no_of_shops }}</h4>
                         </div>
                       </div>
@@ -809,6 +809,7 @@
                               <th scope="col">ID</th>
                               <th scope="col">Name</th>
                               <th scope="col">Phone</th>
+                              <th scope="col">Action</th>
                               <!-- <th scope="col">Handle</th> -->
                             </tr>
                           </thead>
@@ -818,6 +819,7 @@
                               <th scope="row">{{ customer.no }}</th>
                               <td>{{ customer.name }}</td>
                               <td>{{ customer.phone }}</td>
+                              <td><a href="{% url 'update-customer-form' customer.no %}">EDIT</a></td>
                               <!-- <td>@mdo</td> -->
                             </tr>
                             {% endfor %}
@@ -1143,7 +1145,7 @@
                           <div class="status">{{ user.occupation }}</div>
                         </div>
                         <button class="btn btn-icon btn-link op-8 me-1">
-                          <a href=""><i class="fas fa-user"></i></a>
+                          <a href="{% url 'update-customer-form' user.no %}"><i class="fas fa-user"></i></a>
 
                         </button>
                         {% if user.approval %}
@@ -1366,7 +1368,7 @@
               <ul class="nav">
                 <li class="nav-item">
                   <a class="nav-link" href="http://www.themekita.com">
-                    Alternate Media
+                    Nina Sky Innovation Limited
                   </a>
                 </li>
                 <li class="nav-item">
