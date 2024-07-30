@@ -5,7 +5,11 @@ from django.urls import reverse
 from .forms import CustomerForm, EditCustomerForm
 from collections import Counter    
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 
+
+def is_admin(user):
+    return user.is_superuser
 
 # Create your views here.
 @login_required
@@ -53,7 +57,9 @@ def new_customer_form(request):
 
 
 
-@login_required
+# @login_required
+
+@user_passes_test(is_admin)
 def update_customer_form(request, customer_no):
     customer = get_object_or_404(Customer, no=customer_no)
     if request.method == "GET":

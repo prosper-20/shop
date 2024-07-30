@@ -40,7 +40,7 @@ class EditCustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('no', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'status', 'nextdue') # You removed approval form the list and  exitdate
+        fields = ('no', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'status', 'nextdue', 'approval') # You removed approval form the list and  exitdate
         labels = {
             'no': 'Customer ID',
             'business': 'Business Name',
@@ -53,8 +53,8 @@ class EditCustomerForm(forms.ModelForm):
             'address': 'House Address',
             'occupation': 'Occupation',
             # 'exitdate': 'Exit Date',
-            'nextdue': 'Due Date'
-            # 'approval': 'Approve',
+            'nextdue': 'Due Date',
+            'approval': 'Approve',
         }
 
         widgets = {
