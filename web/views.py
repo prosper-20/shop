@@ -85,7 +85,7 @@ def customer_signup(request):
     return render(request, 'web/customer_signup.html')
 
 
-
+@login_required
 def home(request):
     if request.method == "POST":
         name = request.POST.get("name")
