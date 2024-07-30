@@ -5,6 +5,8 @@ urlpatterns = [
     path('', views.customer, name="customer"),
     path('form/', views.new_customer_form, name="customer_form"), # you changed this to new_customer_form
     path('customer/<int:id>', views.customer_form, name="customer_update"),
+    path("customer/update/<int:customer_no>/", views.update_customer_form, name="update-customer-form")
+
  
 ]
 

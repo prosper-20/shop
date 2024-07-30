@@ -57,7 +57,7 @@ def new_customer_form(request):
 def update_customer_form(request, customer_no):
     customer = get_object_or_404(Customer, no=customer_no)
     if request.method == "GET":
-        form = EditCustomerForm()
+        form = EditCustomerForm(instance=customer)
     else:
         form = EditCustomerForm(request.POST, instance=customer)
         if form.is_valid():
