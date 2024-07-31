@@ -5,7 +5,35 @@ from django.db.models import Count
 from .forms import ShopForm, MyShopForm, EditMyShopForm
 from django.core.paginator import Paginator
 from django.contrib import messages
+import pandas as pd
+from django.http import HttpResponse
 
+def generate_shops(request):
+    file_path = r"C:/Users/edwar/Downloads/DBB_Shops.csv"
+    shops_df = pd.read_csv(file_path)
+    for _, row in shops_df.iterrows():
+        shop_id = row[0]
+        floor_level = row[1]
+        size = row[2]
+        rent = float(row[3].replace(',', ''))
+
+        # Create the Shop instance
+        shop = Shop.objects.create(
+            name=shop_id,
+            type='A',  # Default or inferred type
+            price=rent,
+            no=shop_id,
+            address=f"{floor_level}, {shop_id}",
+            floor=floor_level[0],  # Extract the floor identifier
+            size=size,
+            status='vacant',  # Default status
+            is_paid=False,  # Default value
+            is_approved=False  # Default value
+        )
+
+        # Save the shop instance to the database
+        shop.save()
+    return HttpResponse("DONE")
 
 def home(request):
     return render(request, 'index.html')
