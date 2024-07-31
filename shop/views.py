@@ -71,7 +71,7 @@ def new_shop_form(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Shop Creation Successful")
-            return redirect('all-shop')
+            return redirect('all-shops')
     return render(request, 'shop/new_shop_form.html', {'form':form})
 
 
