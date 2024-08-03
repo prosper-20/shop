@@ -143,8 +143,8 @@ def list_rents(request):
     return render(request, "rent/list_rents.html", context)
 
 
-def edit_rents(request, shop):
-    rent = get_object_or_404(Rent, shop=shop)
+def edit_rents(request, shop_no):
+    rent = get_object_or_404(Rent, shop__no=shop_no)
     if request.method == "POST":
         form = EditMyRentForm(request.POST, instance=rent)
         if form.is_valid():
