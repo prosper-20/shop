@@ -76,7 +76,7 @@ def send_rent_creation_email(sender, instance, created, **kwargs):
                   f'Best regards,\n' \
                   f'Nina Sky Innovation Limited'
         recipient_list = [instance.customer.email]
-        send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+        send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list, fail_silently=False)
 
 
 
