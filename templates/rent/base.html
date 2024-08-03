@@ -13,31 +13,36 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 
     {% if title %}
-        <title>Django Blog - {{ title }}</title>
+        <title>Nina Sky | Rent Management</title>
     {% else %}
-        <title>Django Blog</title>
+        <title>Nina Sky | Rent Management</title>
     {% endif %}
 </head>
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="">Nina Sky</a>
+          <a class="navbar-brand mr-4" href=""><img
+            src="{% static 'images/logo-removebg-preview.png' %}"
+            alt="navbar brand"
+            class="navbar-brand"
+            height="20"
+          /></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="">Home</a>
-              <a class="nav-item nav-link" href="">About</a>
+              <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              <!-- <a class="nav-item nav-link" href="">About</a> -->
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="">Profile</a>
-                <a class="nav-item nav-link" href="">Logout</a>
+                <!-- <a class="nav-item nav-link" href="">Profile</a> -->
+                <a class="nav-item nav-link" href="{% url 'staff-logout' %}">Logout</a>
               {% else %}
-                <a class="nav-item nav-link" href="">Login</a>
+                <a class="nav-item nav-link" href="{% url 'staff-login' %}">Login</a>
                 <a class="nav-item nav-link" href="">Register</a>
               {% endif %}
             </div>

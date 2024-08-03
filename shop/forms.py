@@ -57,7 +57,20 @@ class EditMyShopForm(forms.ModelForm):
 class CreateRentForm(forms.ModelForm):
     class Meta:
         model = Rent
-        fields = ('shop', 'customer', 'rent_type', 'is_paid', 'date_paid', 'is_expired', 'rent_start', 'date_due')
+        fields = ('shop', 'customer', 'rent_type', 'date_paid', 'is_paid',  'rent_start', 'date_due', 'is_expired')
+        labels = {
+            'date_paid': 'Payment Date',
+            'is_paid': 'Is Paid',
+            'is_expired': 'Is Expired',
+            'rent_start': 'Rent Start Date',
+            'date_due': 'Rent Due Date',
+            }
+    
+        widgets = {
+            'date_paid': forms.DateInput(attrs={'type': 'date'}),
+            'date_due': forms.DateInput(attrs={"type": 'date'}),
+            'rent_start': forms.DateInput(attrs={"type": 'date'})
+        }
 
         
 
