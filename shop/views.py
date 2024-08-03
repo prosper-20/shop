@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Rate, Shop, Rent
 from django.db.models import Count
-from .forms import ShopForm, MyShopForm, EditMyShopForm, CreateRentForm
+from .forms import ShopForm, MyShopForm, EditMyShopForm, EditMyRentForm, CreateRentForm
 from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
@@ -130,6 +130,7 @@ def create_rent(request):
             messages.success(request, "Rent successfully logged!")
             return redirect(reverse("list-shop-rents"))
         messages.error(request, "Something went wrong")
+        return redirect(reverse("create-shop-rent"))
     else:
         form = CreateRentForm()
     context = {"form": form}
@@ -140,6 +141,23 @@ def list_rents(request):
     rents = Rent.objects.all()
     context = {"rents": rents}
     return render(request, "rent/list_rents.html", context)
+
+
+def edit_rents(request, shop):
+    rent = get_object_or_404(Rent, shop=shop)
+    if request.method == "POST":
+        form = EditMyRentForm(request.POST, instance=rent)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Rent details updated successfully")
+            return redirect(reverse("list-shop-rents"))
+        else:
+            messages.error(request, "Something went wrong")
+            return redirect(reverse("edit-shop-rent", args=[shop]))
+    else:
+        form = EditMyRentForm(instance=rent)
+    return render(request, "rent/edit_rent_form.html", {'form': form})
+
 
 
 

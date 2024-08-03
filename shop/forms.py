@@ -72,6 +72,19 @@ class CreateRentForm(forms.ModelForm):
             'rent_start': forms.DateInput(attrs={"type": 'date'})
         }
 
+
+class EditMyRentForm(forms.ModelForm):
+    class Meta:
+        model = Rent
+        fields = ('shop', 'customer', 'rent_type', 'date_paid', 'is_paid',  'rent_start', 'date_due', 'is_expired')
+        labels = {
+            'date_paid': 'Payment Date',
+            'is_paid': 'Is Paid',
+            'is_expired': 'Is Expired',
+            'rent_start': 'Rent Start Date',
+            'date_due': 'Rent Due Date',
+            }
+    
         
 
 
