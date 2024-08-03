@@ -57,9 +57,8 @@ def send_email_on_shop_creation(sender, instance, created, **kwargs):
     if created:
         subject = 'New Shop Created'
         message = f'Hello sir, a new shop named {instance.name} has been created, Kindly review and approve it!'
-        from_email = settings.EMAIL_HOST_USER
-        to_email = settings.EMAIL_HOST_USER
-        recipient = [user.email for user in User.objects.all() if user.is_superuser==True]
+        sender = settings.EMAIL_HOST_USER
+        recipient = [user.email for user in User.objects.all() if user.is_superuser==True and user.is_approved==True]
         send_mail(subject, message, sender, recipient, fail_silently=False)
 
 

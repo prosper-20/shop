@@ -185,3 +185,4 @@ LOGIN_URL = '/web/login/staff/'
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = config("SENDGRID_API_KEY")
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
