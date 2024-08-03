@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Rate, Shop
+from .models import Rate, Shop, Rent
 from django.db.models import Count
 from .forms import ShopForm, MyShopForm, EditMyShopForm, CreateRentForm
 from django.core.paginator import Paginator
@@ -128,12 +128,19 @@ def create_rent(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Rent successfully logged!")
-            return redirect(reverse("all-shops"))
+            return redirect(reverse("list-shop-rents"))
         messages.error(request, "Something went wrong")
     else:
         form = CreateRentForm()
     context = {"form": form}
     return render(request, "rent/create_rent.html", context)
+
+
+def list_rents(request):
+    rents = Rent.objects.all()
+    context = {"rents": rents}
+    return render(request, "rent/list_rents.html", context)
+
 
 
     

@@ -1,0 +1,15 @@
+{% extends "rent/base.html" %}
+{% block content %}
+    {% for rent in rentss %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ rent.rent_type }}</a>
+              <small class="text-muted">{{ rent.date_due }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ rent.shop.no }}</a></h2>
+            <p class="article-content">Rented by {{ rent.customer.name }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
