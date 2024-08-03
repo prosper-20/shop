@@ -1,9 +1,13 @@
 from django.db import models
-from .models import Rent
+from .models import Rent, Shop
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 @receiver(post_save, sender=Rent)
 def update_shop_status(sender, instance, created, **kwargs):
@@ -46,3 +50,17 @@ def check_due_date(sender, instance, **kwargs):
         instance.is_expired = True
     else:
         instance.is_expired = False
+
+
+@receiver(post_save, sender=Shop)
+def send_email_on_shop_creation(sender, instance, created, **kwargs):
+    if created:
+        subject = 'New Shop Created'
+        message = f'Hello sir, a new shop named {instance.name} has been created, Kindly review and approve it!'
+        from_email = settings.EMAIL_HOST_USER
+        to_email = settings.EMAIL_HOST_USER
+        recipient = [user.email for user in User.objects.all() if user.is_superuser==True]
+        send_mail(subject, message, sender, recipient, fail_silently=False)
+
+
+
