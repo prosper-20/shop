@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Rate, Shop
 from django.db.models import Count
-from .forms import ShopForm, MyShopForm, EditMyShopForm
+from .forms import ShopForm, MyShopForm, EditMyShopForm, CreateRentForm
 from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
@@ -121,7 +122,18 @@ def edit_shop_form(request, shop_no):
 
 
 
-
+def create_rent(request):
+    if request.method == "POST":
+        form = CreateRentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Rent successfully logged!")
+            return redirect(reverse("all-shops"))
+        messages.error(request, "Something went wrong")
+    else:
+        form = CreateRentForm()
+    context = {"form": form}
+    return render(request, "rent/create_rent.html", context)
 
 
     

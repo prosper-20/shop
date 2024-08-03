@@ -9,6 +9,7 @@ urlpatterns = [
     path('shop/generate/', views.generate_shops, name="generate"),
     path('shops/', views.myshops, name="all-shops"),
     path('shop/create/', views.new_shop_form, name="shop-create"),
+    path("shop/rent/create/", views.create_rent, name="create-shop-rent"),
     path('shops/<str:shop_no>/', views.edit_shop_form, name="shop-edit"),
     path('shop/form/', views.shop_form, name="shop_form"),
     path('shop/<int:id>', views.shop_form, name="shop_update"),
