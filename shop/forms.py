@@ -1,5 +1,5 @@
 from django import forms
-from .models import Rate, Shop
+from .models import Rate, Shop, Rent
 
 class ShopForm(forms.ModelForm):
 
@@ -53,7 +53,14 @@ class EditMyShopForm(forms.ModelForm):
             'size' : 'Shop Size',
         }
 
-    
+
+class CreateRentForm(forms.ModelForm):
+    class Meta:
+        model = Rent
+        fields = ('shop', 'customer', 'rent_type', 'is_paid', 'date_paid', 'is_expired', 'rent_start', 'date_due')
+
+        
+
 
 
 

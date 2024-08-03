@@ -73,9 +73,10 @@ class Rent(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.Model)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
-    date_paid = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    date_paid = models.DateTimeField()
     is_paid = models.BooleanField(default=False)
     is_expired = models.BooleanField(default=False)  # New field
+    rent_start = models.DateField(default=timezone.now)
     date_due = models.DateField()
 
     def __str__(self):
