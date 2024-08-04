@@ -90,12 +90,15 @@ from decouple import config
     # # create client and send
     # client = mt.MailtrapClient(token="your-api-key")
     # client.send(mail)
-# @receiver(post_save, sender=User)
-# def send_approval_email(sender, instance, created, **kwargs):
-#     if instance.is_approved:
-#         subject = 'Profile Approved'
-#         html_message = render_to_string('web/profile_approved_email.html', {'user': instance.username})
-#         plain_message = strip_tags(html_message)
-#         from_email = settings.DEFAULT_FROM_EMAIL
-#         to_email = instance.email
-#         send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+
+
+
+@receiver(post_save, sender=Customer)
+def send_approval_email(sender, instance, created, **kwargs):
+    if instance.approval:
+        subject = 'Profile Approved'
+        html_message = render_to_string('web/profile_approved_email.html', {'user': instance.username})
+        plain_message = strip_tags(html_message)
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to_email = instance.email
+        send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
