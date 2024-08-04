@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 def is_admin(user):
-    return user.is_superuser
+    return user.is_superuser and user.is_approved
 
 # Create your views here.
 @login_required

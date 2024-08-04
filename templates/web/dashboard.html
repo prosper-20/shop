@@ -819,7 +819,7 @@
                               <th scope="row">{{ customer.no }}</th>
                               <td>{{ customer.name }}</td>
                               <td>{{ customer.phone }}</td>
-                              {% if customer.is_staff %}
+                              {% if user.is_superuser and user.approval %}
                               <td><a href="{% url 'update-customer-form' customer.no %}">EDIT</a></td>
                               {% endif %}
                               <!-- <td>@mdo</td> -->

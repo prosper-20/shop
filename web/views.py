@@ -116,7 +116,7 @@ def dashboard(request):
     customers_awaiting_approval_count = Customer.objects.filter(approval=False).count()
     customers_awaiting_approval = Customer.objects.filter(approval=False)
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "customers_awaiting_approval": customers_awaiting_approval, "customers_awaiting_approval_count": customers_awaiting_approval_count, "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees, "sum_of_paid_rents": sum_of_paid_rents, "owing_customers": owing_customers, "owing_customers_count": owing_customers_count, "all_customers_count": all_customers_count}
+    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "customers_awaiting_approval": customers_awaiting_approval, "customers_awaiting_approval_count": customers_awaiting_approval_count, "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees, "sum_of_paid_rents": sum_of_paid_rents, "owing_customers": owing_customers, "owing_customers_count": owing_customers_count, "all_customers_count": all_customers_count, "current_user": request.user}
     return render(request, "web/dashboard.html", context)
 
 
