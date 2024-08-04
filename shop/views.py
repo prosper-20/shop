@@ -8,6 +8,9 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
 from django.http import HttpResponse
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 def generate_shops(request):
     file_path = r"C:/Users/edwar/Downloads/DBB_Shops.csv"
@@ -157,6 +160,26 @@ def edit_rents(request, shop_no):
     else:
         form = EditMyRentForm(instance=rent)
     return render(request, "rent/edit_rent_form.html", {'form': form})
+
+
+def send_rent_reminder(request, shop_no):
+    rent = get_object_or_404(Rent, shop__no=shop_no)
+    subject = 'Rent Reminder'
+    message = f'Dear {rent.customer.name}, \n\n'\
+              f'We hope this email finds you well. \n' \
+              f'This is a friendly reminder that your rent for the month of is due on {rent.date_due}. Your payment is greatly appreciated and helps maintain the upkeep of our property.\n'\
+              f'To avoid any late fees, please ensure your payment is received by the due date. You can make your payment through FCMB 9201562019 NINA SKY INNOVATIONS LTD.\n'\
+              f"If you have any questions or require assistance, please don't hesitate to contact our office at (Phone Number)or (Email Address). \n"\
+              f"Thank you for being a valued tenant.\n"\
+              f"Sincerely,\n"\
+              f"Nina Sky Innovation Limited"
+    sender = settings.EMAIL_HOST_USER
+    recipient = [rent.customer.email]
+    send_mail(subject, message, sender, recipient, fail_silently=False)
+    return HttpResponse("Email Successfully sent!")
+
+
+
 
 
 
