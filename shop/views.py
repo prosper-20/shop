@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Rate, Shop, Rent
 from django.db.models import Count
-from .forms import ShopForm, MyShopForm, EditMyShopForm, EditMyRentForm, CreateRentForm
+from .forms import ShopForm, MyShopForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
 from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
@@ -122,6 +122,23 @@ def edit_shop_form(request, shop_no):
         form = EditMyShopForm(instance=shop)
 
     return render(request, 'shop/edit_shop_form.html', {'form': form})
+
+
+@login_required
+def admin_edit_shop_form(request, shop_no):
+    # Fetch the Shop instance using the shop number
+    shop = get_object_or_404(Shop, no=shop_no)
+
+    if request.method == 'POST':
+        form = AdminEditMyShopForm(request.POST, instance=shop)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Shop details updated successfully")
+            return redirect('all-shops')  # Redirect to the shop list or detail view
+    else:
+        form = AdminEditMyShopForm(instance=shop)
+
+    return render(request, 'shop/admin_edit_shop_form.html', {'form': form})
 
 
 

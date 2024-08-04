@@ -15,6 +15,7 @@ urlpatterns = [
     path('shops/<str:shop_no>/', views.edit_shop_form, name="shop-edit"),
     path('shop/form/', views.shop_form, name="shop_form"),
     path('shop/<int:id>', views.shop_form, name="shop_update"),
+    path('shop/edit/<str:shop_no>/', views.admin_edit_shop_form, name="admin-edit-shop-form"),
 
  
 ]

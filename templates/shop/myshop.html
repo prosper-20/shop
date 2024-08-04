@@ -60,7 +60,7 @@
                         <!-- <td>{{shop.shop_rent}}</td> -->
                          {% if user.is_superuser %}
                         <td>
-                         <a href="{% url 'shop-edit' shop.no %}" class="btn text-secondary px-0">
+                         <a href="{% url 'admin-edit-shop-form' shop.no %}" class="btn text-secondary px-0">
                          EDIT
                          </a>
                         </td>
