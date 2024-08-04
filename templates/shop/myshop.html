@@ -35,7 +35,10 @@
                             <td>Shop Size</td>
                             <td>Approval Status</td>
                             <!-- <td>Shop Rent</td> -->
+                             {% if user.is_superuser %}
                             <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
+                            {% endif %}
+
                         </tr>
                     </thead>
 
@@ -55,12 +58,13 @@
                         
 
                         <!-- <td>{{shop.shop_rent}}</td> -->
-                         {% if user.is_staff %}
+                         {% if user.is_superuser %}
                         <td>
                          <a href="{% url 'shop-edit' shop.no %}" class="btn text-secondary px-0">
                          EDIT
                          </a>
                         </td>
+                        
                         {% endif %}
 
                         </tr>
