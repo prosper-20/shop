@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Customer
 from django.urls import reverse
-from .forms import CustomerForm, EditCustomerForm
+from .forms import CustomerForm, EditCustomerForm, ApproverEditCustomerForm, ReviwerEditCustomerForm
 from collections import Counter    
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
@@ -63,9 +63,9 @@ def new_customer_form(request):
 def update_customer_form(request, customer_no):
     customer = get_object_or_404(Customer, no=customer_no)
     if request.method == "GET":
-        form = EditCustomerForm(instance=customer)
+        form = ApproverEditCustomerForm(instance=customer)
     else:
-        form = EditCustomerForm(request.POST, instance=customer)
+        form = ApproverEditCustomerForm(request.POST, instance=customer)
         if form.is_valid():
             form.save()
             messages.success(request, "Customer Account Updated Successfully")

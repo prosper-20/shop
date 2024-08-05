@@ -41,7 +41,7 @@ class MyShopForm(forms.ModelForm):
 
 
 
-class EditMyShopForm(forms.ModelForm):
+class EditMyShopForm(forms.ModelForm): 
     class Meta:
         model = Shop
         fields = ('no', 'type', 'floor', 'price', 'size')
