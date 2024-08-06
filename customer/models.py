@@ -11,6 +11,39 @@ class Customer(models.Model):
         ('Courier/Dispatch', 'Courier/Dispatch'),
         ('Banking/Insurance', 'Banking/Insurance'),
         ('Barbing/Salon', 'Barbing/Salon'),
+        ('Restaurant', 'Restaurant'),
+        ('Food and Drinks', 'Food and Drinks'),
+        ('Makeup Artist', 'Makeup Artist'),
+        ('Building', 'Building'),
+        ('Tailoring', 'Tailoring'),
+        ('Studio', 'Studio'),
+        ('Beauty Salon', 'Beauty Salon'),
+        ('Bakery', 'Bakery'),
+        ('Wine Seller', 'Wine Seller'),
+        ('Logistics', 'Logistics'),
+        ('Clothing', 'Clothing'),
+        ('Fabrics', 'Fabrics'),
+        ('Oriflame Dealer', 'Oriflame Dealer'),
+        ('Fruit Seller', 'Fruit Seller'),
+        ('Communication', 'Communication'),
+        ('Business Centre', 'Business Centre'),
+        ('Bank', 'Bank'),
+        ('Tv Repair', 'Tv Repair'),
+        ('Hair Business', 'Hair Business'),
+        ('Consultancy', 'Consultancy'),
+        ('Skin Beauty Store', 'Skin Beauty Store'),
+        ('Dispatch Office', 'Dispatch Office'),
+        ('Loan Business', 'Loan Business'),
+        ('Children Wears', 'Children Wears'),
+        ('Electrical/Electronics Store', 'Electrical/Electronics Store'),
+        ('Home Wears Store', 'Home Wears Store'),
+        ('Travel Agency', 'Travel Agency'),
+        ('Photo Studio', 'Photo Studio'),
+        ('Law Firm', 'Law Firm'),
+        ('Graphic Design and Branding', 'Graphic Design and Branding'),
+        ('Consultancy', 'Consultancy'),
+        ('Perfumery', 'Perfumery'),
+        ('NGO', 'NGO')
         
     ]
 
@@ -82,7 +115,7 @@ class Customer(models.Model):
     address = models.CharField(max_length=225)
     state = models.CharField(max_length=225, choices=STATES)
     occupation = models.CharField(max_length=50)
-    nature = models.CharField(max_length=25, choices=NATURE, default="")
+    nature = models.CharField(max_length=255, choices=NATURE, default="")
     status = models.CharField(max_length=10, choices=STATUS, default='')
     is_reviewed = models.CharField(max_length=100, choices=REVIWED_CHOICES, default="Not Reviewed")
     date = models.DateField()
