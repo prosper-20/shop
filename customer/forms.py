@@ -5,7 +5,7 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
+        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', "other_state", 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
         labels = {
             'no': 'Customer ID',
             'business': 'Business Name',
@@ -25,6 +25,8 @@ class CustomerForm(forms.ModelForm):
             # 'approval': 'Approve',
         }
 
+    
+
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'dob': forms.DateInput(attrs={'type': 'date'}),
@@ -37,6 +39,9 @@ class CustomerForm(forms.ModelForm):
             'maxlength': '1000',  # Example: limit the length of input
         }),
         }
+
+    other_state = forms.CharField(max_length=225, required=False, widget=forms.TextInput(attrs={'placeholder': 'Specify state'}))
+    outstanding_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': 'Outstanding Balance'}))  # Added field
 
     def __init__(self, *args, **kwargs):
         super(CustomerForm, self).__init__(*args, **kwargs)
@@ -173,6 +178,8 @@ class ApproverEditCustomerForm(forms.ModelForm):
             'maxlength': '1000',  # Example: limit the length of input
         }),
         }
+
+
 
     # def __init__(self, *args, **kwargs):
     #     super(CustomerForm, self).__init__(*args, **kwargs)

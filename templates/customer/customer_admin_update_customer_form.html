@@ -20,6 +20,49 @@
         // Initial call to set the correct visibility when the page loads
         toggleExitDateField();
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var statusField = document.getElementById('id_status');
+        var outstandingBalanceFieldContainer = document.getElementById('outstanding_balance_container');
+        var outstandingBalanceField = document.getElementById('id_outstanding_balance');
+
+        function toggleOutstandingBalanceField() {
+            if (statusField.value === 'renewal') {
+                outstandingBalanceFieldContainer.style.display = 'block';
+            } else {
+                outstandingBalanceFieldContainer.style.display = 'none';
+                outstandingBalanceField.value = '';  // Clear the input field if not needed
+            }
+        }
+
+        // Initial check
+        toggleOutstandingBalanceField();
+
+        // Add event listener for change event
+        statusField.addEventListener('change', toggleOutstandingBalanceField);
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var stateField = document.getElementById('id_state');
+        var otherStateFieldContainer = document.getElementById('other_state_container');
+        var otherStateField = document.getElementById('id_other_state');
+
+        function toggleOtherStateField() {
+            if (stateField.value === 'Others') {
+                otherStateFieldContainer.style.display = 'block';
+            } else {
+                otherStateFieldContainer.style.display = 'none';
+                otherStateField.value = '';  // Clear the input field if not needed
+            }
+        }
+
+        // Initial check
+        toggleOtherStateField();
+
+        // Add event listener for change event
+        stateField.addEventListener('change', toggleOtherStateField);
+    });
 </script>
 
 
@@ -80,6 +123,13 @@
                             <div class="col-md-4">
                                 {{form.state|as_crispy_field}}
                             </div>
+
+                             <!-- New row for the 'other_state' field -->
+                        <div class="row" id="other_state_container" style="display: none;">
+                            <div class="col-md-4">
+                                {{ form.other_state|as_crispy_field }}
+                            </div>
+                        </div>
                             
                         </div>
 
@@ -91,6 +141,12 @@
                             <div class="col-md-2">
                                 {{form.status|as_crispy_field}}
                             </div> 
+
+                            <div class="row" id="outstanding_balance_container" style="display: none;">
+                                <div class="col-md-4">
+                                    {{ form.outstanding_balance|as_crispy_field }}
+                                </div>
+                            </div>
 
                         </div>
 
