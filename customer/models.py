@@ -61,7 +61,8 @@ class Customer(models.Model):
     ("Sokoto", "Sokoto"),
     ("Taraba", "Taraba"),
     ("Yobe", "Yobe"),
-    ("Zamfara", "Zamfara")
+    ("Zamfara", "Zamfara"),
+    ("Others", "Others")
 ]
     
     TITLE_CHOICES = [
