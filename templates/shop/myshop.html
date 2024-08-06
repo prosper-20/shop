@@ -34,6 +34,7 @@
                             <td>Shop Price</td>
                             <td>Shop Size</td>
                             <td>Approval Status</td>
+                            <td>Details</td>
                             <!-- <td>Shop Rent</td> -->
                              {% if user.is_superuser %}
                             <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
@@ -58,7 +59,7 @@
                         
 
                         <!-- <td>{{shop.shop_rent}}</td> -->
-                         {% if user.is_superuser %}
+                         {% if user.is_staff or user.is_superuser %}
                         <td>
                          <a href="{% url 'admin-edit-shop-form' shop.no %}" class="btn btn-outline-success">
                          VIEW

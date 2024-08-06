@@ -63,9 +63,16 @@ class Customer(models.Model):
     ("Yobe", "Yobe"),
     ("Zamfara", "Zamfara")
 ]
+    
+    TITLE_CHOICES = [
+        ("Mr", "Mr"),
+        ("Mrs", "Mrs"),
+        ("Miss", "Miss"),
+    ]
 
      
     no = models.CharField(max_length=4, unique=True)
+    title = models.CharField(max_length=10, choices=TITLE_CHOICES, default="Mr")
     name = models.CharField(max_length=100)
     business = models.CharField(max_length=225)
     email = models.EmailField(unique=True)
@@ -87,4 +94,4 @@ class Customer(models.Model):
 
 
     def __str__(self):
-            return self.name
+            return f"{self.title} {self.name}"

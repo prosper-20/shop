@@ -5,7 +5,7 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('no', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
+        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
         labels = {
             'no': 'Customer ID',
             'business': 'Business Name',
@@ -101,7 +101,7 @@ class ReviwerEditCustomerForm(forms.ModelForm):
             'Your Comments (Optional)': 'review_officer_note',
             # 'exitdate': 'Exit Date',
             'nextdue': 'Due Date',
-            'approval': 'Approve',
+            # 'approval': 'Approve',
         }
 
         widgets = {

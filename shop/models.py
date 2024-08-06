@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db.models import Sum
 from customer.models import Customer
-
+from django.core.validators import MinLengthValidator
 
 User = get_user_model()
 
@@ -38,7 +38,7 @@ class Shop(models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10, choices=Type)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    no = models.CharField(max_length=5, unique=True)
+    no = models.CharField(max_length=5, validators=[MinLengthValidator(4)], unique=True)
     address = models.CharField(max_length=300)
     floor = models.CharField(max_length=20, choices=Floor)
     size = models.IntegerField()

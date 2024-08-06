@@ -682,7 +682,7 @@
                 <h6 class="op-7 mb-2">Nina Sky Innovation Limited Admin Dashboard</h6>
               </div>
               <div class="ms-md-auto py-2 py-md-0">
-                <a href="{% url 'customer' %}" class="btn btn-label-info btn-round me-2">Manage</a>
+                <a href="{% url 'shop-create' %}" class="btn btn-label-info btn-round me-2">Add Shop</a>
                 <!-- <a href="{% url 'customer-signup' %}" class="btn btn-primary btn-round">Add Customer</a> -->
                 <!-- <a href="{% url 'customer_form' %}" class="btn btn-primary btn-round">Add Customer</a> -->
                 <a href="{% url 'customer_form' %}" class="btn btn-primary btn-round">Add Customer</a>
@@ -774,7 +774,83 @@
                 </div>
               </div>
             </div>
+            
+             
             <div class="row">
+              <!-- IF THE USER IS A DATA ENTRY OFFICER, MAKE THE TABLE FULL -->
+              {% if user.is_authenticated and not user.is_staff %}
+              <div class="col-md-12">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Customers Awaiting Approval ({{ customers_awaiting_approval_count }})</div>
+                      <div class="card-tools">
+                        <a
+                          href="#"
+                          class="btn btn-label-success btn-round btn-sm me-2"
+                        >
+                          <span class="btn-label">
+                            <i class="fa fa-pencil"></i>
+                          </span>
+                          Export
+                        </a>
+                        <a href="#" class="btn btn-label-info btn-round btn-sm">
+                          <span class="btn-label">
+                            <i class="fa fa-print"></i>
+                          </span>
+                          Print
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container" style="min-height: 375px">
+                      
+                        
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Phone</th>
+                              <th scope="col">Action</th>
+                              <!-- <th scope="col">Handle</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for customer in customers_awaiting_approval %}
+                            <tr>
+                              <th scope="row">{{ customer.no }}</th>
+                              <td>{{ customer.name }}</td>
+                              <td>{{ customer.phone }}</td>
+                              
+                              <!-- <td>@mdo</td> -->
+                            </tr>
+                            {% endfor %}
+                            <!-- <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>Larry</td>
+                              <td>the Bird</td>
+                              <td>@twitter</td>
+                            </tr> -->
+                          </tbody>
+                        </table>
+                      
+                      <!-- <canvas id="statisticsChart"></canvas> -->
+                    </div>
+                    <div id="myChartLegend"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- END OF TABLE FOR DATA ENTRY OFFICER -->
+
+              {% else %}
               <div class="col-md-8">
                 <div class="card card-round">
                   <div class="card-header">
@@ -819,8 +895,10 @@
                               <th scope="row">{{ customer.no }}</th>
                               <td>{{ customer.name }}</td>
                               <td>{{ customer.phone }}</td>
-                              {% if user.is_superuser %}
-                              <td><a href="{% url 'update-customer-form' customer.no %}">EDIT</a></td>
+                              {% if user.is_authenticated and user.is_staff and not user.is_superuser %}
+                              <td><a href="{% url 'update-customer-form' customer.no %}">Review</a></td>
+                              {% elif user.is_authenticated and user.is_superuser %}
+                              <td><a href="{% url 'admin-update-customer-form' customer.no %}">Approve</a></td>
                               {% endif %}
                               <!-- <td>@mdo</td> -->
                             </tr>
@@ -846,6 +924,13 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
+              
+              
+
+
+              <!-- THIS MAKES SURE THE RENT STUFF ONLY SHOWS FOR THE ADMIN AND REVIEWERS ALONE -->
+              {% if user.is_authenticated and user.is_staff %}
               <div class="col-md-4">
                 <div class="card card-primary card-round">
                   <div class="card-header">
@@ -898,7 +983,12 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
+              
             </div>
+            <!-- END OF THE  TABLE FOR DATA ENTRY OFFICERS -->
+
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
@@ -1042,18 +1132,20 @@
                     <div class="card-head-row card-tools-still-right">
                       <div class="card-title">All Customers ({{ all_customers_count}})</div>
                       <div class="card-tools">
-                        <div class="dropdown">
+                        <!-- <i class="fa fa-eye"><a href=""><i></i></a> -->
+                        <a href="{% url 'customer' %}"><i class="fa fa-eye fa-lg"></i></a>
+                        <!-- <div class="dropdown">
                           <button
                             class="btn btn-icon btn-clean me-0"
                             type="button"
                             id="dropdownMenuButton"
                             data-bs-toggle="dropdown"
                             aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i class="fas fa-ellipsis-h"></i>
-                          </button>
-                          <div
+                            aria-expanded="false">
+                            <i class="fa fa-eye"><a href="{% url 'customer' %}"></a></i>
+                            
+                          </button> -->
+                          <!-- <div
                             class="dropdown-menu"
                             aria-labelledby="dropdownMenuButton"
                           >
@@ -1062,8 +1154,8 @@
                             <a class="dropdown-item" href="#"
                               >Something else here</a
                             >
-                          </div>
-                        </div>
+                          </div> -->
+                        <!-- </div> -->
                       </div>
                     </div>
                     <div class="card-list py-4">

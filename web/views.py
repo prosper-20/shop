@@ -51,7 +51,7 @@ def customer_login(request):
         if user is not None:
             login(request, user)
             # Redirect to a success page, or wherever you want
-            return redirect(reverse('home'))  # Replace 'home' with your desired URL name
+            return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
         else:
             messages.error(request, "Invalid email address or password.")
             return redirect(reverse('login'))
@@ -60,7 +60,7 @@ def customer_login(request):
     return render(request, 'web/login.html')
 
 
-def customer_signup(request):
+def data_entry_signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email_address')
@@ -82,7 +82,32 @@ def customer_signup(request):
             messages.error(request, "Both passwords must match!")
             return redirect(reverse('signup'))
 
-    return render(request, 'web/customer_signup.html')
+    return render(request, 'web/data_entry_officer_signup.html')
+
+
+def reviewer_entry_signup(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email_address')
+        password = request.POST.get('password')
+        password2 = request.POST.get("password2")
+
+        if password == password2:
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username is already taken.')
+                return redirect('signup')
+            elif User.objects.filter(email=email).exists():
+                messages.error(request, 'Email is already registered.')
+                return redirect('signup')
+            else:
+                User.objects.create_user(username=username, email=email, password=password, is_staff=True)
+                messages.success(request, "Account creation successful!")
+                return redirect(reverse('login'))
+        else:
+            messages.error(request, "Both passwords must match!")
+            return redirect(reverse('signup'))
+
+    return render(request, 'web/review_officer_signup.html')
 
 
 @login_required
@@ -99,7 +124,7 @@ def home(request):
         return render(request, "web/home.html")
     
 
-@admin_required
+@login_required
 def dashboard(request):
     users = User.objects.filter(is_staff=False)
     users_count = User.objects.filter(is_staff=False).count()
@@ -236,7 +261,7 @@ from django.contrib.auth.decorators import login_required
 #     return render(request, 'web/fetch_profile.html', {'form': form})
 
 
-@admin_required
+@login_required
 def create_customer(request):
     if request.method == "POST":
         form = CustomerForm(request.POST)

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 def is_admin(user):
-    return user.is_superuser and user.is_approved
+    return user.is_superuser or user.is_staff
 
 # Create your views here.
 @login_required
@@ -59,8 +59,25 @@ def new_customer_form(request):
 
 # @login_required
 
+# THIS IS FOR THE REVIEW OFFICER
 @user_passes_test(is_admin)
 def update_customer_form(request, customer_no):
+    customer = get_object_or_404(Customer, no=customer_no)
+    if request.method == "GET":
+        form = ReviwerEditCustomerForm(instance=customer)
+    else:
+        form = ReviwerEditCustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Customer Account Updated Successfully")
+            return redirect(reverse("customer"))
+    return render(request, "customer/customer_admin_update_customer_form.html", {"form": form})
+
+
+
+# THIS IS FOR THE APPROVAL OFFICER OFFICER
+@user_passes_test(is_admin)
+def admin_update_customer_form(request, customer_no):
     customer = get_object_or_404(Customer, no=customer_no)
     if request.method == "GET":
         form = ApproverEditCustomerForm(instance=customer)
@@ -70,4 +87,4 @@ def update_customer_form(request, customer_no):
             form.save()
             messages.success(request, "Customer Account Updated Successfully")
             return redirect(reverse("customer"))
-    return render(request, "customer/customer_admin_update_customer_form.html", {"form": form})
+    return render(request, "customer/approver_customer_admin_update_customer_form.html", {"form": form})
