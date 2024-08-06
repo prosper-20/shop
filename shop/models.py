@@ -17,6 +17,13 @@ class Shop(models.Model):
         ('D', 'Type D'),
         ('E', 'Type E'),
         ('F', 'Type F'),
+        ('Platinum', 'Platinum'),
+        ('Titanium', 'Titanium'),
+        ('Diamond', 'Diamond'),
+        ('Premium', 'Premium'),
+        ('Gold', 'Gold'),
+        ('Silver', 'Silver'),
+
     ]
 
     Floor = [
