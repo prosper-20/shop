@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Shop, Rate, Rent
+from .models import Shop, Rate, Rent, Income
+
+@admin.register(Income)
+class IncomeAdmin(admin.ModelAdmin):
+    list_display = ["name", "daily", "weekly", "yearly"]
+    list_filter = ["name"]
+    search_fields = ["name"]
 # Register your models here.
 
 @admin.register(Rent)

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from account.decorators import admin_required
 # from .forms import RetrieveCustomerProfileForm
-from shop.models import Shop, Rent
+from shop.models import Shop, Rent, Income
 from customer.forms import CustomerForm
 from customer.models import Customer
 
@@ -141,7 +141,35 @@ def dashboard(request):
     customers_awaiting_approval_count = Customer.objects.filter(approval=False).count()
     customers_awaiting_approval = Customer.objects.filter(approval=False)
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    context = {"users": users, "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers, "customers_awaiting_approval": customers_awaiting_approval, "customers_awaiting_approval_count": customers_awaiting_approval_count, "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees, "sum_of_paid_rents": sum_of_paid_rents, "owing_customers": owing_customers, "owing_customers_count": owing_customers_count, "all_customers_count": all_customers_count, "current_user": request.user}
+    all_income = Income.objects.all()
+    nina_daily_income = get_object_or_404(Income, name="Nina").daily
+    nina_weekly_income = get_object_or_404(Income, name="Nina").weekly
+    nina_yearly_income = get_object_or_404(Income, name="Nina").yearly
+    chairman_daily_income = get_object_or_404(Income, name="Chairman").daily
+    chairman_weekly_income = get_object_or_404(Income, name="Chairman").weekly
+    chairman_yearly_income = get_object_or_404(Income, name="Chairman").yearly
+    daily_income_total = Income.total_daily_receipts()
+    weekly_income_total = Income.total_weekly_receipts()
+    yearly_income_total = Income.total_yearly_receipts()
+    context = {"users": users, "daily_income_total": daily_income_total,
+               "weekly_income_total": weekly_income_total,
+               "yearly_income_total": yearly_income_total,
+                "nina_daily_income": nina_daily_income, "nina_weekly_income":nina_weekly_income, 
+                "nina_yearly_income": nina_yearly_income, 
+                "chairman_daily_income": chairman_daily_income, 
+                "chairman_weekly_income": chairman_weekly_income, 
+                "chairman_yearly_income": chairman_yearly_income, 
+                "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
+                "customers_awaiting_approval": customers_awaiting_approval,
+                "customers_awaiting_approval_count": customers_awaiting_approval_count,
+                "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
+                "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
+                "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
+                "sum_of_paid_rents": sum_of_paid_rents,
+                "owing_customers": owing_customers, "owing_customers_count": owing_customers_count,
+                "all_customers_count": all_customers_count, 
+                "current_user": request.user, "all_income": all_income}
+    print(nina_daily_income)
     return render(request, "web/dashboard.html", context)
 
 

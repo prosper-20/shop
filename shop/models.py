@@ -5,18 +5,13 @@ from django.utils import timezone
 from django.db.models import Sum
 from customer.models import Customer
 from django.core.validators import MinLengthValidator
+from django.db.models import Sum
 
 User = get_user_model()
 
 class Shop(models.Model):
  
     Type = [
-        ('A', 'Type A'),
-        ('B', 'Type B'),
-        ('C', 'Type C'),
-        ('D', 'Type D'),
-        ('E', 'Type E'),
-        ('F', 'Type F'),
         ('Platinum', 'Platinum'),
         ('Titanium', 'Titanium'),
         ('Diamond', 'Diamond'),
@@ -184,6 +179,36 @@ class Rate(models.Model):
     def renewal_rent(self):
         return round(self.shop_rent + self.shop_charges, 2)
     
+
+
+class Income(models.Model):
+    name = models.CharField(max_length=200)
+    daily = models.DecimalField(max_digits=15, decimal_places=2)
+    new_daily = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    weekly = models.DecimalField(max_digits=15, decimal_places=2)
+    new_weekly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    yearly = models.DecimalField(max_digits=15, decimal_places=2)
+    new_yearly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+
+
+    def __str__(self):
+        return self.name
+    
+
+    @staticmethod
+    def total_daily_receipts():
+        result = Income.objects.aggregate(total_daily=Sum('daily'))
+        return result['total_daily'] or Decimal('0.00')
+    
+    @staticmethod
+    def total_weekly_receipts():
+        result = Income.objects.aggregate(total_weekly=Sum('weekly'))
+        return result['total_weekly'] or Decimal('0.00')
+    
+    @staticmethod
+    def total_yearly_receipts():
+        result = Income.objects.aggregate(total_yearly=Sum('yearly'))
+        return result['total_yearly'] or Decimal('0.00')
 
 
 
