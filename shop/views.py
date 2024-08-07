@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Rate, Shop, Rent
 from django.db.models import Count
-from .forms import ShopForm, MyShopForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
+from .forms import ShopForm, IncomeForm, MyShopForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
 from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
@@ -194,6 +194,27 @@ def send_rent_reminder(request, shop_no):
     recipient = [rent.customer.email]
     send_mail(subject, message, sender, recipient, fail_silently=False)
     return HttpResponse("Email Successfully sent!")
+
+
+
+@login_required
+def upload_receipts(request):
+    if request.method == "POST":
+        form = IncomeForm(request.POST)
+        if form.is_valid:
+            form.save()
+            messages.success(request, "Amount successfully logged")
+            return redirect(reverse("dashboard"))
+        else:
+            messages.error(request, "Couldn't complete upload")
+            return redirect(reverse("income-upload"))
+    else:
+        form = IncomeForm()
+    context = {
+        "form": form
+    }
+    return render(request, "customer/upload_income.html", context)
+
 
 
 

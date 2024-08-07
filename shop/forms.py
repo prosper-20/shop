@@ -1,6 +1,18 @@
 from django import forms
-from .models import Rate, Shop, Rent
+from .models import Rate, Shop, Rent, Income
 
+
+class IncomeForm(forms.ModelForm):
+    class Meta:
+        model = Income
+        fields = ["new_daily", "new_weekly", "new_yearly"]
+        labels = {
+            "new_daily": 'Daily Income',
+            "new_weekly": "Weekly Income",
+            "new_yearly": "Yearly Income"
+        }
+
+        
 class ShopForm(forms.ModelForm):
 
     class Meta:

@@ -189,6 +189,24 @@ class Income(models.Model):
     new_weekly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
     yearly = models.DecimalField(max_digits=15, decimal_places=2)
     new_yearly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    date_created = models.DateTimeField(default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        # Check if new_daily is provided and not None
+        if self.new_daily is not None:
+            # Add new_daily to daily
+            self.daily += self.new_daily
+            # Reset new_daily after adding to daily
+            self.new_daily = Decimal('0.00')
+        elif self.new_weekly is not None:
+            self.weekly += self.new_weekly
+            self.new_weekly = Decimal('0.00')
+        elif self.new_yearly is not None:
+            self.yearly += self.new_yearly
+            self.new_yearly = Decimal('0.00')
+
+        # Call the parent class's save method
+        super().save(*args, **kwargs)
 
 
     def __str__(self):
