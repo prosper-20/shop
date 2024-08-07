@@ -6,7 +6,12 @@ from .forms import CustomerForm, EditCustomerForm, ApproverEditCustomerForm, Rev
 from collections import Counter    
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
-
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+import weasyprint
+import datetime
+import csv
 
 def is_admin(user):
     return user.is_superuser or user.is_staff
@@ -88,3 +93,43 @@ def admin_update_customer_form(request, customer_no):
             messages.success(request, "Customer Account Updated Successfully")
             return redirect(reverse("customer"))
     return render(request, "customer/approver_customer_admin_update_customer_form.html", {"form": form})
+
+
+
+
+
+@user_passes_test(is_admin)
+def admin_customer_pdf(request):
+    pending_customers = Customer.objects.filter(approval=False)
+    customer_count = pending_customers.count()
+    html = render_to_string('customer/customer_pdf.html', {'pending_customers': pending_customers, "customer_count": customer_count})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=customer_data.pdf'
+    weasyprint.HTML(string=html).write_pdf(response)
+    return response
+
+
+
+@user_passes_test(is_admin)
+def export_to_csv(modeladmin, request, queryset):
+    opts = modeladmin.model._meta
+    content_disposition = f'attachment; filename={opts.verbose_name}.csv'
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = content_disposition
+    writer = csv.writer(response)
+    fields = [field for field in opts.get_fields() if not \
+    field.many_to_many and not field.one_to_many]
+    # Write a first row with header information
+    writer.writerow([field.verbose_name for field in fields])
+    # Write data rows
+    for obj in queryset:
+        data_row = []
+        for field in fields:
+            value = getattr(obj, field.name)
+            if isinstance(value, datetime.datetime):
+                value = value.strftime('%d/%m/%Y')
+            
+            data_row.append(value)
+        writer.writerow(data_row)
+    return response
+    export_to_csv.short_description = 'Export to CSV'
