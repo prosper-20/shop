@@ -181,8 +181,14 @@ class Rate(models.Model):
     
 
 
+NAME_CHOICES = (
+    ("Nina", "Nina"),
+    ("Chairman", "Chariman")
+)
+
+
 class Income(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, choices=NAME_CHOICES)
     daily = models.DecimalField(max_digits=15, decimal_places=2)
     new_daily = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
     weekly = models.DecimalField(max_digits=15, decimal_places=2)
@@ -195,6 +201,8 @@ class Income(models.Model):
         # Check if new_daily is provided and not None
         if self.new_daily is not None:
             # Add new_daily to daily
+            print(self.daily)
+            print(self.new_daily)
             self.daily += self.new_daily
             # Reset new_daily after adding to daily
             self.new_daily = Decimal('0.00')

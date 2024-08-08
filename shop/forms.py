@@ -5,8 +5,9 @@ from .models import Rate, Shop, Rent, Income
 class IncomeForm(forms.ModelForm):
     class Meta:
         model = Income
-        fields = ["new_daily", "new_weekly", "new_yearly"]
+        fields = ["name", "new_daily", "new_weekly", "new_yearly"]
         labels = {
+            "name": "Select Account",
             "new_daily": 'Daily Income',
             "new_weekly": "Weekly Income",
             "new_yearly": "Yearly Income"
