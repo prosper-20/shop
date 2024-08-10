@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from web.views import home
+from web.views import home, dashboard
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('', dashboard, name="home-dashboard"),
     path('shop/', views.shop, name="shop"),
     path('shop/generate/', views.generate_shops, name="generate"),
     path('shops/', views.myshops, name="all-shops"),

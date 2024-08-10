@@ -189,32 +189,32 @@ NAME_CHOICES = (
 
 class Income(models.Model):
     name = models.CharField(max_length=200, choices=NAME_CHOICES)
-    daily = models.DecimalField(max_digits=15, decimal_places=2)
+    daily = models.DecimalField(max_digits=15, decimal_places=2, default=Decimal("0.00"))
     new_daily = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
-    weekly = models.DecimalField(max_digits=15, decimal_places=2)
+    weekly = models.DecimalField(max_digits=15, decimal_places=2,  default=Decimal("0.00"))
     new_weekly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
-    yearly = models.DecimalField(max_digits=15, decimal_places=2)
+    yearly = models.DecimalField(max_digits=15, decimal_places=2,  default=Decimal("0.00"))
     new_yearly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now())
 
-    def save(self, *args, **kwargs):
-        # Check if new_daily is provided and not None
-        if self.new_daily is not None:
-            # Add new_daily to daily
-            print(self.daily)
-            print(self.new_daily)
-            self.daily += self.new_daily
-            # Reset new_daily after adding to daily
-            self.new_daily = Decimal('0.00')
-        elif self.new_weekly is not None:
-            self.weekly += self.new_weekly
-            self.new_weekly = Decimal('0.00')
-        elif self.new_yearly is not None:
-            self.yearly += self.new_yearly
-            self.new_yearly = Decimal('0.00')
+    # def save(self, *args, **kwargs):
+    #     # Check if new_daily is provided and not None
+    #     if self.new_daily is not None:
+    #         # Add new_daily to daily
+    #         print(self.daily)
+    #         print(self.new_daily)
+    #         self.daily += self.new_daily
+    #         # Reset new_daily after adding to daily
+    #         self.new_daily = Decimal('0.00')
+    #     elif self.new_weekly is not None:
+    #         self.weekly += self.new_weekly
+    #         self.new_weekly = Decimal('0.00')
+    #     elif self.new_yearly is not None:
+    #         self.yearly += self.new_yearly
+    #         self.new_yearly = Decimal('0.00')
 
-        # Call the parent class's save method
-        super().save(*args, **kwargs)
+    #     # Call the parent class's save method
+    #     super().save(*args, **kwargs)
 
 
     def __str__(self):

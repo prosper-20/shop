@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Rate, Shop, Rent
+from .models import Rate, Shop, Rent, Income
 from django.db.models import Count
 from .forms import ShopForm, IncomeForm, MyShopForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
 from django.core.paginator import Paginator
@@ -10,7 +10,7 @@ import pandas as pd
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail
-
+from decimal import Decimal
 
 def generate_shops(request):
     file_path = r"C:/Users/edwar/Downloads/DBB_Shops.csv"
@@ -203,6 +203,30 @@ def upload_receipts(request):
         form = IncomeForm(request.POST)
         if form.is_valid:
             form.save()
+            existing_income = Income.objects.filter(name=form.cleaned_data["name"]).last()
+            if form.cleaned_data["new_daily"] is not None:
+                print("exisig", existing_income.daily)
+                existing_income.daily += form.cleaned_data["new_daily"]
+                existing_income.save()
+            elif form.cleaned_data["new_weekly"] is not None:
+                existing_income.weekly += form.cleaned_data["new_weekly"]
+                existing_income.save()
+            elif form.cleaned_data["new_weekly"] is not None:
+                existing_income.yearly += form.cleaned_data["new_yearly"]
+                existing_income.save()
+
+            # if existing_income.new_daily is not None:
+            #     existing_income.daily += form.cleaned_data["new_daily"]
+            #     existing_income.save()
+            #     existing_income.new_daily = Decimal('0.00')
+            # elif existing_income.new_weekly is not None:
+            #     existing_income.weekly +=  form.cleaned_data["new_weekly"]
+            #     existing_income.save()
+            #     existing_income.new_weekly = Decimal('0.00')
+            # elif existing_income.new_yearly is not None:
+            #     existing_income.yearly += form.cleaned_data["new_yearly"]
+            #     existing_income.save()
+            #     existing_income.new_yearly = Decimal("0.00")
             messages.success(request, "Amount successfully logged")
             return redirect(reverse("dashboard"))
         else:
