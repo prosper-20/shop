@@ -1,0 +1,21 @@
+{% extends "rent/base.html" %}
+{% block content %}
+    {% for receipt in all_receipts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ rent.rent_type }}</a>
+              <small class="text-muted" style="justify-content: right;">Payment Date: {{ receipt.payment_date }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ receipt.shop_no }}</a></h2>
+            <p class="article-content">Rented by {{receipt.customer.title }} {{ receipt.customer.name }}</p>
+            {% if user.is_superuser %}
+            <div>
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" style="justify-content: right; text-align: end;" href="{% url 'edit-uploaded-customer-payment' receipt.pk %}">More Details</a>
+              <a class="btn btn-primary btn-sm mt-1 mb-1" href="">View</a>
+            </div>
+          {% endif %}
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

@@ -16,7 +16,10 @@ urlpatterns = [
     path('shop/form/', views.shop_form, name="shop_form"),
     path('shop/<int:id>', views.shop_form, name="shop_update"),
     path('shop/edit/<str:shop_no>/', views.admin_edit_shop_form, name="admin-edit-shop-form"),
-    path("income/upload/", views.upload_receipts, name="income-upload")
+    path("income/upload/", views.upload_receipts, name="income-upload"),
+    path("upload/receipts/", views.create_payment_slip, name="upload-customer-payment"),
+    path("receipts/<int:pk>/", views.edit_payment_slip, name="edit-uploaded-customer-payment"),
+    path("receipts/all/", views.list_all_payment_receipts, name="all-receipts")
 
  
 ]

@@ -6,6 +6,8 @@ from django.db.models import Sum
 from customer.models import Customer
 from django.core.validators import MinLengthValidator
 from django.db.models import Sum
+from django.core.exceptions import ValidationError
+
 
 User = get_user_model()
 
@@ -235,6 +237,27 @@ class Income(models.Model):
     def total_yearly_receipts():
         result = Income.objects.aggregate(total_yearly=Sum('yearly'))
         return result['total_yearly'] or Decimal('0.00')
+
+
+
+def validate_image_size(image):
+    filesize = image.file.size
+    megabyte_limit = 1.0
+    if filesize > megabyte_limit * 1024 * 1024:
+        raise ValidationError(f"Maximum file size is {megabyte_limit}MB") 
+
+
+class PaymentSlip(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
+    shop_no = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="payment_receipts", blank=True, null=True, validators=[validate_image_size])
+    payment_date = models.DateField(auto_now_add=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.customer
 
 
 

@@ -142,12 +142,12 @@ def dashboard(request):
     customers_awaiting_approval = Customer.objects.filter(approval=False)
     no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
     all_income = Income.objects.all()
-    nina_daily_income = Income.objects.filter(name="Nina").last().daily
-    nina_weekly_income = Income.objects.filter(name="Nina").last().weekly
-    nina_yearly_income = Income.objects.filter(name="Nina").last().yearly
-    chairman_daily_income = Income.objects.filter(name="Chairman").last().daily
-    chairman_weekly_income = Income.objects.filter(name="Chairman").last().weekly
-    chairman_yearly_income = Income.objects.filter(name="Nina").last().yearly
+    nina_daily_income = get_object_or_404(Income, name="Nina").daily
+    nina_weekly_income = get_object_or_404(Income, name="Nina").weekly
+    nina_yearly_income = get_object_or_404(Income, name="Nina").yearly
+    chairman_daily_income = get_object_or_404(Income, name="Chairman").daily
+    chairman_weekly_income = get_object_or_404(Income, name="Chairman").weekly
+    chairman_yearly_income = get_object_or_404(Income, name="Chairman").yearly
     daily_income_total = Income.total_daily_receipts()
     weekly_income_total = Income.total_weekly_receipts()
     yearly_income_total = Income.total_yearly_receipts()

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Rate, Shop, Rent, Income
+from .models import Rate, Shop, Rent, Income, PaymentSlip
 from django.db.models import Count
-from .forms import ShopForm, IncomeForm, MyShopForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
+from .forms import ShopForm, IncomeForm, MyShopForm, PaymentSlipEditForm, PaymentSlipForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
 from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
@@ -238,6 +238,47 @@ def upload_receipts(request):
         "form": form
     }
     return render(request, "customer/upload_income.html", context)
+
+@login_required
+def list_all_payment_receipts(request):
+    all_receipts = PaymentSlip.objects.filter(is_verified=False)
+    context = {
+        "all_receipts": all_receipts
+    }
+    return render(request, "customer/list_all_receipts.html", context)
+
+@login_required
+def create_payment_slip(request):
+    if request.method == 'POST':
+        form = PaymentSlipForm(request.POST)
+        if form.is_valid():
+            payment_slip = form.save(commit=False)
+            payment_slip.uploaded_by = request.user
+            payment_slip.save()
+            messages.success(request, "Receipt Upload Successful!")
+            return redirect(reverse('dashboard'))
+    else:
+        form = PaymentSlipForm()
+    
+    return render(request, 'customer/upload_customer_receipts.html', {'form': form})
+
+@login_required
+def edit_payment_slip(request, pk):
+    payment_slip = get_object_or_404(PaymentSlip, pk=pk)
+    
+    if request.method == 'POST':
+        form = PaymentSlipEditForm(request.POST, request.FILES, instance=payment_slip)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Payment Data Saved")
+            return redirect('all-receipts')
+        else:
+            messages.error(request, "Error saving payment data")
+            return redirect(reverse("edit-uploaded-customer-payment", kwargs={"pk":pk}))
+    else:
+        form = PaymentSlipEditForm(instance=payment_slip)
+
+    return render(request, 'customer/edit_customer_receipts.html', {'form': form})
 
 
 

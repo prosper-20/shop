@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Shop, Rate, Rent, Income
+from .models import Shop, Rate, Rent, Income, PaymentSlip
+
+
+@admin.register(PaymentSlip)
+class PaymentSlipAdmin(admin.ModelAdmin):
+    list_display = ('id', 'shop_no', 'payment_date',)
+    list_filter = ('shop_no', 'payment_date')
+    search_fields = ('shop_no', 'payment_date')
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):

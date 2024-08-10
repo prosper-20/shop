@@ -1,5 +1,5 @@
 from django import forms
-from .models import Rate, Shop, Rent, Income
+from .models import Rate, Shop, Rent, Income,PaymentSlip
 
 
 class IncomeForm(forms.ModelForm):
@@ -113,6 +113,32 @@ class EditMyRentForm(forms.ModelForm):
             'rent_start': 'Rent Start Date',
             'date_due': 'Rent Due Date',
             }
+        
+
+
+class PaymentSlipForm(forms.ModelForm):
+    class Meta:
+        model = PaymentSlip
+        fields = ["customer", "amount", "shop_no", "image"]
+        labels = {
+            "shop_no": "Shop Number",
+            "amount": "Amount",
+            "image": "Upload Receipt (Optional)"
+        }
+
+
+class PaymentSlipEditForm(forms.ModelForm):
+    class Meta:
+        model = PaymentSlip
+        fields = ["customer", "amount", "shop_no", "image", "is_verified"]
+        labels = {
+            "shop_no": "Shop Number",
+            "amount": "Amount",
+            "image": "Upload Receipt (Optional)",
+            "is_verified": "Confirm Payment"
+        }
+
+
     
         
 
