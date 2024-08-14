@@ -11,6 +11,9 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail
 from decimal import Decimal
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+import weasyprint
 
 def generate_shops(request):
     file_path = r"C:/Users/edwar/Downloads/DBB_Shops.csv"
@@ -279,6 +282,23 @@ def edit_payment_slip(request, pk):
         form = PaymentSlipEditForm(instance=payment_slip)
 
     return render(request, 'customer/edit_customer_receipts.html', {'form': form})
+
+
+
+@login_required
+def generate_payment_advice(request, shop_no):
+    shop = get_object_or_404(Shop, no=shop_no)
+    return render(request, "shop/generate_shop_payment_advice.html", {"shop": shop})
+
+@login_required
+def generate_payment_advice_pdf(request, shop_no):
+    shop = get_object_or_404(Shop, no=shop_no)
+    html = render_to_string('shop/shop_pdf.html',
+    {'shop': shop})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=payment_advice_{shop_no}.pdf'
+    weasyprint.HTML(string=html).write_pdf(response)
+    return response
 
 
 

@@ -1,0 +1,92 @@
+{% extends "rent/base.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Shop Payment Advice</h1>
+                <h3>Shop No: {{ shop.no }}</h3><br>
+                
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Bill Name</th>
+            <th scope="col">Amount (₦)</th>
+            <!-- <th scope="col">Last</th>
+            <th scope="col">Handle</th> -->
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Shop Size</th>
+                <td>{{ shop.size }}</td>
+                <!-- <td>Otto</td>
+                <td>@mdo</td> -->
+            </tr>
+            <tr>
+                <th scope="row">Shop Type</th>
+                <td>{{ shop.type }}</td>
+                <!-- <td>Otto</td>
+                <td>@mdo</td> -->
+              </tr>
+          <tr>
+            <th scope="row">Shop Rent</th>
+            <td>{{ shop.rent }}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Shop Price</th>
+            <td>{{shop.shop_price }}</td>
+            <!-- <td>Thornton</td>
+            <td>@fat</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Shop Charges</th>
+            <td>{{ shop.shop_charges }}</td>
+            <!-- <td>the Bird</td>
+            <td>@twitter</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Shop Agency</th>
+            <td>{{ shop.shop_agency }}</td>
+            <!-- <td>the Bird</td>
+            <td>@twitter</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Shop Legal</th>
+            <td>{{ shop.shop_legal }}</td>
+            <!-- <td>the Bird</td>
+            <td>@twitter</td> -->
+          </tr>
+          <tr>
+            <th scope="row"><strong><h4>Total Payment</h4></strong></th>
+            <td><strong>{{ shop.total }}</strong></td>
+            <!-- <td>the Bird</td>
+            <td>@twitter</td> -->
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <a href="{% url 'generate-shop-payment-advice-pdf' shop.no %}" class="btn btn-outline-primary">Print Advice</a>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+    
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

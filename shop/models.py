@@ -68,6 +68,56 @@ class Shop(models.Model):
         total_paid_price = Shop.objects.filter(is_paid=True).aggregate(Sum('price'))['price__sum'] or 0.0
         formatted_sum = formatted_sum = '{:.2f}'.format(total_paid_price)
         return formatted_sum
+    
+    # YOU ADDED THIS FORM THE RATE MODEL
+    
+    @property
+    def rent(self):
+        return self.size * self.price
+    
+          
+    @property
+    def shop_price(self):
+        result = self.rent * Decimal('1.075')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_rent(self):
+        result = self.shop_price * Decimal('1.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_charges(self):
+        result = self.shop_price * Decimal('0.25')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_agency(self):
+        result = self.shop_price * Decimal('0.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_legal(self):
+        result = self.shop_price * Decimal('0.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+    @property
+    def shop_newcharges(self):
+        return round(self.shop_agency + self.shop_legal, 2)
+    
+    @property
+    def new_rent(self):
+        return round(self.shop_rent + self.shop_newcharges + self.shop_charges, 2)
+    
+    @property
+    def renewal_rent(self):
+        return round(self.shop_rent + self.shop_charges, 2)
+    
+    @property
+    def total(self):
+        # Calculate the total as the sum of specific properties
+        return round(self.rent + self.shop_price + self.shop_rent +
+                     self.shop_charges + self.shop_agency + self.shop_legal, 2)
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),
@@ -109,6 +159,50 @@ class Rent(models.Model):
     @staticmethod
     def rents_paid_count():
         return Rent.objects.filter(is_paid=True).count()
+    
+    # YOU ADDED THIS FORM THE RATE MODEL
+    
+    @property
+    def rent(self):
+        return self.shop.size * self.shop.price
+    
+          
+    @property
+    def shop_price(self):
+        result = self.rent * Decimal('1.075')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_rent(self):
+        result = self.shop_price * Decimal('1.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_charges(self):
+        result = self.shop_price * Decimal('0.25')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_agency(self):
+        result = self.shop_price * Decimal('0.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def shop_legal(self):
+        result = self.shop_price * Decimal('0.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+    @property
+    def shop_newcharges(self):
+        return round(self.shop_agency + self.shop_legal, 2)
+    
+    @property
+    def new_rent(self):
+        return round(self.shop_rent + self.shop_newcharges + self.shop_charges, 2)
+    
+    @property
+    def renewal_rent(self):
+        return round(self.shop_rent + self.shop_charges, 2)
     
    
     
@@ -180,6 +274,9 @@ class Rate(models.Model):
     @property
     def renewal_rent(self):
         return round(self.shop_rent + self.shop_charges, 2)
+    
+    
+    
     
 
 
