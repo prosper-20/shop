@@ -43,7 +43,8 @@ class Customer(models.Model):
         ('Graphic Design and Branding', 'Graphic Design and Branding'),
         ('Consultancy', 'Consultancy'),
         ('Perfumery', 'Perfumery'),
-        ('NGO', 'NGO')
+        ('NGO', 'NGO'),
+        ("Others", "Others")
         
     ]
 

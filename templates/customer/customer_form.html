@@ -64,6 +64,22 @@
         stateField.addEventListener('change', toggleOtherStateField);
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+    var natureField = document.getElementById('id_nature');
+    var otherBusinessTypeContainer = document.getElementById('other_business_type_container');
+    
+    natureField.addEventListener('change', function() {
+        if (natureField.value === 'Others') {
+            otherBusinessTypeContainer.style.display = 'block';
+        } else {
+            otherBusinessTypeContainer.style.display = 'none';
+        }
+    });
+
+    // Trigger change event on page load to set the initial state
+    natureField.dispatchEvent(new Event('change'));
+});
+
 </script>
 
 
@@ -111,6 +127,15 @@
                             </div>
                             <div class="col-md-2">
                                 {{form.nature|as_crispy_field}}
+                            </div>
+                            <!-- <div class="row" id="other_state_container" style="display: none;">
+                                <div class="col-md-4">
+                                    {{ form.other_business_type|as_crispy_field }}
+                                </div>
+                            </div> -->
+                            <div id="other_business_type_container" style="display:none;">
+                                <div class="col-md-">{{ form.other_business_type|as_crispy_field }}</div>
+                                
                             </div>
                             <div class="col-md-4">
                                 {{form.occupation|as_crispy_field}}

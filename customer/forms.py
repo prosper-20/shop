@@ -5,7 +5,7 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'occupation', 'date', 'dob', 'address', 'state', "other_state", 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
+        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'other_business_type', 'occupation', 'date', 'dob', 'address', 'state', "other_state", 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
         labels = {
             'no': 'Customer ID',
             'business': 'Business Name',
@@ -42,6 +42,8 @@ class CustomerForm(forms.ModelForm):
 
     other_state = forms.CharField(max_length=225, required=False, widget=forms.TextInput(attrs={'placeholder': 'Specify state'}))
     outstanding_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': 'Outstanding Balance'}))  # Added field
+    other_business_type = forms.CharField(label='Specify Business', required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_business_type'}),
+    )
 
     def __init__(self, *args, **kwargs):
         super(CustomerForm, self).__init__(*args, **kwargs)
