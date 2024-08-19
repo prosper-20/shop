@@ -18,6 +18,7 @@ class CustomerForm(forms.ModelForm):
             'address': 'House Address',
             'occupation': 'Occupation',
             'Comments (Optional)': 'data_entry_officer_note',
+            'Oustanding Balance (Optional)': 'oustanding_balance',
             'Review Comments (Optional)': 'review_officer_note',
             'Approval Comments(Optional)': 'approval_officer_note',
             # 'exitdate': 'Exit Date',
@@ -32,6 +33,8 @@ class CustomerForm(forms.ModelForm):
             'dob': forms.DateInput(attrs={'type': 'date'}),
             'exitdate': forms.DateInput(attrs={'type': 'date'}),
             'nextdue': forms.DateInput(attrs={'type': 'date'}),
+            # 'oustanding_balance': forms.NumberInput(attrs={ 'placeholder': 'Enter balance here',
+            # 'class': 'form-control'}),
             'data_entry_officer_note': forms.TextInput(attrs={
             'placeholder': 'Enter comment here...',
             'class': 'form-control',

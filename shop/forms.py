@@ -1,6 +1,6 @@
 from django import forms
 from .models import Rate, Shop, Rent, Income,PaymentSlip
-
+from datetime import timedelta
 
 class IncomeForm(forms.ModelForm):
     class Meta:
@@ -100,6 +100,28 @@ class CreateRentForm(forms.ModelForm):
             'date_due': forms.DateInput(attrs={"type": 'date'}),
             'rent_start': forms.DateInput(attrs={"type": 'date'})
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        rent_start = cleaned_data.get('rent_start')
+        rent_type = cleaned_data.get('rent_type')
+
+        if rent_start and rent_type:
+            if rent_type == 'Monthly':
+                # Calculate the date_due for monthly rent
+                date_due = rent_start + timedelta(days=30)
+            elif rent_type == 'Yearly':
+                # Calculate the date_due for yearly rent
+                date_due = rent_start + timedelta(days=365)
+            elif rent_type == 'Lease':
+                # Example: Assume a lease is for 6 months
+                date_due = rent_start + timedelta(days=180)
+            else:
+                date_due = None  # Default if unknown rent_type
+
+            cleaned_data['date_due'] = date_due
+
+        return cleaned_data
 
 
 class EditMyRentForm(forms.ModelForm):

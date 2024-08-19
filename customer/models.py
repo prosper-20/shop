@@ -120,6 +120,7 @@ class Customer(models.Model):
     status = models.CharField(max_length=10, choices=STATUS, default='')
     is_reviewed = models.CharField(max_length=100, choices=REVIWED_CHOICES, default="Not Reviewed")
     date = models.DateField()
+    outstanding_balance = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     data_entry_officer_note = models.TextField(max_length=1000, blank=True, null=True)
     review_officer_note = models.TextField(max_length=1000, blank=True, null=True)
     approval_officer_note = models.TextField(max_length=1000, blank=True, null=True)
