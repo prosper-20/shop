@@ -253,7 +253,7 @@ def list_all_payment_receipts(request):
 @login_required
 def create_payment_slip(request):
     if request.method == 'POST':
-        form = PaymentSlipForm(request.POST)
+        form = PaymentSlipForm(request.POST, request.FILES)
         if form.is_valid():
             payment_slip = form.save(commit=False)
             payment_slip.uploaded_by = request.user

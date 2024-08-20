@@ -367,7 +367,7 @@ class PaymentSlip(models.Model):
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.customer
+        return self.customer.name
 
 
 
