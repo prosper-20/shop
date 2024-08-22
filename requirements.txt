@@ -10,6 +10,7 @@ Django==4.2.13
 django-crispy-forms==2.2
 django-debug-toolbar==4.4.2
 django-sendgrid-v5==1.2.3
+django-storages==1.14.4
 fonttools==4.53.1
 gunicorn==22.0.0
 html5lib==1.1
