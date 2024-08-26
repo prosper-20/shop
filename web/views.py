@@ -126,49 +126,53 @@ def home(request):
 
 @login_required
 def dashboard(request):
-    users = User.objects.filter(is_staff=False)
-    users_count = User.objects.filter(is_staff=False).count()
-    no_of_due_rents = Rent.rents_due_count()
-    no_of_paid_rents = Rent.rents_paid_count()
-    no_of_shops = Shop.objects.all().count()
-    all_customers = Customer.objects.all()
-    all_customers_count = Customer.objects.all().count()
-    allocated_shops = Shop.allocated_shops_count
-    expected_rent_fees = Shop.expected_rent_fees
-    sum_of_paid_rents = Shop.total_paid_shops_price()
-    owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
-    owing_customers_count = owing_customers.count()
-    customers_awaiting_approval_count = Customer.objects.filter(approval=False).count()
-    customers_awaiting_approval = Customer.objects.filter(approval=False)
-    no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
-    all_income = Income.objects.all()
-    nina_daily_income = get_object_or_404(Income, name="Nina").daily
-    nina_weekly_income = get_object_or_404(Income, name="Nina").weekly
-    nina_yearly_income = get_object_or_404(Income, name="Nina").yearly
-    chairman_daily_income = get_object_or_404(Income, name="Chairman").daily
-    chairman_weekly_income = get_object_or_404(Income, name="Chairman").weekly
-    chairman_yearly_income = get_object_or_404(Income, name="Chairman").yearly
-    daily_income_total = Income.total_daily_receipts()
-    weekly_income_total = Income.total_weekly_receipts()
-    yearly_income_total = Income.total_yearly_receipts()
-    context = {"users": users, "daily_income_total": daily_income_total,
-               "weekly_income_total": weekly_income_total,
-               "yearly_income_total": yearly_income_total,
-                "nina_daily_income": nina_daily_income, "nina_weekly_income":nina_weekly_income, 
-                "nina_yearly_income": nina_yearly_income, 
-                "chairman_daily_income": chairman_daily_income, 
-                "chairman_weekly_income": chairman_weekly_income, 
-                "chairman_yearly_income": chairman_yearly_income, 
-                "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
-                "customers_awaiting_approval": customers_awaiting_approval,
-                "customers_awaiting_approval_count": customers_awaiting_approval_count,
-                "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
-                "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
-                "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
-                "sum_of_paid_rents": sum_of_paid_rents,
-                "owing_customers": owing_customers, "owing_customers_count": owing_customers_count,
-                "all_customers_count": all_customers_count, 
-                "current_user": request.user, "all_income": all_income}
+    if request.method == "POST":
+        searched = request.POST.get("search_term")
+        results = Customer.objects.filter(name__icontains=searched)
+    else:
+        users = User.objects.filter(is_staff=False)
+        users_count = User.objects.filter(is_staff=False).count()
+        no_of_due_rents = Rent.rents_due_count()
+        no_of_paid_rents = Rent.rents_paid_count()
+        no_of_shops = Shop.objects.all().count()
+        all_customers = Customer.objects.all()
+        all_customers_count = Customer.objects.all().count()
+        allocated_shops = Shop.allocated_shops_count
+        expected_rent_fees = Shop.expected_rent_fees
+        sum_of_paid_rents = Shop.total_paid_shops_price()
+        owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
+        owing_customers_count = owing_customers.count()
+        customers_awaiting_approval_count = Customer.objects.filter(approval=False).count()
+        customers_awaiting_approval = Customer.objects.filter(approval=False)
+        no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
+        all_income = Income.objects.all()
+        nina_daily_income = get_object_or_404(Income, name="Nina").daily
+        nina_weekly_income = get_object_or_404(Income, name="Nina").weekly
+        nina_yearly_income = get_object_or_404(Income, name="Nina").yearly
+        chairman_daily_income = get_object_or_404(Income, name="Chairman").daily
+        chairman_weekly_income = get_object_or_404(Income, name="Chairman").weekly
+        chairman_yearly_income = get_object_or_404(Income, name="Chairman").yearly
+        daily_income_total = Income.total_daily_receipts()
+        weekly_income_total = Income.total_weekly_receipts()
+        yearly_income_total = Income.total_yearly_receipts()
+        context = {"users": users, "daily_income_total": daily_income_total,
+                "weekly_income_total": weekly_income_total,
+                "yearly_income_total": yearly_income_total,
+                    "nina_daily_income": nina_daily_income, "nina_weekly_income":nina_weekly_income, 
+                    "nina_yearly_income": nina_yearly_income, 
+                    "chairman_daily_income": chairman_daily_income, 
+                    "chairman_weekly_income": chairman_weekly_income, 
+                    "chairman_yearly_income": chairman_yearly_income, 
+                    "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
+                    "customers_awaiting_approval": customers_awaiting_approval,
+                    "customers_awaiting_approval_count": customers_awaiting_approval_count,
+                    "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
+                    "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
+                    "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
+                    "sum_of_paid_rents": sum_of_paid_rents,
+                    "owing_customers": owing_customers, "owing_customers_count": owing_customers_count,
+                    "all_customers_count": all_customers_count, 
+                    "current_user": request.user, "all_income": all_income}
     print(nina_daily_income)
     return render(request, "web/dashboard.html", context)
 

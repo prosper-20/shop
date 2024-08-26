@@ -85,16 +85,42 @@
             <ul class="nav nav-secondary">
               <li class="nav-item active">
                 <a
-                  data-bs-toggle="collapse"
-                  href="#dashboard"
-                  class="collapsed"
-                  aria-expanded="false"
+                  
+                  href="{% url 'dashboard' %}"
+                  
+                >
+                  <i class="fas fa-bell"></i>
+                  <p>Dashboard</p>
+                  
+                </a>
+                <a
+                 
+                  href="{% url 'customer' %}"
+                  
+                >
+                  <i class="fas fa-users"></i>
+                  <p>Customers</p>
+                  
+                </a>
+                <a
+                  
+                  href="{% url 'all-shops' %}"
+                  
                 >
                   <i class="fas fa-home"></i>
-                  <p>Dashboard</p>
-                  <span class="caret"></span>
+                  <p>Shops</p>
+                  
                 </a>
-                <div class="collapse" id="dashboard">
+                <a
+                 
+                  href="{% url 'list-shop-rents' %}"
+                  
+                >
+                  <i class="fas fa-user-check"></i>
+                  <p>Allocation</p>
+                  
+                </a>
+                <!-- <div class="collapse" id="dashboard">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="../demo1/index.html">
@@ -102,7 +128,7 @@
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div> -->
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
@@ -375,6 +401,7 @@
                     type="text"
                     placeholder="Search ..."
                     class="form-control"
+                    name="search_term"
                   />
                 </div>
               </nav>
@@ -592,7 +619,7 @@
                     {% else %}
                     <div class="avatar-sm">
                       <img
-                        src="/user.jpg"
+                        src="/media/default.jpg"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
