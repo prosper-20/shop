@@ -41,7 +41,6 @@ class Customer(models.Model):
         ('Photo Studio', 'Photo Studio'),
         ('Law Firm', 'Law Firm'),
         ('Graphic Design and Branding', 'Graphic Design and Branding'),
-        ('Consultancy', 'Consultancy'),
         ('Perfumery', 'Perfumery'),
         ('NGO', 'NGO'),
         ("Others", "Others")

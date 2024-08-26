@@ -139,9 +139,18 @@ class EditMyRentForm(forms.ModelForm):
 
 
 class PaymentSlipForm(forms.ModelForm):
+    PAYMENT_ACCOUNT_CHOICES = [
+        ('Nina Sky', 'Nina Sky'),
+        ('Chairman', 'Chairman'),
+    ]
+
+    payment_account = forms.ChoiceField(
+        choices=PAYMENT_ACCOUNT_CHOICES,
+        label='Payment Account'
+    )
     class Meta:
         model = PaymentSlip
-        fields = ["customer", "amount", "shop_no", "image"]
+        fields = ["payment_account", "customer", "amount", "shop_no", "image"]
         labels = {
             "shop_no": "Shop Number",
             "amount": "Amount",
