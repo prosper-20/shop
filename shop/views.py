@@ -260,6 +260,8 @@ def create_payment_slip(request):
             payment_slip.save()
             messages.success(request, "Receipt Upload Successful!")
             return redirect(reverse('dashboard'))
+        else:
+            return HttpResponse(form.errors)
     else:
         form = PaymentSlipForm()
     

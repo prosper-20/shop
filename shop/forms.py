@@ -1,6 +1,8 @@
 from django import forms
 from .models import Rate, Shop, Rent, Income,PaymentSlip
 from datetime import timedelta
+from customer.models import Customer
+
 
 class IncomeForm(forms.ModelForm):
     class Meta:
@@ -148,14 +150,32 @@ class PaymentSlipForm(forms.ModelForm):
         choices=PAYMENT_ACCOUNT_CHOICES,
         label='Payment Account'
     )
+
+    narration = forms.CharField(
+        max_length=255,
+        required=False,  # This makes the field optional
+        label='Narration (Optional)'
+    )
+
     class Meta:
         model = PaymentSlip
-        fields = ["payment_account", "customer", "amount", "shop_no", "image"]
+        fields = ["payment_account", "customer", "amount", "shop_no", "image", "narration"]
         labels = {
             "shop_no": "Shop Number",
             "amount": "Amount",
             "image": "Upload Receipt (Optional)"
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set queryset for customer field
+        self.fields['customer'].queryset = Customer.objects.all()
+        # Set the widget to include an empty option
+        self.fields['customer'].widget = forms.Select(
+            choices=[('', 'Select a customer')] + [(c.id, f"{c.no} - {c.name}") for c in self.fields['customer'].queryset]
+        )
+        # Set initial value to None
+        self.fields['customer'].initial = None
 
 
 class PaymentSlipEditForm(forms.ModelForm):

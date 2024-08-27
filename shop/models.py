@@ -364,6 +364,7 @@ class PaymentSlip(models.Model):
     image = models.ImageField(upload_to="payment_receipts", blank=True, null=True, validators=[validate_image_size])
     payment_date = models.DateField(auto_now_add=True)
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    narration = models.CharField(max_length=255, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
