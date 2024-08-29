@@ -43,13 +43,13 @@ def update_shop_is_not_paid_again(sender, instance, **kwargs):
         shop.save()
 
 
-@receiver(pre_save, sender=Rent)
-def check_due_date(sender, instance, **kwargs):
-    today = timezone.now().date()
-    if instance.date_due and instance.date_due <= today:
-        instance.is_expired = True
-    else:
-        instance.is_expired = False
+# @receiver(pre_save, sender=Rent)
+# def check_due_date(sender, instance, **kwargs):
+#     today = timezone.now().date()
+#     if instance.date_due and instance.date_due <= today:
+#         instance.is_expired = True
+#     else:
+#         instance.is_expired = False
 
 
 @receiver(post_save, sender=Shop)

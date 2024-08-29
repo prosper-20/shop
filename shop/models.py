@@ -138,18 +138,18 @@ class Rent(models.Model):
     def __str__(self):
         return self.shop.name
     
-    def save(self, *args, **kwargs):
-        # Calculate the due date based on rent_type
-        if self.rent_type == "Monthly":
-            self.date_due = self.rent_start + timedelta(days=30)
-        elif self.rent_type == "Yearly":
-            self.date_due = self.rent_start + timedelta(days=365)
-        elif self.rent_type == "Lease":
-            # Set your custom lease duration here
-            # For example, assuming a lease is for 6 months
-            self.date_due = self.rent_start + timedelta(days=180)
+    # def save(self, *args, **kwargs):
+    #     # Calculate the due date based on rent_type
+    #     if self.rent_type == "Monthly":
+    #         self.date_due = self.rent_start + timedelta(days=30)
+    #     elif self.rent_type == "Yearly":
+    #         self.date_due = self.rent_start + timedelta(days=365)
+    #     elif self.rent_type == "Lease":
+    #         # Set your custom lease duration here
+    #         # For example, assuming a lease is for 6 months
+    #         self.date_due = self.rent_start + timedelta(days=180)
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
     
     @property
     def is_due(self):
@@ -167,7 +167,8 @@ class Rent(models.Model):
     @staticmethod
     def rents_due_count():
         today = timezone.now().date()
-        return Rent.objects.filter(date_due__lt=today).count()
+        return Rent.objects.filter(is_expired=True).count()
+        # return Rent.objects.filter(date_due__lt=today).count() THJIS WAS THE OLD COMPUTATION
     
     @staticmethod
     def rents_paid_count():

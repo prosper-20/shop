@@ -173,7 +173,7 @@ def dashboard(request):
                     "owing_customers": owing_customers, "owing_customers_count": owing_customers_count,
                     "all_customers_count": all_customers_count, 
                     "current_user": request.user, "all_income": all_income}
-    print(nina_daily_income)
+    # print(nina_daily_income)
     return render(request, "web/dashboard.html", context)
 
 
