@@ -21,7 +21,8 @@ urlpatterns = [
     path("income/upload/", views.upload_receipts, name="income-upload"),
     path("upload/receipts/", views.create_payment_slip, name="upload-customer-payment"),
     path("receipts/<int:pk>/", views.edit_payment_slip, name="edit-uploaded-customer-payment"),
-    path("receipts/all/", views.list_all_payment_receipts, name="all-receipts")
+    path("receipts/all/", views.list_all_payment_receipts, name="all-receipts"),
+    path("paymentslips/all/", views.view_payment_receipts, name="all-payment-slips"),
 
  
 ]

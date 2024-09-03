@@ -1,0 +1,16 @@
+{% extends "rent/base.html" %}
+{% block content %}
+    {% for payment in all_payments %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ payment.rent_type }}</a>
+              <small class="text-muted" style="justify-content: right;">Payment Date: {{ payment.payment_date }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ payment.shop_no }}</a></h2>
+            <p class="article-content">Rented by {{payment.customer.title }} {{ payment.customer.name }}</p>
+
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

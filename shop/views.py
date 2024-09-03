@@ -242,6 +242,13 @@ def upload_receipts(request):
     }
     return render(request, "customer/upload_income.html", context)
 
+
+@login_required
+def view_payment_receipts(request):
+    all_payments = PaymentSlip.objects.all()
+    context = {"all_payments": all_payments}
+    return render(request, "customer/all_income_uploads.html", context)
+
 @login_required
 def list_all_payment_receipts(request):
     all_receipts = PaymentSlip.objects.filter(is_verified=False)
