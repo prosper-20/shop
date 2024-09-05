@@ -53,6 +53,9 @@ class Shop(models.Model):
     def __str__(self):
         return f"Shop {self.no}"
     
+    class Meta:
+        ordering = ["no"]
+    
     @staticmethod
     def allocated_shops_count():
         return Shop.objects.filter(status="allocated").count()

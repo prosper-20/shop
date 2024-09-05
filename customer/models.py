@@ -48,9 +48,9 @@ class Customer(models.Model):
     ]
 
     STATUS = [
-        ('new', 'new'),
-        ('renewal', 'renewal'),   
-        ('exited', 'exited'),    
+        ('new', 'New'),
+        ('renewal', 'Renewal'),   
+        ('exited', 'Exited'),    
     ]
 
     REVIWED_CHOICES = [

@@ -71,7 +71,7 @@ def shop (request):
 
 @login_required
 def myshops(request):
-    all_shops = Shop.objects.all().order_by("name")
+    all_shops = Shop.objects.all().order_by("no")
     context = {"all_shops": all_shops}
     return render(request, "shop/myshop.html", context)
 
