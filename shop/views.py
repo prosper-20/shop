@@ -310,6 +310,13 @@ def generate_payment_advice_pdf(request, shop_no):
     return response
 
 
+@login_required
+def generate_payment_advice_old(request, shop_no):
+    shop = get_object_or_404(Shop, no=shop_no)
+    return render(request, "shop/generate_shop_payment_advice_old_customer.html", {"shop": shop})
+
+
+
 
 
 

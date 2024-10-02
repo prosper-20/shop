@@ -17,6 +17,7 @@ urlpatterns = [
     path('shop/<int:id>', views.shop_form, name="shop_update"),
     path('shop/edit/<str:shop_no>/', views.admin_edit_shop_form, name="admin-edit-shop-form"),
     path('shop/<str:shop_no>/generate-invoice/', views.generate_payment_advice, name="generate-shop-paymrnt-advice"),
+    path('shop/<str:shop_no>/generate-invoice/old/', views.generate_payment_advice_old, name="generate-payment-advice-old"),
     path('shop/<str:shop_no>/generate-invoice/pdf/', views.generate_payment_advice_pdf, name="generate-shop-payment-advice-pdf"),
     path("income/upload/", views.upload_receipts, name="income-upload"),
     path("upload/receipts/", views.create_payment_slip, name="upload-customer-payment"),

@@ -47,7 +47,7 @@
                         {% for shop in all_shops %}
                         <tr>
 
-                        <td>{{shop.no}}</td>
+                        <td><a style="color: black;" href="{% url 'admin-edit-shop-form' shop.no %}">{{shop.no}}</a></td>
                         <td>{{shop.type}}</td>
                         <td>{{shop.price}}</td>
                         <td>{{shop.size}}</td>
@@ -68,8 +68,8 @@
                         
                         {% endif %}
                         <td>
-                            <a href="{% url 'generate-shop-paymrnt-advice' shop.no %}" class="btn btn-outline-success">
-                            View Advice
+                            <a href="{% url 'generate-shop-paymrnt-advice' shop.no %}" class="btn btn-outline-success btn-sm">
+                            View Advice (New)
                             </a>
                            </td>
 
