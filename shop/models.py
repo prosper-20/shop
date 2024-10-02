@@ -90,6 +90,9 @@ class Shop(models.Model):
         result = self.shop_price * Decimal('1.05')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
+    @property # you just added these
+    
+    
     @property
     def shop_charges(self):
         result = self.shop_price * Decimal('0.25')
