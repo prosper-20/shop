@@ -86,15 +86,18 @@ class Shop(models.Model):
     
     @property
     def vat(self): # 7.5% OF THE RENT
-        return round(0.0075 * self.rent, 2)
+        result = self.new_rent * Decimal('0.075')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        # return round(0.0075 * self.rent, 2)
     
     @property
     def wht(self):  # 5% 
-        return round(0.005 * self.rent)
+        result = self.new_rent * Decimal(0.05)
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
     def gross_rent(self):
-        return round(self.rent + self.vat + self.wht, 2)
+        return round(self.new_rent + self.vat + self.wht, 2)
     
     @property
     def new_shop_agency(self):
@@ -106,7 +109,9 @@ class Shop(models.Model):
         result = self.shop_price * Decimal('0.05')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
-
+    @property
+    def new_total_rent_payable(self):
+        return round(self.new_rent + self.new_shop_agency + self.new_shop_legal, 2)
     
           
     @property
@@ -146,9 +151,9 @@ class Shop(models.Model):
     def shop_newcharges(self):
         return round(self.shop_agency + self.shop_legal, 2)
     
-    @property
-    def new_rent(self):
-        return round(self.shop_rent + self.shop_newcharges + self.shop_charges, 2)
+    # @property
+    # def new_rent(self):
+    #     return round(self.shop_rent + self.shop_newcharges + self.shop_charges, 2)
     
     @property
     def renewal_rent(self):
@@ -161,9 +166,7 @@ class Shop(models.Model):
                      self.shop_charges + self.shop_agency + self.shop_legal, 2)
     
 
-    @property
-    def new_total_rent_payable(self):
-        return round(self.new_shop_rent + self.shop_agency + self.shop_charges + self.shop_legal, 2)
+    
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),
