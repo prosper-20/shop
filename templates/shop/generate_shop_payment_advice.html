@@ -36,6 +36,7 @@
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
+
           <tr>
             <th scope="row">Gross annual rent</th>
             <td>{{ shop.gross_rent }}</td>
@@ -66,6 +67,12 @@
             <!-- <td>the Bird</td>
             <td>@twitter</td> -->
           </tr>
+          <tr>
+            <th scope="row">Service Charge (25%)</th>
+            <td>{{ shop.new_service_charge}}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
           <!-- <tr>
             <th scope="row">Shop Legal</th>
             <td>{{ shop.new_shop_legal }}</td>
@@ -75,7 +82,7 @@
 
           <tr>
             <th scope="row"><strong><h4>Total Rent Payable</h4></strong></th>
-            <td><strong>{{ shop.total }}</strong></td>
+            <td><strong>{{ shop.new_total_rent_payable }}</strong></td>
             <!-- <td>the Bird</td>
             <td>@twitter</td> -->
           </tr>

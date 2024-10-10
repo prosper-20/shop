@@ -101,17 +101,23 @@ class Shop(models.Model):
     
     @property
     def new_shop_agency(self):
-        result = self.new_rent * Decimal('0.15')
+        result = (self.new_rent + self.vat) * Decimal('0.15')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
     def new_shop_legal(self):
-        result = self.shop_price * Decimal('0.05')
+        result = (self.new_rent + self.vat) * Decimal('0.05')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
+    def new_service_charge(self):
+        result = (self.new_rent + self.vat) * Decimal('0.25')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+    
+    @property
     def new_total_rent_payable(self):
-        return round(self.new_rent + self.new_shop_agency + self.new_shop_legal, 2)
+        return round(self.new_rent + self.new_shop_agency + self.new_shop_legal + self.new_service_charge + self.wht + self.vat, 2)
     
           
     @property
