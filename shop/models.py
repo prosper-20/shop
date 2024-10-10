@@ -42,6 +42,7 @@ class Shop(models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10, choices=Type)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    shop_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     new_shop_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     no = models.CharField(max_length=5, validators=[MinLengthValidator(4)], unique=True)
     address = models.CharField(max_length=300)
@@ -79,6 +80,34 @@ class Shop(models.Model):
     def rent(self):
         return self.size * self.price
     
+    @property
+    def new_rent(self):
+        return self.new_shop_price * self.size
+    
+    @property
+    def vat(self): # 7.5% OF THE RENT
+        return round(0.0075 * self.rent, 2)
+    
+    @property
+    def wht(self):  # 5% 
+        return round(0.005 * self.rent)
+    
+    @property
+    def gross_rent(self):
+        return round(self.rent + self.vat + self.wht, 2)
+    
+    @property
+    def new_shop_agency(self):
+        result = self.new_rent * Decimal('0.15')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def new_shop_legal(self):
+        result = self.shop_price * Decimal('0.05')
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+
+    
           
     @property
     def shop_price(self):
@@ -86,11 +115,16 @@ class Shop(models.Model):
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
-    def shop_rent(self):
+    def shop_rent(self): # FOR OLD CUSTOMERS
         result = self.shop_price * Decimal('1.05')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property # you just added these
+    def new_shop_rent(self): # FOR NEW CUSTOMERS
+        if self.new_shop_price:
+            result = self.new_rent * Decimal('1.05')
+        result = 0
+        return result.quantize
     
     
     @property
@@ -125,6 +159,11 @@ class Shop(models.Model):
         # Calculate the total as the sum of specific properties
         return round(self.rent + self.shop_price + self.shop_rent +
                      self.shop_charges + self.shop_agency + self.shop_legal, 2)
+    
+
+    @property
+    def new_total_rent_payable(self):
+        return round(self.new_shop_rent + self.shop_agency + self.shop_charges + self.shop_legal, 2)
 
 RENT_TYPE = (
     ("Monthly", "Monthly"),
