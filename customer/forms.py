@@ -1,5 +1,6 @@
 from django import forms
 from .models import Customer
+from django.db.models import Max
 
 class CustomerForm(forms.ModelForm):
 
@@ -50,6 +51,14 @@ class CustomerForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomerForm, self).__init__(*args, **kwargs)
+        last_no = Customer.objects.aggregate(last_no=Max('no'))['last_no']
+        if last_no:
+            next_no = str(int(last_no) + 1).zfill(5)
+        else:
+            next_no = '10001'  # Starting number if no customers exist
+
+        # Set the initial value for the 'no' field in the form
+        self.fields['no'].initial = next_no
         self.fields['nature'].choices = sorted(Customer.NATURE, key=lambda x: x[1])
         # self.fields['nature'].choices = [('', 'Select')] + list(self.fields['nature'].choices)
         self.fields['state'].choices = [('', 'Select')] + list(self.fields['state'].choices)

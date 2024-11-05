@@ -105,7 +105,7 @@ class Customer(models.Model):
     ]
 
      
-    no = models.CharField(max_length=4, unique=True)
+    no = models.CharField(max_length=5, unique=True)
     title = models.CharField(max_length=10, choices=TITLE_CHOICES, default="Mr")
     name = models.CharField(max_length=100)
     business = models.CharField(max_length=225)
@@ -133,3 +133,20 @@ class Customer(models.Model):
     
     class Meta:
           ordering = ["no"]
+
+
+    def save(self, *args, **kwargs):
+        """
+        Override the save method to generate a unique 'no' for each customer.
+        """
+        if not self.no:  # If no is not provided, generate a new one
+            # Get the last 'no' in use, and add 1 to it
+            last_no = Customer.objects.aggregate(last_no=Max('no'))['last_no']
+            if last_no:
+                # Convert the last number to an integer, increment it, and pad with leading zeros
+                self.no = str(int(last_no) + 1).zfill(5)
+            else:
+                # If no records exist, start with '10001'
+                self.no = '10001'
+
+        super().save(*args, **kwargs) 
