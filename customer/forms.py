@@ -6,7 +6,7 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'other_business_type', 'occupation', 'date', 'dob', 'address', 'state', "other_state", 'status', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
+        fields = ('no', 'title', 'name', 'business', 'email', 'phone', 'nature', 'other_business_type', 'occupation', 'date', 'dob', 'address', 'state', "other_state", 'status', 'outstanding_balance', 'data_entry_officer_note', 'nextdue') # You removed approval form the list and  exitdate
         labels = {
             'no': 'Customer ID',
             'business': 'Business Name',

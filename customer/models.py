@@ -114,6 +114,7 @@ class Customer(models.Model):
     dob = models.DateField(default=None)
     address = models.CharField(max_length=225)
     state = models.CharField(max_length=225, choices=STATES)
+    other_state = models.CharField(max_length=255, blank=True, null=True)
     occupation = models.CharField(max_length=50)
     nature = models.CharField(max_length=255, choices=NATURE, default="")
     status = models.CharField(max_length=10, choices=STATUS, default='')
