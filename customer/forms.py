@@ -45,7 +45,7 @@ class CustomerForm(forms.ModelForm):
         }
 
     other_state = forms.CharField(max_length=225, required=False, widget=forms.TextInput(attrs={'placeholder': 'Specify state'}))
-    outstanding_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': 'Outstanding Balance'}))  # Added field
+    outstanding_balance = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'Outstanding Balance'}))  # Added field
     other_business_type = forms.CharField(label='Specify Business', required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_business_type'}),
     )
 
@@ -101,7 +101,7 @@ class EditCustomerForm(forms.ModelForm):
         }
 
     other_state = forms.CharField(max_length=225, required=False, widget=forms.TextInput(attrs={'placeholder': 'Specify state'}))
-    outstanding_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': 'Outstanding Balance'}))  # Added field
+    outstanding_balance = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'Outstanding Balance'}))  # Added field
 
 class ReviwerEditCustomerForm(forms.ModelForm):
 
