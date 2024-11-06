@@ -281,7 +281,7 @@ def receipt_list(request):
     payment_slips = PaymentSlip.objects.all()
 
     # Pass the payment slips to the template
-    return render(request, 'receipts/receipt_list.html', {'payment_slips': payment_slips})
+    return render(request, 'receipts/receipts_list.html', {'payment_slips': payment_slips})
 
 
 @login_required

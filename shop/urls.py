@@ -24,6 +24,7 @@ urlpatterns = [
     path("receipts/<int:pk>/", views.edit_payment_slip, name="edit-uploaded-customer-payment"),
     path("receipts/all/", views.list_all_payment_receipts, name="all-receipts"),
     path("paymentslips/all/", views.view_payment_receipts, name="all-payment-slips"),
+    path("all/uploaded-receipts/", views.receipt_list, name="list-all-uploaded-receipts")
 
  
 ]
