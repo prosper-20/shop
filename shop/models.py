@@ -44,6 +44,7 @@ class Shop(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     shop_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     new_shop_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    caution_fee = models.DecimalField(max_digits=12, decimal_places=2, default=100000.00)
     no = models.CharField(max_length=5, validators=[MinLengthValidator(4)], unique=True)
     address = models.CharField(max_length=300)
     floor = models.CharField(max_length=20, choices=Floor)
@@ -117,7 +118,7 @@ class Shop(models.Model):
     
     @property
     def new_total_rent_payable(self):
-        return round(self.new_rent + self.new_shop_agency + self.new_shop_legal + self.new_service_charge + self.wht + self.vat, 2)
+        return round(self.new_rent + self.new_shop_agency + self.new_shop_legal + self.new_service_charge + self.wht + self.vat + self.caution_fee, 2)
     
           
     @property

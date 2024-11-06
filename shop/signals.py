@@ -24,18 +24,65 @@ def send_due_date_email(sender, instance, **kwargs):
     today = timezone.now().date()
     due_date = instance.date_due
 
+    print("due_date", due_date)
+    print("today", today)
+
     # Check if the due date is 90 days from today
-    if due_date - today == timedelta(days=90) or due_date - today == timedelta(days=60) or due_date - today == timedelta(days=30):
+    if due_date - today == timedelta(days=90):
         customer = instance.customer
         if customer.email:  # Ensure the customer has an email address
-            send_due_date_reminder_email(customer)
+            send_due_date_reminder_email_90_days(customer)
+    elif due_date - today == timedelta(days=60):
+        customer = instance.customer
+        if customer.email:  # Ensure the customer has an email address
+            send_due_date_reminder_email_60_days(customer)
+    elif due_date - today == timedelta(days=30):
+        customer = instance.customer
+        if customer.email:  # Ensure the customer has an email address
+            send_due_date_reminder_email_30_days(customer)
 
 
-def send_due_date_reminder_email(customer):
+
+
+def send_due_date_reminder_email_90_days(customer):
     """Helper function to send the email."""
     subject = "Reminder: Your Rent Due Date is Approaching"
     message = f"Dear {customer.name},\n\n" \
               f"This is a friendly reminder that your rent payment is due in 90 days. Please ensure you make the necessary arrangements.\n\n" \
+              f"Thank you for your attention to this matter.\n\n" \
+              f"Best regards,\nNina Sky Innovation Limited"
+    sender = settings.EMAIL_HOST_USER
+    send_mail(
+        subject,
+        message,
+        sender,  # Sender's email (change to actual sender)
+        [customer.email],
+        fail_silently=False,
+    )
+
+
+def send_due_date_reminder_email_60_days(customer):
+    """Helper function to send the email."""
+    subject = "Reminder: Your Rent Due Date is Approaching"
+    message = f"Dear {customer.name},\n\n" \
+              f"This is a friendly reminder that your rent payment is due in 60 days. Please ensure you make the necessary arrangements.\n\n" \
+              f"Thank you for your attention to this matter.\n\n" \
+              f"Best regards,\nNina Sky Innovation Limited"
+    sender = settings.EMAIL_HOST_USER
+    send_mail(
+        subject,
+        message,
+        sender,  # Sender's email (change to actual sender)
+        [customer.email],
+        fail_silently=False,
+    )
+
+
+def send_due_date_reminder_email_30_days(customer):
+    """Helper function to send the email."""
+    subject = "Reminder: Your Rent Due Date is Approaching"
+    message = f"Dear {customer.name},\n\n" \
+              f"This is a friendly reminder that your rent payment is due in 30 days. Please ensure you make the necessary arrangements.\n\n" \
               f"Thank you for your attention to this matter.\n\n" \
               f"Best regards,\nNina Sky Innovation Limited"
     sender = settings.EMAIL_HOST_USER
