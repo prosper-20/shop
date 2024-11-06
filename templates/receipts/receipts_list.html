@@ -41,7 +41,7 @@
             {% endif %}
           </td>
           <td style="padding: 10px; border: 1px solid #ddd;">
-            Verify
+            <a href="{% url 'verify-payment-receipt' receipt.pk %}">Verify Payment</a>
           </td>
         </tr>
       {% endfor %}
