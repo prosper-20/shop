@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Uploaded Payment Receipts</h1>
+  <h2>Uploaded Payment Receipts</h2>
   <br>
   <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
     <thead>
@@ -22,7 +22,7 @@
         <tr>
         <td style="padding: 10px; border: 1px solid #ddd;">{{ forloop.counter }}</td>  <!-- Display row number -->
           <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.customer.title }} {{ receipt.customer.name|title }}</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.amount }}</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">₦{{ receipt.amount }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.shop_no.name }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.payment_date }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">
@@ -32,7 +32,7 @@
               No Image
             {% endif %}
           </td>
-          <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.uploaded_by.username }}</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.uploaded_by.username|title }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">
             {% if receipt.is_verified %}
               Verified
