@@ -101,6 +101,8 @@ class Customer(models.Model):
     TITLE_CHOICES = [
         ("Mr", "Mr"),
         ("Mrs", "Mrs"),
+        ("Engr.", "Engr."),
+        ("Dr.", "Dr."),
         ("Miss", "Miss"),
     ]
 

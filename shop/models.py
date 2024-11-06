@@ -422,10 +422,11 @@ class PaymentSlip(models.Model):
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     shop_no = models.ForeignKey(Shop, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="payment_receipts", blank=True, null=True, validators=[validate_image_size])
-    payment_date = models.DateField(auto_now_add=True)
+    payment_date = models.DateField()
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     narration = models.CharField(max_length=255, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
+    uploaded_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.customer.name

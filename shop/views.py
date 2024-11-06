@@ -275,6 +275,16 @@ def create_payment_slip(request):
     return render(request, 'customer/upload_customer_receipts.html', {'form': form})
 
 @login_required
+def receipt_list(request):
+    """View to display all uploaded payment receipts."""
+    # Get all payment receipts
+    payment_slips = PaymentSlip.objects.all()
+
+    # Pass the payment slips to the template
+    return render(request, 'receipts/receipt_list.html', {'payment_slips': payment_slips})
+
+
+@login_required
 def edit_payment_slip(request, pk):
     payment_slip = get_object_or_404(PaymentSlip, pk=pk)
     
