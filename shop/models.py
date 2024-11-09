@@ -423,6 +423,10 @@ PAYMENT_ACCOUNT_CHOICES = [
 
 
 class PaymentSlip(models.Model):
+    PAYMENT_ACCOUNT_CHOICES = [
+        ('Nina Sky', 'Nina Sky'),
+        ('Chairman', 'Chairman'),
+    ]
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     payment_account = models.CharField(choices=PAYMENT_ACCOUNT_CHOICES, max_length=30)
     amount = models.DecimalField(max_digits=15, decimal_places=2)

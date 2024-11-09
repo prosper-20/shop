@@ -2,6 +2,21 @@
 
 {% block content %}
   <h2>Uploaded Payment Receipts</h2>
+
+  <!-- Filter form for payment account -->
+  <form method="get" action="{% url 'list-all-uploaded-receipts' %}" style="margin-bottom: 20px;">
+    <label for="payment_account">Filter by Payment Account: </label>
+    <select name="payment_account" id="payment_account">
+      <option value="">-- All Accounts --</option>
+      {% for value, label in payment_account_choices %}
+        <option value="{{ value }}" {% if value == selected_payment_account %}selected{% endif %}>
+          {{ label }}
+        </option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
   <br>
   <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
     <thead>
@@ -21,10 +36,10 @@
     <tbody>
       {% for receipt in payment_slips %}
         <tr>
-        <td style="padding: 10px; border: 1px solid #ddd;">{{ forloop.counter }}</td>  <!-- Display row number -->
+          <td style="padding: 10px; border: 1px solid #ddd;">{{ forloop.counter }}</td>  <!-- Display row number -->
           <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.customer.title }} {{ receipt.customer.name|title }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">₦{{ receipt.amount }}</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">₦{{ receipt.payment_account  }}</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.payment_account  }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.shop_no.name }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">{{ receipt.payment_date }}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">
