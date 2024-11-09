@@ -1,6 +1,6 @@
 from django import forms
 from .models import Rate, Shop, Rent, Income,PaymentSlip
-from datetime import timedelta
+from datetime import timedelta, date
 from customer.models import Customer
 
 
@@ -159,11 +159,16 @@ class PaymentSlipForm(forms.ModelForm):
 
     class Meta:
         model = PaymentSlip
-        fields = ["payment_account", "customer", "amount", "shop_no", "image", "narration"]
+        fields = ["payment_account", "customer", "amount", "shop_no", "image", "payment_date", "narration"]
         labels = {
             "shop_no": "Shop Number",
             "amount": "Amount",
             "image": "Upload Receipt (Optional)"
+        }
+
+        widgets = {
+            'payment_date': forms.DateInput(attrs={'type': 'date'}),
+            
         }
 
     def __init__(self, *args, **kwargs):
@@ -176,6 +181,7 @@ class PaymentSlipForm(forms.ModelForm):
         )
         # Set initial value to None
         self.fields['customer'].initial = None
+        self.fields['payment_date'].initial = date.today
 
 
 class PaymentSlipEditForm(forms.ModelForm):

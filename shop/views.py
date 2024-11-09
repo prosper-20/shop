@@ -266,7 +266,7 @@ def create_payment_slip(request):
             payment_slip.uploaded_by = request.user
             payment_slip.save()
             messages.success(request, "Receipt Upload Successful!")
-            return redirect(reverse('dashboard'))
+            return redirect(reverse('all/uploaded-receipts/'))
         else:
             return HttpResponse(form.errors)
     else:
@@ -278,7 +278,7 @@ def create_payment_slip(request):
 def receipt_list(request):
     """View to display all uploaded payment receipts."""
     # Get all payment receipts
-    payment_slips = PaymentSlip.objects.all().order_by("-uploaded_on")
+    payment_slips = PaymentSlip.objects.all().order_by("-payment_date")
 
     # Pass the payment slips to the template
     return render(request, 'receipts/receipts_list.html', {'payment_slips': payment_slips})
@@ -289,7 +289,7 @@ def verify_payment_receipt(request, pk):
     payment_slip.is_verified = True
     payment_slip.save()
     messages.success(request, "Payment verified successfully")
-    return redirect("/all/uploaded-receipts/")
+    return redirect("list-all-uploaded-receipts")
 
 @login_required
 def edit_payment_slip(request, pk):
