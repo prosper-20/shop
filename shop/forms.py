@@ -141,15 +141,15 @@ class EditMyRentForm(forms.ModelForm):
 
 
 class PaymentSlipForm(forms.ModelForm):
-    PAYMENT_ACCOUNT_CHOICES = [
-        ('Nina Sky', 'Nina Sky'),
-        ('Chairman', 'Chairman'),
-    ]
+    # PAYMENT_ACCOUNT_CHOICES = [
+    #     ('Nina Sky', 'Nina Sky'),
+    #     ('Chairman', 'Chairman'),
+    # ]
 
-    payment_account = forms.ChoiceField(
-        choices=PAYMENT_ACCOUNT_CHOICES,
-        label='Payment Account'
-    )
+    # payment_account = forms.ChoiceField(
+    #     choices=PAYMENT_ACCOUNT_CHOICES,
+    #     label='Payment Account'
+    # )
 
     narration = forms.CharField(
         max_length=255,
@@ -182,6 +182,7 @@ class PaymentSlipForm(forms.ModelForm):
         # Set initial value to None
         self.fields['customer'].initial = None
         self.fields['payment_date'].initial = date.today
+        self.fields['payment_account'].initial = "Nina Sky"
 
 
 class PaymentSlipEditForm(forms.ModelForm):

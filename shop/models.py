@@ -416,9 +416,15 @@ def validate_image_size(image):
     if filesize > megabyte_limit * 1024 * 1024:
         raise ValidationError(f"Maximum file size is {megabyte_limit}MB") 
 
+PAYMENT_ACCOUNT_CHOICES = [
+        ('Nina Sky', 'Nina Sky'),
+        ('Chairman', 'Chairman'),
+    ]
+
 
 class PaymentSlip(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    payment_account = models.CharField(choices=PAYMENT_ACCOUNT_CHOICES, max_length=30)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     shop_no = models.ForeignKey(Shop, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="payment_receipts", blank=True, null=True, validators=[validate_image_size])
