@@ -435,6 +435,11 @@ class PaymentSlip(models.Model):
         ('Nina Sky', 'Nina Sky'),
         ('Chairman', 'Chairman'),
     ]
+
+    REVIEW_CHOICES =(
+        ("Reviewed", "Reviewed"),
+        ("Mot Reviewed", "Not Reviewed")
+    )
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     payment_account = models.CharField(choices=PAYMENT_ACCOUNT_CHOICES, max_length=30)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
@@ -443,6 +448,7 @@ class PaymentSlip(models.Model):
     payment_date = models.DateField()
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     narration = models.CharField(max_length=255, blank=True, null=True)
+    is_reviewed = models.CharField(choices=REVIEW_CHOICES, max_length=100)
     is_verified = models.BooleanField(default=False)
     uploaded_on = models.DateTimeField(auto_now_add=True)
 

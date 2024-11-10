@@ -20,5 +20,5 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.index_title = "Shop Management"
-admin.site.site_header = "Shop Management Admin"
+admin.site.site_header = "Nina Sky Innovation"
 admin.site.site_title = "Nina Sky Innovation"
