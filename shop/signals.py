@@ -121,7 +121,7 @@ def send_due_date_reminder_email_7_days(customer):
 
 def send_due_date_reminder_email_on_the_due_day(customer):
     """Helper function to send the email."""
-    subject = "Reminder: Your Rent Due Date is Approaching"
+    subject = "Reminder: Your Rent Is Due Today"
     message = f"Dear {customer.name},\n\n" \
               f"This is a friendly reminder that your rent payment is due today. Please ensure you make the necessary arrangements.\n\n" \
               f"Thank you for your attention to this matter.\n\n" \

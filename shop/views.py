@@ -299,6 +299,15 @@ def verify_payment_receipt(request, pk):
     messages.success(request, "Payment verified successfully")
     return redirect("list-all-uploaded-receipts")
 
+
+@login_required
+def review_payment_receipt(request, pk):
+    payment_slip = get_object_or_404(PaymentSlip, id=pk)
+    payment_slip.is_reviewed = True
+    payment_slip.save()
+    messages.success(request, "Payment has been reviewed successfully")
+    return redirect("list-all-uploaded-receipts")
+
 @login_required
 def edit_payment_slip(request, pk):
     payment_slip = get_object_or_404(PaymentSlip, pk=pk)
