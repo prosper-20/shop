@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 <div class="container ml-3 mr-3">
     <div class ="row">
                     <div class="col-md-9">
@@ -35,6 +36,8 @@
                             <td>Shop Size</td>
                             <td>Approval Status</td>
                             <td>Details</td>
+                            <td>Generate Advice | Old | New</td>
+                            
                             <!-- <td>Shop Rent</td> -->
                              {% if user.is_superuser %}
                             <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
@@ -68,11 +71,16 @@
                         
                         {% endif %}
                         <td>
+                            <a href="{% url 'generate-payment-advice-old' shop.no %}" class="btn btn-outline-success btn-sm">
+                            View Advice (Old)
+                            </a>
+                           </td>
+                        <td>
                             <a href="{% url 'generate-shop-paymrnt-advice' shop.no %}" class="btn btn-outline-success btn-sm">
                             View Advice (New)
                             </a>
                            </td>
-
+                        
                         </tr>
                         {% endfor %}
                         

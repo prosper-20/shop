@@ -40,6 +40,15 @@ def send_due_date_email(sender, instance, **kwargs):
         customer = instance.customer
         if customer.email:  # Ensure the customer has an email address
             send_due_date_reminder_email_30_days(customer)
+    elif due_date - today == timedelta(days=7):
+        customer = instance.customer
+        if customer.email:  # Ensure the customer has an email address
+            send_due_date_reminder_email_7_days(customer)
+    elif due_date == today:
+        customer = instance.customer
+        if customer.email:  # Ensure the customer has an email address
+            send_due_date_reminder_email_on_the_due_day(customer)
+    
 
 
 
@@ -94,6 +103,37 @@ def send_due_date_reminder_email_30_days(customer):
         fail_silently=False,
     )
 
+def send_due_date_reminder_email_7_days(customer):
+    """Helper function to send the email."""
+    subject = "Reminder: Your Rent Due Date is Approaching"
+    message = f"Dear {customer.name},\n\n" \
+              f"This is a friendly reminder that your rent payment is due in 7 days. Please ensure you make the necessary arrangements.\n\n" \
+              f"Thank you for your attention to this matter.\n\n" \
+              f"Best regards,\nNina Sky Innovation Limited"
+    sender = settings.EMAIL_HOST_USER
+    send_mail(
+        subject,
+        message,
+        sender,  # Sender's email (change to actual sender)
+        [customer.email],
+        fail_silently=False,
+    )
+
+def send_due_date_reminder_email_on_the_due_day(customer):
+    """Helper function to send the email."""
+    subject = "Reminder: Your Rent Due Date is Approaching"
+    message = f"Dear {customer.name},\n\n" \
+              f"This is a friendly reminder that your rent payment is due today. Please ensure you make the necessary arrangements.\n\n" \
+              f"Thank you for your attention to this matter.\n\n" \
+              f"Best regards,\nNina Sky Innovation Limited"
+    sender = settings.EMAIL_HOST_USER
+    send_mail(
+        subject,
+        message,
+        sender,  # Sender's email (change to actual sender)
+        [customer.email],
+        fail_silently=False,
+    )
 
 @receiver(post_save, sender=Rent)
 def update_shop_status(sender, instance, created, **kwargs):

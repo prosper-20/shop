@@ -158,6 +158,10 @@ class Shop(models.Model):
     def shop_newcharges(self):
         return round(self.shop_agency + self.shop_legal, 2)
     
+
+    @property
+    def old_customer_total_rent_payable(self):
+        return round(self.gross_rent + self.new_service_charge, 2)
     # @property
     # def new_rent(self):
     #     return round(self.shop_rent + self.shop_newcharges + self.shop_charges, 2)
@@ -272,6 +276,10 @@ class Rent(models.Model):
     @property
     def new_rent(self):
         return round(self.shop_rent + self.shop_newcharges + self.shop_charges, 2)
+    
+    @property
+    def old_customer_total_rent_payable(self):
+        return round(self.shop_rent + self.shop_newcharges, 2)
     
     @property
     def renewal_rent(self):

@@ -20,21 +20,33 @@
             
           <tr>
             <th scope="row">Net Rent</th>
-            <td>{{ shop.rent }}</td>
+            <td>{{ shop.new_rent }}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
           <tr>
-            <th scope="row">Gross Rent</th>
-            <td>{{shop.shop_price }}</td>
-            <!-- <td>Thornton</td>
-            <td>@fat</td> -->
+            <th scope="row">7.5% VAT</th>
+            <td>{{ shop.vat }}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
           </tr>
           <tr>
-            <th scope="row">Shop Charges</th>
-            <td>{{ shop.shop_charges }}</td>
-            <!-- <td>the Bird</td>
-            <td>@twitter</td> -->
+            <th scope="row">5% VAT</th>
+            <td>{{ shop.wht}}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Gross annual rent</th>
+            <td>{{ shop.gross_rent }}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Service Charge (25%)</th>
+            <td>{{ shop.new_service_charge}}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
           </tr>
           <!-- <tr>
             <th scope="row">Shop Agency</th>
@@ -50,7 +62,7 @@
           </tr> -->
           <tr>
             <th scope="row"><strong><h4>Total Rent Payable</h4></strong></th>
-            <td><strong>{{ shop.total }}</strong></td>
+            <td><strong>{{ shop.old_customer_total_rent_payable }}</strong></td>
             <!-- <td>the Bird</td>
             <td>@twitter</td> -->
           </tr>
