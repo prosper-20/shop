@@ -139,7 +139,7 @@ import pandas as pd
 
 
 def upload_customers(request):
-    if request.method == "POST":
+    if request.method == "GET":
         # Get the uploaded file
         excel_file = "clinic/customer_data.xlsx"
 
@@ -156,7 +156,7 @@ def upload_customers(request):
             try:
                 # Extract fields from the row (update based on your spreadsheet column names)
                 no = str(row['Customer ID/no'])
-                # title = row.get('title', 'Mr')
+                # title = 'Mr'
                 name = row['name']
                 business = row['business']
                 email = row['email']
@@ -181,7 +181,7 @@ def upload_customers(request):
                 # Create a Customer instance
                 customer = Customer(
                     no=no,
-                    title=title,
+                    title="Mr",
                     name=name,
                     business=business,
                     email=email,
@@ -209,7 +209,7 @@ def upload_customers(request):
                 errors.append(f"Row {index + 1}: {str(e)}")
 
         return HttpResponse(
-            f'success: {customers_created} customers created."
+            f'success: {customers_created} customers created.'
         )
 
-    return render(request, 'upload_customers.html')
+    return render(request, 'web/home.html')
