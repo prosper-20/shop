@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import staff_login, reviewer_entry_signup, data_entry_signup, staff_logout, home, dashboard, customer_login, create_customer
+from .views import staff_login, upload_customers, reviewer_entry_signup, data_entry_signup, staff_logout, home, dashboard, customer_login, create_customer
+from customer.views import upload_customers
+
 
 urlpatterns = [
     path("login/customer/", customer_login, name="login"),
@@ -13,7 +15,8 @@ urlpatterns = [
     # path("userprofile/<str:username>/", new_profile, name="user-profile"),
     # path('fetch-profile/', fetch_profile, name='fetch_profile'),
     # path("profile/", view_profile, name="profile"),
-    path("home/", home, name="home")
+    path("home/", home, name="home"),
+    path("upload/", upload_customers, name="upload")
 
 ]
 

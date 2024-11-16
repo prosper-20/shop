@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 import weasyprint
 import datetime
 import csv
+from django.utils.dateparse import parse_date
 
 def is_admin(user):
     return user.is_superuser or user.is_staff
@@ -133,3 +134,82 @@ def export_to_csv(modeladmin, request, queryset):
         writer.writerow(data_row)
     return response
     export_to_csv.short_description = 'Export to CSV'
+
+import pandas as pd
+
+
+def upload_customers(request):
+    if request.method == "POST":
+        # Get the uploaded file
+        excel_file = "clinic/customer_data.xlsx"
+
+        # Read the spreadsheet
+        try:
+            df = pd.read_excel(excel_file)
+        except Exception as e:
+            return HttpResponse({'error': f'Error reading file: {str(e)}'})
+
+        # Iterate through rows and create customers
+        customers_created = 0
+        errors = []
+        for index, row in df.iterrows():
+            try:
+                # Extract fields from the row (update based on your spreadsheet column names)
+                no = str(row['Customer ID/no'])
+                # title = row.get('title', 'Mr')
+                name = row['name']
+                business = row['business']
+                email = row['email']
+                phone = str(row['phone'])
+                dob = parse_date(str(row['date_of_birth']))
+                address = row['Customer address']
+                state = row['Customer state', 'Lagos']
+                other_state = row.get('other_state', None)
+                occupation = row['Customer occupation']
+                nature = row['naturebusiness of ']
+                status = row.get('status', 'new')
+                is_reviewed = row.get('is_reviewed', 'Not Reviewed')
+                date = parse_date(str(row['date']))
+                outstanding_balance = row.get('outstanding_balance', 0)
+                data_entry_officer_note = row.get('data_entry_officer_note', '')
+                review_officer_note = row.get('review_officer_note', '')
+                approval_officer_note = row.get('approval_officer_note', '')
+                approval = bool(row.get('approval', False))
+                exitdate = parse_date(str(row.get('exitdate', None)))
+                nextdue = parse_date(str(row.get('nextdue', None)))
+
+                # Create a Customer instance
+                customer = Customer(
+                    no=no,
+                    title=title,
+                    name=name,
+                    business=business,
+                    email=email,
+                    phone=phone,
+                    dob=dob,
+                    address=address,
+                    state=state,
+                    other_state=other_state,
+                    occupation=occupation,
+                    nature=nature,
+                    status=status,
+                    is_reviewed=is_reviewed,
+                    date=date,
+                    outstanding_balance=outstanding_balance,
+                    data_entry_officer_note=data_entry_officer_note,
+                    review_officer_note=review_officer_note,
+                    approval_officer_note=approval_officer_note,
+                    approval=approval,
+                    exitdate=exitdate,
+                    nextdue=nextdue,
+                )
+                customer.save()
+                customers_created += 1
+            except Exception as e:
+                errors.append(f"Row {index + 1}: {str(e)}")
+
+        return HttpResponse(
+            f'success: {customers_created} customers created."
+        )
+
+    return render(request, 'upload_customers.html')
