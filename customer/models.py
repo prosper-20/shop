@@ -44,6 +44,9 @@ class Customer(models.Model):
         ('Graphic Design and Branding', 'Graphic Design and Branding'),
         ('Perfumery', 'Perfumery'),
         ('NGO', 'NGO'),
+        ('Branding Business', 'Branding Business'),
+        ('Mtn Service Provider Business', 'Mtn Service Provider Business'),
+        ('Cyber Cafe', 'Cyber Cafe'),
         ("Others", "Others")
         
     ]
