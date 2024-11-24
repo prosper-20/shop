@@ -141,11 +141,13 @@ import pandas as pd
 def upload_customers(request):
     if request.method == "GET":
         # Get the uploaded file
-        excel_file = "clinic/customer_data.xlsx"
+        excel_file = "C:/Users/edwar/Documents/PROJECTS/KLINSMAN_BROTHER/MyProject/customer/customer_data.xlsx"
 
         # Read the spreadsheet
         try:
             df = pd.read_excel(excel_file)
+            print(df.head())
+            print(df.shape)
         except Exception as e:
             return HttpResponse({'error': f'Error reading file: {str(e)}'})
 
