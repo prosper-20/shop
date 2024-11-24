@@ -39,6 +39,7 @@ class Customer(models.Model):
         ('Home Wears Store', 'Home Wears Store'),
         ('Travel Agency', 'Travel Agency'),
         ('Photo Studio', 'Photo Studio'),
+        ('Real Estate', 'Real Estate'),
         ('Law Firm', 'Law Firm'),
         ('Graphic Design and Branding', 'Graphic Design and Branding'),
         ('Perfumery', 'Perfumery'),
@@ -60,6 +61,7 @@ class Customer(models.Model):
 
     STATES = [
     ("Abia", "Abia"),
+    ("Abuja", "Abuja"),
     ("Adamawa", "Adamawa"),
     ("Akwa Ibom", "Akwa Ibom"),
     ("Anambra", "Anambra"),

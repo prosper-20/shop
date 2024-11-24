@@ -94,24 +94,26 @@ User = get_user_model()
     # client.send(mail)
 
 
-
-@receiver(post_save, sender=Customer)
-def send_approval_email(sender, instance, created, **kwargs):
-    if instance.approval:
-        subject = 'Account Approved'
-        html_message = render_to_string('web/profile_approved_email.html', {'user': instance.name})
-        plain_message = strip_tags(html_message)
-        from_email = settings.EMAIL_HOST_USER
-        to_email = instance.email
-        send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+# YOU COMMENTE THIS TWO ON SUNDAY
 
 
+# @receiver(post_save, sender=Customer)
+# def send_approval_email(sender, instance, created, **kwargs):
+#     if instance.approval:
+#         subject = 'Account Approved'
+#         html_message = render_to_string('web/profile_approved_email.html', {'user': instance.name})
+#         plain_message = strip_tags(html_message)
+#         from_email = settings.EMAIL_HOST_USER
+#         to_email = instance.email
+#         send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
 
-@receiver(post_save, sender=Customer)
-def send_creation_email(sender, instance, created, **kwargs):
-    if created:
-        subject = 'New Account'
-        message = f"Hello, a new customer named '{instance.name}' has been added. Kindly review and approve this account."
-        sender = settings.EMAIL_HOST_USER
-        recipient = [user.email for user in User.objects.all() if user.is_superuser==True and user.is_approved==True]
-        send_mail(subject, message, sender, recipient, fail_silently=False)
+
+
+# @receiver(post_save, sender=Customer)
+# def send_creation_email(sender, instance, created, **kwargs):
+#     if created:
+#         subject = 'New Account'
+#         message = f"Hello, a new customer named '{instance.name}' has been added. Kindly review and approve this account."
+#         sender = settings.EMAIL_HOST_USER
+#         recipient = [user.email for user in User.objects.all() if user.is_superuser==True and user.is_approved==True]
+#         send_mail(subject, message, sender, recipient, fail_silently=False)
