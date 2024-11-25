@@ -6,12 +6,15 @@ class Customer(models.Model):
 
     NATURE = [
         ('Supermarket', 'Supermarket'),
+        ('Bridal Wears', 'Bridal Wears'),
         ('Laundry', 'Laundry'),
         ('Pharmacy', 'Pharmacy'),
+        ('Car Dealer', 'Car Dealer'),
         ('Courier/Dispatch', 'Courier/Dispatch'),
         ('Banking/Insurance', 'Banking/Insurance'),
         ('Barbing/Salon', 'Barbing/Salon'),
         ('Restaurant', 'Restaurant'),
+        ('Legal Aid Services', 'Legal Aid Services'),
         ('Food and Drinks', 'Food and Drinks'),
         ('Makeup Artist', 'Makeup Artist'),
         ('Building', 'Building'),
