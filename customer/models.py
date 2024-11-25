@@ -33,6 +33,7 @@ class Customer(models.Model):
         ('Consultancy', 'Consultancy'),
         ('Skin Beauty Store', 'Skin Beauty Store'),
         ('Dispatch Office', 'Dispatch Office'),
+        ('Atm Customization', 'Atm Customization'),
         ('Loan Business', 'Loan Business'),
         ('Children Wears', 'Children Wears'),
         ('Electrical/Electronics Store', 'Electrical/Electronics Store'),
@@ -45,6 +46,7 @@ class Customer(models.Model):
         ('Perfumery', 'Perfumery'),
         ('NGO', 'NGO'),
         ('Branding Business', 'Branding Business'),
+        ('Pastries & Cake', 'Pastries & Cakes'),
         ('Mtn Service Provider Business', 'Mtn Service Provider Business'),
         ('Cyber Cafe', 'Cyber Cafe'),
         ('Wood Floor Trader', 'Wood Floor Trader'),
@@ -108,6 +110,7 @@ class Customer(models.Model):
     TITLE_CHOICES = [
         ("Mr", "Mr"),
         ("Mrs", "Mrs"),
+        ('Miss', 'Miss'),
         ("Engr.", "Engr."),
         ("Dr.", "Dr."),
         ("Miss", "Miss"),
