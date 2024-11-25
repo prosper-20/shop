@@ -47,6 +47,7 @@ class Customer(models.Model):
         ('Branding Business', 'Branding Business'),
         ('Mtn Service Provider Business', 'Mtn Service Provider Business'),
         ('Cyber Cafe', 'Cyber Cafe'),
+        ('Wood Floor Trader', 'Wood Floor Trader'),
         ("Others", "Others")
         
     ]
@@ -81,6 +82,7 @@ class Customer(models.Model):
     ("Gombe", "Gombe"),
     ("Imo", "Imo"),
     ("Jigawa", "Jigawa"),
+    ("Jos", "Jos"),
     ("Kaduna", "Kaduna"),
     ("Kano", "Kano"),
     ("Katsina", "Katsina"),
@@ -116,8 +118,8 @@ class Customer(models.Model):
     title = models.CharField(max_length=10, choices=TITLE_CHOICES, default="Mr")
     name = models.CharField(max_length=100)
     business = models.CharField(max_length=225)
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=11, unique=True)
+    email = models.EmailField()
+    phone = models.CharField(max_length=11)
     dob = models.DateField(default=None)
     address = models.CharField(max_length=225)
     state = models.CharField(max_length=225, choices=STATES)
