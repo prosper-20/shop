@@ -97,6 +97,13 @@ def shop_form(request, id=0):
         return redirect('shop')
     
 
+@login_required
+def shop_detail(request, shop_no):
+    shop = get_object_or_404(Shop, no=shop_no)
+
+    return render(request, "shop/detail.html", {"shop": shop, "title": "Shop Detail"})
+    
+
 
 @login_required
 def new_shop_form(request):

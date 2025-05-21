@@ -5,6 +5,7 @@ from web.views import home, dashboard
 urlpatterns = [
     path('', dashboard, name="home-dashboard"),
     path('shop/', views.shop, name="shop"),
+    path('shop/<str:shop_no>/detail/', views.shop_detail, name="shop-detail"),
     path('shop/generate/', views.generate_shops, name="generate"),
     path('shops/', views.myshops, name="all-shops"),
     path('shop/create/', views.new_shop_form, name="shop-create"),

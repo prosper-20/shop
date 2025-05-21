@@ -35,8 +35,9 @@
                             <td>Shop Price</td>
                             <td>Shop Size</td>
                             <td>Approval Status</td>
-                            <td>Details</td>
-                            <td>Generate Advice | Old | New</td>
+                            <!-- <td>Details</td> -->
+                            <td>Generate Advice |Old|New</td>
+                            <td>Action</td>
                             
                             <!-- <td>Shop Rent</td> -->
                              {% if user.is_superuser %}
@@ -62,24 +63,31 @@
                         
 
                         <!-- <td>{{shop.shop_rent}}</td> -->
-                         {% if user.is_staff or user.is_superuser %}
+                         <!-- {% if user.is_staff or user.is_superuser %}
                         <td>
                          <a href="{% url 'admin-edit-shop-form' shop.no %}" class="btn btn-outline-success">
                          VIEW
                          </a>
                         </td>
                         
-                        {% endif %}
-                        <td>
+                        {% endif %} -->
+                        <!-- <td>
                             <a href="{% url 'generate-payment-advice-old' shop.no %}" class="btn btn-outline-success btn-sm">
                             View Advice (Old)
                             </a>
-                           </td>
+                           </td> -->
                         <td>
                             <a href="{% url 'generate-shop-paymrnt-advice' shop.no %}" class="btn btn-outline-success btn-sm">
                             View Advice (New)
                             </a>
                            </td>
+
+                        <td>
+                            <a href="{% url 'shop-detail' shop.no %}" class="btn btn-outline-success btn-sm">
+                            Shop Info
+                            </a>
+                           </td>
+                        <td>
                         
                         </tr>
                         {% endfor %}
