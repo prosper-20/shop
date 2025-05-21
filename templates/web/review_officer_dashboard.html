@@ -831,7 +831,7 @@
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
-                      <div class="card-title">Customers Awaiting Approval ({{ customers_awaiting_approval|length }})</div>
+                      <div class="card-title">Customers Awaiting Review ({{ customers_awaiting_review|length }})</div>
                       <div class="card-tools">
                         <a
                           href="#"
@@ -866,16 +866,13 @@
                             </tr>
                           </thead>
                           <tbody>
-                            {% for customer in customers_awaiting_approval %}
+                            {% for customer in customers_awaiting_review %}
                             <tr>
                               <th scope="row">{{ customer.no }}</th>
                               <td>{{ customer.name }}</td>
                               <td>{{ customer.phone }}</td>
-                              {% if user.is_authenticated and user.is_staff and not user.is_superuser %}
                               <td><a href="{% url 'update-customer-form' customer.no %}">Review</a></td>
-                              {% elif user.is_authenticated and user.is_superuser %}
-                              <td><a href="{% url 'admin-update-customer-form' customer.no %}">Approve</a></td>
-                              {% endif %}
+                              
                               <!-- <td>@mdo</td> -->
                             </tr>
                             {% endfor %}
@@ -900,7 +897,8 @@
                   </div>
                 </div>
               </div>
-              
+              <!-- END OF TABLE FOR REVIEW ENTRY OFFICER -->
+
               <div class="col-md-4">
                 <div class="card card-primary card-round">
                   <div class="card-header">
@@ -953,10 +951,8 @@
                   </div>
                 </div>
               </div>
-           
               
             </div>
-
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
@@ -1096,177 +1092,8 @@
                 </div>
               </div>
             </div>
-            
             <div class="row">
-              <div class="col-md-4">
-                <div class="card card-round">
-                  <div class="card-body">
-                    <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">All Customers ({{ all_customers| length}})</div>
-                      <div class="card-tools">
-                        <!-- <i class="fa fa-eye"><a href=""><i></i></a> -->
-                        <a href="{% url 'customer' %}"><i class="fa fa-eye fa-lg"></i></a>
-                        <!-- <div class="dropdown">
-                          <button
-                            class="btn btn-icon btn-clean me-0"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fa fa-eye"><a href="{% url 'customer' %}"></a></i>
-                            
-                          </button> -->
-                          <!-- <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
-                          </div> -->
-                        <!-- </div> -->
-                      </div>
-                    </div>
-                    <div class="card-list py-4">
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="{% static 'web/web_dashboard/assets/img/jm_denis.jpg' %}"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Jimmy Denis</div>
-                          <div class="status">Graphic Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white"
-                            >CF</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chandra Felix</div>
-                          <div class="status">Sales Promotion</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="{% static 'web/web_dashboard/assets/img/talha.jpg' %}"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Talha</div>
-                          <div class="status">Front End Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- {% for user in all_customers %}
-                      <div class="item-list">
-                        {% if user.profile.image %}
-                        <div class="avatar">
-                          <img
-                            src="{{ user.profile.image.url }}"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        {% else %}
-                        <div class="avatar">
-                          <img
-                            src="/user.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        {% endif %}
-                        <div class="info-user ms-3">
-                          <div class="username">{{ user.name|title }}</div>
-                          <div class="status">{{ user.occupation }}</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <a href="{% url 'update-customer-form' user.no %}"><i class="fas fa-user"></i></a>
-
-                        </button>
-                        {% if user.approval %}
-                        <button class="btn btn-icon btn-link btn-primary op-8">
-                          <i class="fas fa-check-circle"></i>
-                        </button>
-                        {% else %}
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-times-circle"></i>
-                        </button>
-                        {% endif %}
-
-                      </div>
-                      {% endfor %} -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-primary"
-                            >H</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Hizrian</div>
-                          <div class="status">Web Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-secondary"
-                            >F</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Farrah</div>
-                          <div class="status">Marketing</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8">
+              <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row card-tools-still-right">

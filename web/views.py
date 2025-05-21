@@ -5,13 +5,20 @@ from django.contrib.auth import authenticate, login, logout,  get_user_model
 from .models import Contact
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from account.decorators import admin_required
-# from .forms import RetrieveCustomerProfileForm
 from shop.models import Shop, Rent, Income
 from customer.forms import CustomerForm
 from customer.models import Customer
 
 User = get_user_model()
+
+
+def is_review_officer(user):
+    return user.is_staff
+
+def is_admin_officer(user):
+    return user.is_superuser
 
 def staff_login(request):
     if request.method == 'POST':
@@ -50,8 +57,12 @@ def customer_login(request):
 
         if user is not None:
             login(request, user)
-            # Redirect to a success page, or wherever you want
-            return redirect(reverse('dashboard'))  # Replace 'home' with your desired URL name
+            if user.is_staff and not user.is_superuser:
+                return redirect(reverse('review-officer-dashboard'))
+            elif user.is_superuser:
+                return redirect(reverse('dashboard'))
+            else:
+                return redirect(reverse('data-entry-dashboard'))  # Replace 'home' with your desired URL name
         else:
             messages.error(request, "Invalid email address or password.")
             return redirect(reverse('login'))
@@ -126,6 +137,81 @@ def home(request):
     
 
 @login_required
+def data_entry_dashbaord(request):
+    users = User.objects.filter(is_staff=False)
+    users_count = User.objects.filter(is_staff=False).count()
+    no_of_due_rents = Rent.rents_due_count()
+    no_of_paid_rents = Rent.rents_paid_count()
+    no_of_shops = Shop.objects.all().count()
+    all_customers = Customer.objects.all()
+    allocated_shops = Shop.allocated_shops_count
+    expected_rent_fees = Shop.expected_rent_fees
+    sum_of_paid_rents = Shop.total_paid_shops_price()
+    owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
+    customers_awaiting_review = Customer.objects.filter(is_reviewed=False)
+    customers_awaiting_approval = Customer.objects.filter(approval=False)
+    no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
+
+    context = {"users": users, "daily_income_total": 0,
+                "weekly_income_total": 0,
+                "yearly_income_total": 0,
+                    "nina_daily_income": 0, "nina_weekly_income":0, 
+                    "nina_yearly_income": 0, 
+                    "chairman_daily_income": 0, 
+                    "chairman_weekly_income": 0, 
+                    "chairman_yearly_income": 0, 
+                    "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
+                    "customers_awaiting_approval": customers_awaiting_approval,
+                    "customers_awaiting_review": customers_awaiting_review,
+                    "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
+                    "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
+                    "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
+                    "sum_of_paid_rents": sum_of_paid_rents,
+                    "owing_customers": owing_customers, 
+                     
+                    "current_user": request.user, "all_income": 0}
+    
+    return render(request, "web/data_entry_dashboard.html", context)
+
+
+@user_passes_test(is_review_officer)
+def review_officer_dashboard(request):
+    users = User.objects.filter(is_staff=False)
+    users_count = User.objects.filter(is_staff=False).count()
+    no_of_due_rents = Rent.rents_due_count()
+    no_of_paid_rents = Rent.rents_paid_count()
+    no_of_shops = Shop.objects.all().count()
+    all_customers = Customer.objects.all()
+    allocated_shops = Shop.allocated_shops_count
+    expected_rent_fees = Shop.expected_rent_fees
+    sum_of_paid_rents = Shop.total_paid_shops_price()
+    owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
+    customers_awaiting_review = Customer.objects.filter(is_reviewed=False)
+    customers_awaiting_approval = Customer.objects.filter(approval=False)
+    no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()
+
+    context = {"users": users, "daily_income_total": 0,
+                "weekly_income_total": 0,
+                "yearly_income_total": 0,
+                    "nina_daily_income": 0, "nina_weekly_income":0, 
+                    "nina_yearly_income": 0, 
+                    "chairman_daily_income": 0, 
+                    "chairman_weekly_income": 0, 
+                    "chairman_yearly_income": 0, 
+                    "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
+                    "customers_awaiting_approval": customers_awaiting_approval,
+                    "customers_awaiting_review": customers_awaiting_review,
+                    "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
+                    "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
+                    "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
+                    "sum_of_paid_rents": sum_of_paid_rents,
+                    "owing_customers": owing_customers, 
+                     
+                    "current_user": request.user, "all_income": 0}
+    
+    return render(request, "web/review_officer_dashboard.html", context)
+
+@user_passes_test(is_admin_officer)
 def dashboard(request):
     if request.method == "POST":
         searched = request.POST.get("search_term")

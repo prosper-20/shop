@@ -22,6 +22,24 @@
                 </div> -->
 
                 <div class="col-md-12">   <!--You changed this to 12 from 10-->
+                    <!-- Search Form -->
+                        <form method="get" class="float-end">
+                            <div class="input-group mb-3">
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="search" 
+                                    placeholder="Search customers..." 
+                                    value="{{ search_query|default:'' }}">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                                {% if search_query %}
+                                    <a href="{% url 'customer' %}" class="btn btn-outline-danger">
+                                        <i class="bi bi-x"></i> Clear
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </form>
                     <table class="table table-hover  table-striped table-borderless">
                         <thead class="table-dark border-bottom">
                             <tr>
@@ -37,7 +55,7 @@
                         </thead>
     
                         <tbody>
-                            {% for customer in customer_list %}
+                            {% for customer in page_obj %}
                             <tr>
     
                             <td>{{customer.no}}</td>
@@ -57,6 +75,26 @@
                             
                         </tbody>
                         </table>
+
+                        <!-- Pagination controls -->
+                        <div class="pagination justify-content-center">
+                        <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="btn btn-sm btn-outline-primary">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm btn-outline-primary">previous</a>
+                        {% endif %}
+                    
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                    
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm btn-outline-primary">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-sm btn-outline-primary">last &raquo;</a>
+                        {% endif %}
+                        </span>
+            </div>
+
                 </div>
     </div>
 

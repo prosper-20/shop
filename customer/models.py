@@ -142,6 +142,8 @@ class Customer(models.Model):
     approval =models.BooleanField(default=False)
     exitdate = models.DateField(blank=True, null=True)
     nextdue = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):

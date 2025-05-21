@@ -13,6 +13,7 @@ from django.core.mail import send_mail
 from decimal import Decimal
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import user_passes_test
 import weasyprint
 
 def generate_shops(request):
@@ -126,8 +127,10 @@ def edit_shop_form(request, shop_no):
 
     return render(request, 'shop/edit_shop_form.html', {'form': form})
 
+def is_admin(user):
+    return user.is_superuser or user.is_staff
 
-@login_required
+@user_passes_test(is_admin)
 def admin_edit_shop_form(request, shop_no):
     # Fetch the Shop instance using the shop number
     shop = get_object_or_404(Shop, no=shop_no)

@@ -827,11 +827,13 @@
             
              
             <div class="row">
-              <div class="col-md-8">
+              <!-- IF THE USER IS A DATA ENTRY OFFICER, MAKE THE TABLE FULL -->
+              
+              <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
-                      <div class="card-title">Customers Awaiting Approval ({{ customers_awaiting_approval|length }})</div>
+                      <div class="card-title">All Customers ({{ all_customers|length }})</div>
                       <div class="card-tools">
                         <a
                           href="#"
@@ -861,21 +863,18 @@
                               <th scope="col">ID</th>
                               <th scope="col">Name</th>
                               <th scope="col">Phone</th>
-                              <th scope="col">Action</th>
+                              <th scope="col">Business Name</th>
                               <!-- <th scope="col">Handle</th> -->
                             </tr>
                           </thead>
                           <tbody>
-                            {% for customer in customers_awaiting_approval %}
+                            {% for customer in all_customers %}
                             <tr>
                               <th scope="row">{{ customer.no }}</th>
                               <td>{{ customer.name }}</td>
                               <td>{{ customer.phone }}</td>
-                              {% if user.is_authenticated and user.is_staff and not user.is_superuser %}
-                              <td><a href="{% url 'update-customer-form' customer.no %}">Review</a></td>
-                              {% elif user.is_authenticated and user.is_superuser %}
-                              <td><a href="{% url 'admin-update-customer-form' customer.no %}">Approve</a></td>
-                              {% endif %}
+                              <td>{{ customer.business }}</td>
+                              
                               <!-- <td>@mdo</td> -->
                             </tr>
                             {% endfor %}
@@ -900,7 +899,14 @@
                   </div>
                 </div>
               </div>
+              <!-- END OF TABLE FOR DATA ENTRY OFFICER -->
+
               
+              
+
+
+              <!-- THIS MAKES SURE THE RENT STUFF ONLY SHOWS FOR THE ADMIN AND REVIEWERS ALONE -->
+              {% if user.is_authenticated and user.is_staff %}
               <div class="col-md-4">
                 <div class="card card-primary card-round">
                   <div class="card-header">
@@ -953,320 +959,14 @@
                   </div>
                 </div>
               </div>
-           
+              {% endif %}
               
             </div>
+            <!-- END OF THE  TABLE FOR DATA ENTRY OFFICERS -->
 
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row card-tools-still-right">
-                      <h4 class="card-title">Cash Inflow from Customers</h4>
-                      <div class="card-tools">
-                        <button
-                          class="btn btn-icon btn-link btn-primary btn-xs"
-                        >
-                          <span class="fa fa-angle-down"></span>
-                        </button>
-                        <button
-                          class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"
-                        >
-                          <span class="fa fa-sync-alt"></span>
-                        </button>
-                        <button
-                          class="btn btn-icon btn-link btn-primary btn-xs"
-                        >
-                          <span class="fa fa-times"></span>
-                        </button>
-                      </div>
-                    </div>
-                    <p class="card-category">
-                      Table showing staff contribution in numbers
-                    </p>
-                  </div>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="table-responsive table-hover table-sales">
-                          <table class="table">
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/id.png' %}"
-                                      alt="indonesia"
-                                    />
-                                  </div> -->
-                                  <strong>Receipts</strong>
-                                </td>
-                                
-                                <td><strong>Nina(₦)</strong></td>
-                                <td class="text-end"><strong>Chairman(₦)</strong></td>
-                                <td class="text-end"><strong>Total Receipts(₦)</strong></td>
-      
-                              </tr>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/us.png' %}"
-                                      alt="united states"
-                                    />
-                                  </div> -->
-                                  <p><strong>Daily</strong></p>
-                                </td>
-
-                                <td><strong>{{ nina_daily_income }}</strong></td>
-                                <td class="text-end"><strong>{{ chairman_daily_income }}</strong></td>
-                                <td class="text-end"><strong>{{ daily_income_total }}</strong></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/au.png' %}"
-                                      alt="australia"
-                                    />
-                                  </div> -->
-                                  
-                                  <strong>Weekly</strong>
-                                </td>
-                                <td><strong>{{ nina_weekly_income }}</strong></td>
-                                <td class="text-end"><strong>{{ chairman_weekly_income }}</strong></td>
-                                <td class="text-end"><strong>{{ weekly_income_total }}</strong></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/ru.png' %}"
-                                      alt="russia"
-                                    />
-                                  </div> -->
-                                  <strong>Yearly</strong>
-                                </td>
-                                <td><strong>{{ nina_yearly_income }}</strong></td>
-                                <td class="text-end"><strong>{{ chairman_yearly_income }} </strong></td>
-                                <td class="text-end"><strong>{{ yearly_income_total}}</strong></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/cn.png' %}"
-                                      alt="china"
-                                    />
-                                  </div> -->
-                                  <strong>Year-to-date</strong>
-                                </td>
-                                <td><strong>110,234,346.70</strong> </td>
-                                <td class="text-end"><strong>200,000,345.21</strong> </td>
-                                <td class="text-end"><strong>400,000,000.23</strong></td>
-                              </tr>
-                              <!-- <tr>
-                                <td>
-                                  <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/br.png' %}"
-                                      alt="brazil"
-                                    />
-                                  </div>
-                                </td>
-                                <td>Brasil</td>
-                                <td class="text-end">640</td>
-                                <td class="text-end">11.63%</td>
-                              </tr> -->
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      <!-- <div class="col-md-6">
-                        <div class="mapcontainer">
-                          <div
-                            id="world-map"
-                            class="w-100"
-                            style="height: 300px"
-                          ></div>
-                        </div>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             
             <div class="row">
-              <div class="col-md-4">
-                <div class="card card-round">
-                  <div class="card-body">
-                    <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">All Customers ({{ all_customers| length}})</div>
-                      <div class="card-tools">
-                        <!-- <i class="fa fa-eye"><a href=""><i></i></a> -->
-                        <a href="{% url 'customer' %}"><i class="fa fa-eye fa-lg"></i></a>
-                        <!-- <div class="dropdown">
-                          <button
-                            class="btn btn-icon btn-clean me-0"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fa fa-eye"><a href="{% url 'customer' %}"></a></i>
-                            
-                          </button> -->
-                          <!-- <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
-                          </div> -->
-                        <!-- </div> -->
-                      </div>
-                    </div>
-                    <div class="card-list py-4">
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="{% static 'web/web_dashboard/assets/img/jm_denis.jpg' %}"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Jimmy Denis</div>
-                          <div class="status">Graphic Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white"
-                            >CF</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chandra Felix</div>
-                          <div class="status">Sales Promotion</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="{% static 'web/web_dashboard/assets/img/talha.jpg' %}"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Talha</div>
-                          <div class="status">Front End Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- {% for user in all_customers %}
-                      <div class="item-list">
-                        {% if user.profile.image %}
-                        <div class="avatar">
-                          <img
-                            src="{{ user.profile.image.url }}"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        {% else %}
-                        <div class="avatar">
-                          <img
-                            src="/user.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        {% endif %}
-                        <div class="info-user ms-3">
-                          <div class="username">{{ user.name|title }}</div>
-                          <div class="status">{{ user.occupation }}</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <a href="{% url 'update-customer-form' user.no %}"><i class="fas fa-user"></i></a>
-
-                        </button>
-                        {% if user.approval %}
-                        <button class="btn btn-icon btn-link btn-primary op-8">
-                          <i class="fas fa-check-circle"></i>
-                        </button>
-                        {% else %}
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-times-circle"></i>
-                        </button>
-                        {% endif %}
-
-                      </div>
-                      {% endfor %} -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-primary"
-                            >H</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Hizrian</div>
-                          <div class="status">Web Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                      <!-- <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-secondary"
-                            >F</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Farrah</div>
-                          <div class="status">Marketing</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8">
+              <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row card-tools-still-right">
@@ -1327,97 +1027,7 @@
                             </td>
                           </tr>
                           {% endfor %}
-                          <!-- </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">₦250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr> -->
+
                         </tbody>
                       </table>
                     </div>

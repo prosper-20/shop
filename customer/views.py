@@ -13,6 +13,8 @@ import weasyprint
 import datetime
 import csv
 from django.utils.dateparse import parse_date
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 def is_admin(user):
     return user.is_superuser or user.is_staff
@@ -21,13 +23,33 @@ def is_admin(user):
 @login_required
 def customer (request):
     count = Customer.objects.exclude(status='exited').count()
-    customers = Customer.objects.all()
-    nature_counts = Counter(customers.values_list('nature', flat=True))
+    search_query = request.GET.get('search', '')
+    customer_list = Customer.objects.all().order_by('-created_at')
+    
+    if search_query:
+        customer_list = customer_list.filter(
+            Q(name__icontains=search_query) |
+            Q(business__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(phone__icontains=search_query) |
+            Q(no__icontains=search_query)
+        )
+    
+    paginator = Paginator(customer_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    nature_counts = Counter(Customer.objects.values_list('nature', flat=True))
     labels = list(nature_counts.keys())
     data = list(nature_counts.values())
-
     
-    return render(request, 'customer/customer.html', {'count': count, 'customer_list' : Customer.objects.all(), 'labels': labels, 'data': data})
+    return render(request, 'customer/customer.html', {
+        'count': count,
+        'page_obj': page_obj,
+        'labels': labels,
+        'data': data,
+        'search_query': search_query
+    })
 
 @login_required
 def customer_form(request, id=0):
@@ -94,6 +116,8 @@ def admin_update_customer_form(request, customer_no):
         form = ApproverEditCustomerForm(request.POST, instance=customer)
         if form.is_valid():
             form.save()
+            customer.approval = True
+            customer.save()
             messages.success(request, "Customer Account Updated Successfully")
             return redirect(reverse("customer"))
     return render(request, "customer/approver_customer_admin_update_customer_form.html", {"form": form})
