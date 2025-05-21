@@ -88,11 +88,10 @@ class AdminEditMyShopForm(forms.ModelForm):
 class CreateRentForm(forms.ModelForm):
     class Meta:
         model = Rent
-        fields = ('shop', 'customer', 'rent_type', 'date_paid', 'is_paid',  'rent_start', 'date_due', 'is_expired')
+        fields = ('shop', 'customer',  'rent_type', 'amount_paid', 'date_paid', 'rent_start')
         labels = {
             'date_paid': 'Payment Date',
-            'is_paid': 'Is Paid',
-            'is_expired': 'Is Expired',
+            'amount_paid': 'Amount Paid',
             'rent_start': 'Rent Start Date',
             'date_due': 'Rent Due Date',
             }
@@ -102,6 +101,13 @@ class CreateRentForm(forms.ModelForm):
             'date_due': forms.DateInput(attrs={"type": 'date'}),
             'rent_start': forms.DateInput(attrs={"type": 'date'})
         }
+
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Filter shops to only show vacant ones
+        self.fields['shop'].queryset = Shop.objects.filter(status='vacant')
 
     def clean(self):
         cleaned_data = super().clean()

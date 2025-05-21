@@ -1,6 +1,147 @@
-{% extends "rent/base.html" %}
+{% extends 'base.html' %} {% block title %} Rents | Nina Sky Innovation Limited {% endblock %}
+
 {% block content %}
-    {% for rent in rents %}
+
+<div class="container ml-3 mr-3">
+    <div class ="row">
+      <div class="col-md-9">
+          <h3>Rent Management Page</h3>
+      </div>
+      <div class="col-md-3">
+      
+      </div>
+    </div>
+
+    <br><br>
+    <div class ="row">
+    <div class="col-md-12">
+        <table class="table  table-hover  table-striped table-borderless">
+          <thead class="table-dark border-bottom font-weight-bold">
+              <tr>
+                  <td>Shop No</td>
+                  <td>Rent Type</td>
+                  <td>Customer Name</td>
+                  <td>Amount Paid</td>
+                  <td>Rent Start Date</td>
+                  <td>Rent Due Date</td>
+                  
+                  <!-- <td>Generate Advice |Old|New</td>
+                  <td>Action</td> -->
+                  
+                  <!-- <td>Shop Rent</td> -->
+                    <!-- {% if user.is_superuser %}
+                  <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
+                  {% endif %} -->
+
+              </tr>
+          </thead>
+
+        <tbody>
+            {% for rent in rents %}
+            <tr>
+
+            <td><a style="color: black;" href="">{{rent.shop.no}}</a></td>
+            <td>{{rent.rent_type}}</td>
+            <td>{{rent.customer.name}}</td>
+            <td>₦ {{ rent.amount_paid }}</td>
+            <td>{{rent.rent_start}}</td>
+            <td>{{rent.date_due}}</td>
+            <!-- {% if shop.is_approved %}
+            <td>Approved</td>
+            {% else %}
+            <td>Pending</td>
+            {% endif %}
+            
+                </td>
+            <td>
+                <a href="" class="btn btn-outline-success btn-sm">
+                View Advice (New)
+                </a>
+                </td>
+
+            <td>
+                <a href="" class="btn btn-outline-success btn-sm">
+                Shop Info
+                </a>
+                </td>
+            <td>
+            
+            </tr> -->
+            {% endfor %}
+                
+            </tbody>
+            
+            
+            </table>
+            <br/></br>
+          
+
+            {% if shops.has_previous %}
+                <a href="?page=1"&laquo First<< </a>
+                <a href="?page={{ shops.previous_page_numer }}">Previous</a>
+            {% endif %}
+            Page {{ shops.number }} of {{ shops.pagintor.num_pages }}
+
+            {% if shops.has_next %}
+                <a href="?page={{shops.next_page_number }}">next</a>
+                <a href="?page={{ shops.paginator.num_pages }}">Last &raquo </a>
+            {% endif %}
+        </div>
+        </div>
+
+      </div>
+
+</div>
+</div>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('allocationChart').getContext('2d');
+        var allocationChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Allocated', 'Vacant'],
+                datasets: [{
+                    data: [{{ allocated_count }}, {{ vacant_count }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock content %}
+
+
+
+    <!-- {% for rent in rents %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
@@ -17,5 +158,4 @@
           {% endif %}
           </div>
         </article>
-    {% endfor %}
-{% endblock content %}
+    {% endfor %} -->

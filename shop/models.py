@@ -192,6 +192,7 @@ class Rent(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.Model)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
+    amount_paid = models.DecimalField(max_digits=12, decimal_places=2)
     date_paid = models.DateTimeField()
     is_paid = models.BooleanField(default=False)
     is_expired = models.BooleanField(default=False)  # New field
@@ -200,19 +201,7 @@ class Rent(models.Model):
 
     def __str__(self):
         return self.shop.name
-    
-    # def save(self, *args, **kwargs):
-    #     # Calculate the due date based on rent_type
-    #     if self.rent_type == "Monthly":
-    #         self.date_due = self.rent_start + timedelta(days=30)
-    #     elif self.rent_type == "Yearly":
-    #         self.date_due = self.rent_start + timedelta(days=365)
-    #     elif self.rent_type == "Lease":
-    #         # Set your custom lease duration here
-    #         # For example, assuming a lease is for 6 months
-    #         self.date_due = self.rent_start + timedelta(days=180)
 
-    #     super().save(*args, **kwargs)
     
     @property
     def is_due(self):

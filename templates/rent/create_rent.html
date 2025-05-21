@@ -7,15 +7,75 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4"><h3>Create Allocation</h3></legend>
                 {{ form|crispy }}
+
+                <!-- Hidden or readonly field for date_due (optional) -->
+    <div class="form-group">
+        <label for="date_due">Rent Due Date</label>
+        <input 
+            type="date" 
+            class="form-control" 
+            id="date_due" 
+            name="date_due" 
+            readonly
+        >
+    </div>
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Assign Shop</button>
             </div>
         </form>
+
         <!-- <div class="border-top pt-3">
             <small class="text-muted">
                 Already Have An Account? <a class="ml-2" href="">Sign In</a>
             </small>
         </div> -->
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const rentTypeField = document.getElementById('id_rent_type');
+    const rentStartField = document.getElementById('id_rent_start');
+    const dateDueField = document.getElementById('date_due');
+
+    function calculateDueDate() {
+        const rentType = rentTypeField.value;
+        const rentStart = rentStartField.value;
+        
+        if (!rentType || !rentStart) return;
+
+        const startDate = new Date(rentStart);
+        let dueDate = new Date(startDate);
+
+        switch (rentType) {
+            case 'Monthly':
+                dueDate.setMonth(dueDate.getMonth() + 1);
+                break;
+            case 'Weekly':
+                dueDate.setDate(dueDate.getDate() + 7);
+                break;
+            case 'Yearly':
+            case '1 year':
+                dueDate.setFullYear(dueDate.getFullYear() + 1);
+                break;
+            case '2 year(s)':
+                dueDate.setFullYear(dueDate.getFullYear() + 2);
+                break;
+            case '5 years':
+                dueDate.setFullYear(dueDate.getFullYear() + 5);
+                break;
+            case 'Lease':
+                dueDate.setFullYear(dueDate.getFullYear() + 1); // Default lease
+                break;
+        }
+
+        // Format as YYYY-MM-DD (for HTML date input)
+        const formattedDate = dueDate.toISOString().split('T')[0];
+        dateDueField.value = formattedDate;
+    }
+
+    // Update when rent_type or rent_start changes
+    rentTypeField.addEventListener('change', calculateDueDate);
+    rentStartField.addEventListener('change', calculateDueDate);
+});
+</script>
 {% endblock content %}

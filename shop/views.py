@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -158,9 +159,18 @@ def admin_edit_shop_form(request, shop_no):
 def create_rent(request):
     if request.method == "POST":
         form = CreateRentForm(request.POST)
+        due_date_str = request.POST.get("date_due")
+        print("abdbd", due_date_str)
+        # print(type(due_date))
+        due_date = datetime.strptime(due_date_str, "%Y-%m-%d").date()
+
+
         if form.is_valid():
+            form.save(commit=False)
+            form.instance.date_due = due_date
+            form.instance.shop.status = "allocated"
             form.save()
-            messages.success(request, "Rent successfully logged!")
+            messages.success(request, "Rent creation successful")
             return redirect(reverse("list-shop-rents"))
         messages.error(request, "Something went wrong")
         return redirect(reverse("create-shop-rent"))
