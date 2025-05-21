@@ -12,8 +12,12 @@
                 
             {{ form }}
 
-            <button class="form-submit">Login</button>
-            <input type="hidden" name="next" value="{{ next }}">
+            <!-- <button class="form-submit">Login</button>
+            <input type="hidden" name="next" value="{{ next }}"> -->
+
+            <div class="text-center mt-3">
+            <a class="btn-success" href="{% url 'password_reset' %}">Forgot password?</a>
+        </div>
                  
                 
         </form>

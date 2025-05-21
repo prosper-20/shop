@@ -188,10 +188,21 @@ LOGOUT_REDIRECT_URL = "/web/dashboard/"
 # DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = config("SENDGRID_API_KEY")
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True 
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("GMAIL_APP_PASSOWRD")
+
+# Password reset settings
 
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
