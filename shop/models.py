@@ -375,7 +375,7 @@ class Income(models.Model):
     new_weekly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
     yearly = models.DecimalField(max_digits=15, decimal_places=2,  default=Decimal("0.00"))
     new_yearly = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
-    date_created = models.DateTimeField(default=timezone.now())
+    date_created = models.DateTimeField(default=timezone.now)
 
     # def save(self, *args, **kwargs):
     #     # Check if new_daily is provided and not None

@@ -8,16 +8,27 @@ from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 
 
+class Role(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField()
+
+    def __str__(self):
+        return self.name
+    
+
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=25)
     email = models.EmailField(_("email address"), unique=True)
-    is_approved = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=11, help_text="Enter your phone number")
+    is_approved = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
+    REQUIRED_FIELDS = ["username", "phone_number"]
 
     objects = CustomUserManager()
 
@@ -96,12 +107,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 #             self.invoice.save()
 
 
-class Role(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField()
 
-    def __str__(self):
-        return self.name
 
 
 NATURE = [

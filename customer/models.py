@@ -133,7 +133,7 @@ class Customer(models.Model):
     occupation = models.CharField(max_length=50)
     nature = models.CharField(max_length=255, choices=NATURE, default="")
     status = models.CharField(max_length=10, choices=STATUS, default='')
-    is_reviewed = models.CharField(max_length=100, choices=REVIWED_CHOICES, default="Not Reviewed")
+    is_reviewed = models.BooleanField(default=True)
     date = models.DateField()
     outstanding_balance = models.IntegerField(blank=True, null=True)
     data_entry_officer_note = models.TextField(max_length=1000, blank=True, null=True)

@@ -102,7 +102,7 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
+# DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -173,6 +173,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/web/dashboard/"
 
 LOGIN_URL = '/web/login/staff/'
+
+LOGOUT_REDIRECT_URL = "/web/dashboard/"
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

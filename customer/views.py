@@ -57,7 +57,7 @@ def new_customer_form(request):
         form = CustomerForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Customer Account Successful")
+            messages.success(request, "Customer Account  Creation Successful")
             return redirect('customer')
     return render(request, "customer/customer_form.html", {"form": form})
 
@@ -71,10 +71,13 @@ def update_customer_form(request, customer_no):
     customer = get_object_or_404(Customer, no=customer_no)
     if request.method == "GET":
         form = ReviwerEditCustomerForm(instance=customer)
+        
     else:
         form = ReviwerEditCustomerForm(request.POST, instance=customer)
         if form.is_valid():
             form.save()
+            customer.is_reviewed = True
+            customer.save()
             messages.success(request, "Customer Account Updated Successfully")
             return redirect(reverse("customer"))
     return render(request, "customer/customer_admin_update_customer_form.html", {"form": form})
