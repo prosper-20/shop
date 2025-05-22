@@ -27,6 +27,24 @@
                     </div> -->
 
             <div class="col-md-12">
+                                    <!-- Search Form -->
+                        <form method="get" class="float-end">
+                            <div class="input-group mb-3">
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="search" 
+                                    placeholder="Search shops..." 
+                                    value="{{ search_query|default:'' }}">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                                {% if search_query %}
+                                    <a href="{% url 'all-shops' %}" class="btn btn-outline-danger">
+                                        <i class="bi bi-x"></i> Clear
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </form>
                 <table class="table  table-hover  table-striped table-borderless">
                     <thead class="table-dark border-bottom font-weight-bold">
                         <tr>
@@ -48,7 +66,7 @@
                     </thead>
 
                     <tbody>
-                        {% for shop in all_shops %}
+                        {% for shop in page_obj %}
                         <tr>
 
                         <td><a style="color: black;" href="{% url 'admin-edit-shop-form' shop.no %}">{{shop.no}}</a></td>
@@ -99,16 +117,23 @@
                     <br/></br>
                   
 
-                    {% if shops.has_previous %}
-                        <a href="?page=1"&laquo First<< </a>
-                        <a href="?page={{ shops.previous_page_numer }}">Previous</a>
-                    {% endif %}
-                    Page {{ shops.number }} of {{ shops.pagintor.num_pages }}
-
-                    {% if shops.has_next %}
-                        <a href="?page={{shops.next_page_number }}">next</a>
-                        <a href="?page={{ shops.paginator.num_pages }}">Last &raquo </a>
-                    {% endif %}
+                                           <!-- Pagination controls -->
+                        <div class="pagination justify-content-center">
+                        <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="btn btn-sm btn-outline-primary">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm btn-outline-primary">previous</a>
+                        {% endif %}
+                    
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                    
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm btn-outline-primary">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-sm btn-outline-primary">last &raquo;</a>
+                        {% endif %}
+                        </span>
                 </div>
                 </div>
 

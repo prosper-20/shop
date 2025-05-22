@@ -16,6 +16,7 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import user_passes_test
 import weasyprint
+from django.db.models import Q
 
 
 def generate_shops(request):
@@ -75,8 +76,28 @@ def shop (request):
 @login_required
 def myshops(request):
     all_shops = Shop.objects.all().order_by("no")
-    context = {"all_shops": all_shops}
+    
+    search_query = request.GET.get('search', '')
+    print("asdfg", search_query)
+    shop_list = Shop.objects.all()
+
+    if search_query:
+        shop_list = shop_list.filter(
+            Q(no__icontains=search_query) |
+            Q(address__icontains=search_query) |
+            Q(size__icontains=search_query) 
+            
+        )
+
+    paginator = Paginator(shop_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {"all_shops": all_shops,  'search_query': search_query, "page_obj": page_obj}
     return render(request, "shop/myshop.html", context)
+
+
+    
 
 
 @login_required
