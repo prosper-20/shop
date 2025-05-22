@@ -38,13 +38,14 @@ class ShopForm(forms.ModelForm):
 class MyShopForm(forms.ModelForm):
     class Meta:
         model = Shop
-        fields = ('no', 'type', 'floor', 'price', 'size')
+        fields = ('no', 'type', 'floor', 'price', 'size', 'address')
         labels = {
             'no': 'Shop No',
             'type': 'Shop Type',
             'floor': 'Shop Floor',
             'price': 'Shop Price',
             'size' : 'Shop Size',
+            'address': 'Shop Address'
         }
 
     

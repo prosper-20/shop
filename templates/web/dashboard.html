@@ -869,7 +869,7 @@
                             {% for customer in customers_awaiting_approval %}
                             <tr>
                               <th scope="row">{{ customer.no }}</th>
-                              <td>{{ customer.name }}</td>
+                              <td>{{customer.title }} {{ customer.name|title }}</td>
                               <td>{{ customer.phone }}</td>
                               {% if user.is_authenticated and user.is_staff and not user.is_superuser %}
                               <td><a href="{% url 'update-customer-form' customer.no %}">Review</a></td>

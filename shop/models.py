@@ -211,9 +211,6 @@ class Shop(models.Model):
     
 
 RENT_TYPE = (
-    ("Monthly", "Monthly"),
-    ("Yearly", "Yearly"),
-    ("Lease", "Lease"),
     ("1 year", "1 year"),
     ("2 year(s)", "2 years(s)"),
     ("5 years", "5 years")

@@ -871,7 +871,7 @@
                             {% for customer in all_customers %}
                             <tr>
                               <th scope="row">{{ customer.no }}</th>
-                              <td>{{ customer.name }}</td>
+                              <td>{{ customer.title}} {{ customer.name|title }}</td>
                               <td>{{ customer.phone }}</td>
                               <td>{{ customer.business }}</td>
                               
