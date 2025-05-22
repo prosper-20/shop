@@ -10,7 +10,7 @@
 
     <div style="background-color: #f5f5f5; padding: 20px;">
         <!-- <h2 style="color: #333;">Rent Payment Reminder</h2> -->
-        <p>Dear {{ customer.title }} {{ customer.name }}</p>
+        <p>Dear {{ customer.title }} {{ customer.name }},</p>
         <p>I hope this message finds you well.</p>
         <p>We are delighted to inform you that your payment for the shop has been
 successfully received and processed. As a result, we have allocated the following
@@ -20,7 +20,7 @@ shop to you:</p>
         <p>Shop Type: {{ shop.type }}</p>
         <p>Shop size: {{ shop.size }}</p>
         <p>Shop address: {{ shop.address }}</p>
-        <p>Allocation Date: {{ rent.start_date }}</p>
+        <p>Allocation Date: {{ rent.rent_start }}</p>
 <p>Your new shop is now officially assigned to you, and you can start utilizing it
 immediately. Should you have any questions or require further assistance, please feel free to
 contact our support team at [Support Email] or call us at [Support Phone
