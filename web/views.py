@@ -155,21 +155,21 @@ def data_entry_dashbaord(request):
     context = {"users": users, "daily_income_total": 0,
                 "weekly_income_total": 0,
                 "yearly_income_total": 0,
-                    "nina_daily_income": 0, "nina_weekly_income":0, 
-                    "nina_yearly_income": 0, 
-                    "chairman_daily_income": 0, 
-                    "chairman_weekly_income": 0, 
-                    "chairman_yearly_income": 0, 
-                    "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
-                    "customers_awaiting_approval": customers_awaiting_approval,
-                    "customers_awaiting_review": customers_awaiting_review,
-                    "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
-                    "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
-                    "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
-                    "sum_of_paid_rents": sum_of_paid_rents,
-                    "owing_customers": owing_customers, 
-                     
-                    "current_user": request.user, "all_income": 0}
+                "nina_daily_income": 0, "nina_weekly_income":0, 
+                "nina_yearly_income": 0, 
+                "chairman_daily_income": 0, 
+                "chairman_weekly_income": 0, 
+                "chairman_yearly_income": 0, 
+                "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
+                "customers_awaiting_approval": customers_awaiting_approval,
+                "customers_awaiting_review": customers_awaiting_review,
+                "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
+                "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
+                "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
+                "sum_of_paid_rents": sum_of_paid_rents,
+                "owing_customers": owing_customers, 
+                    
+                "current_user": request.user, "all_income": 0}
     
     return render(request, "web/data_entry_dashboard.html", context)
 
@@ -193,21 +193,21 @@ def review_officer_dashboard(request):
     context = {"users": users, "daily_income_total": 0,
                 "weekly_income_total": 0,
                 "yearly_income_total": 0,
-                    "nina_daily_income": 0, "nina_weekly_income":0, 
-                    "nina_yearly_income": 0, 
-                    "chairman_daily_income": 0, 
-                    "chairman_weekly_income": 0, 
-                    "chairman_yearly_income": 0, 
-                    "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
-                    "customers_awaiting_approval": customers_awaiting_approval,
-                    "customers_awaiting_review": customers_awaiting_review,
-                    "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
-                    "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
-                    "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
-                    "sum_of_paid_rents": sum_of_paid_rents,
-                    "owing_customers": owing_customers, 
-                     
-                    "current_user": request.user, "all_income": 0}
+                "nina_daily_income": 0, "nina_weekly_income":0, 
+                "nina_yearly_income": 0, 
+                "chairman_daily_income": 0, 
+                "chairman_weekly_income": 0, 
+                "chairman_yearly_income": 0, 
+                "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
+                "customers_awaiting_approval": customers_awaiting_approval,
+                "customers_awaiting_review": customers_awaiting_review,
+                "all_customers": all_customers, "no_of_due_rents": no_of_due_rents, 
+                "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops, 
+                "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
+                "sum_of_paid_rents": sum_of_paid_rents,
+                "owing_customers": owing_customers, 
+                    
+                "current_user": request.user, "all_income": 0}
     
     return render(request, "web/review_officer_dashboard.html", context)
 
@@ -225,8 +225,8 @@ def dashboard(request):
         all_customers = Customer.objects.all()
         allocated_shops = Shop.allocated_shops_count
         expected_rent_fees = Shop.expected_rent_fees
-        sum_of_paid_rents = Shop.total_paid_shops_price()
-        owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
+        sum_of_paid_rents = Rent.total_paid_shops_price()
+        owing_customers = Rent.objects.filter(is_expired=True, is_paid=True, shop__status="allocated")
         customers_awaiting_review = Customer.objects.filter(is_reviewed=False)
         customers_awaiting_approval = Customer.objects.filter(approval=False)
         no_of_owing_shop_customers = Shop.objects.filter(status="allocated", is_paid=False).count()

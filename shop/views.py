@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.decorators import user_passes_test
 import weasyprint
 
+
 def generate_shops(request):
     file_path = r"C:/Users/edwar/Downloads/DBB_Shops.csv"
     shops_df = pd.read_csv(file_path)

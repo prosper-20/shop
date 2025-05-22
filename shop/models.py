@@ -59,15 +59,38 @@ class Shop(models.Model):
     class Meta:
         ordering = ["no"]
     
+    # @staticmethod
+    # def allocated_shops_count():
+    #     return Shop.objects.filter(status="allocated").count()
+
     @staticmethod
     def allocated_shops_count():
-        return Shop.objects.filter(status="allocated").count()
+        return Rent.objects.filter(is_paid=True, is_expired=False).count()
     
+    # @staticmethod
+    # def expected_rent_fees():
+    #     allocated_shops_sum = Shop.objects.filter(status='allocated').aggregate(total_sum=Sum('price'))['total_sum'] or 0
+    #     formatted_sum = formatted_sum = '{:.2f}'.format(allocated_shops_sum)
+    #     return formatted_sum
+
+
     @staticmethod
     def expected_rent_fees():
-        allocated_shops_sum = Shop.objects.filter(status='allocated').aggregate(total_sum=Sum('price'))['total_sum'] or 0
-        formatted_sum = formatted_sum = '{:.2f}'.format(allocated_shops_sum)
-        return formatted_sum
+        """
+        Returns the sum of new_total_rent_payable for allocated shops
+        in the same format as your example (formatted string)
+        """
+        from decimal import Decimal
+        
+        # Initialize total
+        total = Decimal('0.00')
+        
+        # Calculate sum for allocated shops
+        for shop in Shop.objects.filter(status='allocated'):
+            total += Decimal(str(shop.new_total_rent_payable))
+        
+        # Format to 2 decimal places
+        return '{:.2f}'.format(total)
     
     @staticmethod
     def total_paid_shops_price():
@@ -125,6 +148,9 @@ class Shop(models.Model):
     def new_total_rent_payable(self):
         return round(self.rent + self.new_shop_agency + self.new_shop_legal + self.new_service_charge + self.wht + self.vat + self.caution_fee, 2)
     
+    @property
+    def renewal_rent_payable(self):
+        return round(self.rent + self.new_service_charge)
           
     @property
     def shop_price(self):
@@ -173,7 +199,7 @@ class Shop(models.Model):
     
     @property
     def renewal_rent(self):
-        return round(self.shop_rent + self.shop_charges, 2)
+        return round(self.gross_rent + self.shop_charges, 2)
     
     @property
     def total(self):
@@ -194,7 +220,7 @@ RENT_TYPE = (
 )
 
 class Rent(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.Model)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     rent_type = models.CharField(max_length=20, choices=RENT_TYPE)
     amount_paid = models.DecimalField(max_digits=12, decimal_places=2)
@@ -214,13 +240,63 @@ class Rent(models.Model):
         today = timezone.now().date()
         return today > self.date_due
     
-    def total_paid_rents(self):
-        total_paid_rents = Rent.objects.filter(
-            shop=self,  # Filter by the current shop instance
-            is_paid=True  # Only consider rents that have been paid
-        ).aggregate(Sum('rent_amount'))['rent_amount__sum'] or 0.0
+    # def total_paid_rents(self):
+    #     total_paid_rents = Rent.objects.filter(
+    #         shop=self,  # Filter by the current shop instance
+    #         is_paid=True  # Only consider rents that have been paid
+    #     ).aggregate(Sum('rent_amount'))['rent_amount__sum'] or 0.0
 
-        return total_paid_rents
+    #     return total_paid_rents
+
+
+    # @staticmethod
+    # def total_paid_shops_price():
+    #     """
+    #     Returns total paid amount for current (non-expired) rentals
+    #     """
+    #     total_paid = Rent.objects.filter(
+    #         is_paid=True,
+    #         is_expired=False
+    #     ).aggregate(
+    #         total_sum=Sum('amount_paid')
+    #     )['total_sum'] or Decimal('0.00')
+        
+    #     return '{:.2f}'.format(total_paid)
+    
+
+    # @staticmethod
+    # def total_paid_shops_price():
+    #     """
+    #     Returns the total amount actually paid for all rented shops (from Rent model)
+    #     """
+    #     from django.db.models import Sum
+        
+    #     # Sum all amount_paid from Rent records that are marked as paid
+    #     total_paid = Rent.objects.filter(is_paid=True).aggregate(
+    #         total_sum=Sum('amount_paid')
+    #     )['total_sum'] or Decimal('0.00')
+        
+    #     return '{:.2f}'.format(total_paid)
+    
+
+    @staticmethod
+    def total_paid_shops_price():
+        """
+        Returns the sum of new_total_rent_payable for allocated shops
+        in the same format as your example (formatted string)
+        """
+        from decimal import Decimal
+        
+        # Initialize total
+        total = Decimal('0.00')
+        
+        # Calculate sum for allocated shops
+        for rent in Rent.objects.filter(is_paid=True):
+            print("rterere", rent.amount_paid)
+            total += Decimal(str(rent.amount_paid))
+        
+        # Format to 2 decimal places
+        return '{:.2f}'.format(total)
 
     @staticmethod
     def rents_due_count():

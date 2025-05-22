@@ -1303,7 +1303,7 @@
                       <table class="table align-items-center mb-0">
                         <thead class="thead-light">
                           <tr>
-                            <th scope="col">Shop Name</th>
+                            <th scope="col">Shop No.</th>
                             <th scope="col" class="text-end">Due Date</th>
                             <th scope="col" class="text-end">Amount</th>
                             <th scope="col" class="text-end">Customer</th>
@@ -1318,12 +1318,12 @@
                               >
                                 <i class="fa fa-home"></i>
                               </button>
-                              {{ customer.shop.name }}
+                              {{ customer.shop.no }}
                             </th>
                             <td class="text-end">{{ customer.date_due }}</td>
-                            <td class="text-end">₦ {{ customer.shop.price }}</td>
+                            <td class="text-end">₦ {{ customer.shop.renewal_rent }}</td>
                             <td class="text-end">
-                              <span class="text-end">{{ customer.customer.name|capfirst }}</span>
+                              <span class="text-end">{{ customer.customer.title }} {{ customer.customer.name|capfirst }}</span>
                             </td>
                           </tr>
                           {% endfor %}

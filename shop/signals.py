@@ -1,11 +1,20 @@
 from django.db import models
 from .models import Rent, Shop
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import smart_str
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.contrib.auth import get_user_model
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_str
+from decouple import config
 
 User = get_user_model()
 
@@ -69,6 +78,8 @@ def send_due_date_reminder_email_90_days(customer):
         fail_silently=False,
     )
 
+   
+
 
 def send_due_date_reminder_email_60_days(customer):
     """Helper function to send the email."""
@@ -89,20 +100,16 @@ def send_due_date_reminder_email_60_days(customer):
 
 def send_due_date_reminder_email_30_days(customer):
     """Helper function to send the email."""
-    subject = "Reminder: Your Rent Due Date is Approaching"
-    message = f"Dear {customer.name},\n\n" \
-              f"This is a friendly reminder that your rent payment is due in 30 days. Please ensure you make the necessary arrangements.\n\n" \
-              f"Thank you for your attention to this matter.\n\n" \
-              f"Best regards,\nNina Sky Innovation Limited"
-    sender = settings.EMAIL_HOST_USER
-    send_mail(
-        subject,
-        message,
-        sender,  # Sender's email (change to actual sender)
-        [customer.email],
-        fail_silently=False,
-    )
 
+    subject = "Rent Reminder"
+    html_message = render_to_string("rent/30_days_reminder.html", {"customer": customer, "due_date": "2000-00-000"})
+    plain_message = strip_tags(html_message)
+    from_email = config("EMAIL_HOST_USER")  # Replace with your email
+    to = customer.email
+    send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+   
+
+   
 def send_due_date_reminder_email_7_days(customer):
     """Helper function to send the email."""
     subject = "Reminder: Your Rent Due Date is Approaching"
@@ -141,6 +148,15 @@ def update_shop_status(sender, instance, created, **kwargs):
         instance.shop.status = 'allocated'
         instance.shop.save()
 
+@receiver(post_delete, sender=Rent)
+def update_shop_status_on_rent_delete(sender, instance, **kwargs):
+    """
+    Updates the shop status to 'vacant' when its Rent is deleted.
+    """
+    shop = instance.shop
+    shop.status = 'vacant'
+    shop.is_paid = False  # Also reset payment status if needed
+    shop.save()
 
 
 @receiver(post_save, sender=Rent)
