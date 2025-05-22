@@ -155,7 +155,7 @@ def admin_edit_shop_form(request, shop_no):
     return render(request, 'shop/admin_edit_shop_form.html', {'form': form})
 
 
-
+@login_required
 def create_rent(request):
     if request.method == "POST":
         form = CreateRentForm(request.POST)
@@ -168,6 +168,8 @@ def create_rent(request):
         if form.is_valid():
             form.save(commit=False)
             form.instance.date_due = due_date
+            form.instance.is_paid = True
+            form.instance.assigned_by = request.user
             form.instance.shop.status = "allocated"
             form.save()
             messages.success(request, "Rent creation successful")

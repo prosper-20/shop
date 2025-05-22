@@ -81,44 +81,49 @@ class Shop(models.Model):
     def rent(self):
         return self.size * self.price
     
-    @property
-    def new_rent(self):
-        return self.new_shop_price * self.size
+    # @property
+    # def new_rent(self):
+    #     return self.new_shop_price * self.size
     
     @property
     def vat(self): # 7.5% OF THE RENT
-        result = self.new_rent * Decimal('0.075')
+        result = self.rent * Decimal('0.075')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         # return round(0.0075 * self.rent, 2)
     
     @property
     def wht(self):  # 5% 
-        result = self.new_rent * Decimal(0.05)
+        result = self.rent * Decimal(0.05)
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    @property
+    def annual_rent(self):
+        result = self.rent + self.vat
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
     def gross_rent(self):
-        return round(self.new_rent + self.vat + self.wht, 2)
+        return round(self.rent + self.vat + self.wht, 2)
     
     @property
     def new_shop_agency(self):
-        result = (self.new_rent + self.vat) * Decimal('0.15')
+        result = (self.rent + self.vat) * Decimal('0.15')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
     def new_shop_legal(self):
-        result = (self.new_rent + self.vat) * Decimal('0.05')
+        result = (self.rent + self.vat) * Decimal('0.05')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     @property
     def new_service_charge(self):
-        result = (self.new_rent + self.vat) * Decimal('0.25')
+        result = (self.rent + self.vat) * Decimal('0.25')
         return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     
     @property
     def new_total_rent_payable(self):
-        return round(self.new_rent + self.new_shop_agency + self.new_shop_legal + self.new_service_charge + self.wht + self.vat + self.caution_fee, 2)
+        return round(self.rent + self.new_shop_agency + self.new_shop_legal + self.new_service_charge + self.wht + self.vat + self.caution_fee, 2)
     
           
     @property
@@ -198,6 +203,7 @@ class Rent(models.Model):
     is_expired = models.BooleanField(default=False)  # New field
     rent_start = models.DateField(default=timezone.now)
     date_due = models.DateField()
+    assigned_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.shop.name

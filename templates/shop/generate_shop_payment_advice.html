@@ -20,13 +20,20 @@
             
           <tr>
             <th scope="row">Net annual rent</th>
-            <td>{{ shop.new_rent }}</td>
+            <td>{{ shop.rent }}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
           <tr>
             <th scope="row">7.5% VAT</th>
             <td>{{ shop.vat }}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
+
+          <tr>
+            <th scope="row">Annual Rent (VAT Inclusive)</th>
+            <td>{{ shop.annual_rent }}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
@@ -89,7 +96,7 @@
 
           <tr>
             <th scope="row"><strong><h4>Total Rent Payable</h4></strong></th>
-            <td><strong>{{ shop.new_total_rent_payable }}</strong></td>
+            <td><strong>₦ {{ shop.new_total_rent_payable }}</strong></td>
             <!-- <td>the Bird</td>
             <td>@twitter</td> -->
           </tr>
@@ -101,7 +108,7 @@
               <th scope="col">Handle</th> -->
             </tr>
             <tr>
-              <th scope="row">Shop Size</th>
+              <th scope="row">Shop Size (per m<sup>2</sup>)</th>
               <td>{{ shop.size }}</td>
               <!-- <td>Otto</td>
               <td>@mdo</td> -->
