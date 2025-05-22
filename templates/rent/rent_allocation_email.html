@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Shop Creation Notification</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+
+    <div style="background-color: #f5f5f5; padding: 20px;">
+        <!-- <h2 style="color: #333;">Rent Payment Reminder</h2> -->
+        <p>Dear {{ customer.title }} {{ customer.name }}</p>
+        <p>I hope this message finds you well.</p>
+        <p>We are delighted to inform you that your payment for the shop has been
+successfully received and processed. As a result, we have allocated the following
+shop to you:</p>
+        <p>Details of the New Shop:</p>
+        <p>Shop number: {{ shop.no }}</p>
+        <p>Shop Type: {{ shop.type }}</p>
+        <p>Shop size: {{ shop.size }}</p>
+        <p>Shop address: {{ shop.address }}</p>
+        <p>Allocation Date: {{ rent.start_date }}</p>
+<p>Your new shop is now officially assigned to you, and you can start utilizing it
+immediately. Should you have any questions or require further assistance, please feel free to
+contact our support team at [Support Email] or call us at [Support Phone
+Number]. We are here to help you with any queries or additional support you may
+need.<p>
+<p>Thank you for your prompt payment and for choosing us. We are excited to see
+you make the most of your new shop and look forward to supporting your
+success.</p>
+<p>Best regards,</p>
+<p>Nina Sky Innovations Limited</p>
+    </div>
+
+</body>
+</html>
+
