@@ -6,23 +6,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0017_income_alter_shop_type'),
+        ("shop", "0017_income_alter_shop_type"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='income',
-            name='new_daily',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=15, null=True),
+            model_name="income",
+            name="new_daily",
+            field=models.DecimalField(
+                blank=True, decimal_places=2, max_digits=15, null=True
+            ),
         ),
         migrations.AddField(
-            model_name='income',
-            name='new_weekly',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=15, null=True),
+            model_name="income",
+            name="new_weekly",
+            field=models.DecimalField(
+                blank=True, decimal_places=2, max_digits=15, null=True
+            ),
         ),
         migrations.AddField(
-            model_name='income',
-            name='new_yearly',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=15, null=True),
+            model_name="income",
+            name="new_yearly",
+            field=models.DecimalField(
+                blank=True, decimal_places=2, max_digits=15, null=True
+            ),
         ),
     ]

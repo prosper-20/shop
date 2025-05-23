@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0007_customuser_role'),
+        ("account", "0007_customuser_role"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='customuser',
-            name='role',
+            model_name="customuser",
+            name="role",
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='is_approved',
+            model_name="customuser",
+            name="is_approved",
             field=models.BooleanField(default=True),
         ),
     ]

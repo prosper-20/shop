@@ -6,19 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('customer', '0017_alter_customer_is_reviewed'),
+        ("customer", "0017_alter_customer_is_reviewed"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customer',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default='2025-05-11'),
+            model_name="customer",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, default="2025-05-11"),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='customer',
-            name='updated_at',
+            model_name="customer",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

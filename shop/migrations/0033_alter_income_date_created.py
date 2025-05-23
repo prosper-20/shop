@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0032_paymentslip_is_reviewed_alter_income_date_created'),
+        ("shop", "0032_paymentslip_is_reviewed_alter_income_date_created"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2025, 5, 21, 9, 8, 37, 99421, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2025, 5, 21, 9, 8, 37, 99421, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]

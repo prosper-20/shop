@@ -6,14 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0008_remove_customuser_role_alter_customuser_is_approved'),
+        ("account", "0008_remove_customuser_role_alter_customuser_is_approved"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='phone_number',
-            field=models.CharField(default='09036356792', help_text='Enter your phone number', max_length=11),
+            model_name="customuser",
+            name="phone_number",
+            field=models.CharField(
+                default="09036356792",
+                help_text="Enter your phone number",
+                max_length=11,
+            ),
             preserve_default=False,
         ),
     ]

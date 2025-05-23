@@ -9,27 +9,56 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('customer', '0010_alter_customer_nature_alter_customer_state'),
+        ("customer", "0010_alter_customer_nature_alter_customer_state"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('shop', '0021_alter_income_daily_alter_income_date_created_and_more'),
+        ("shop", "0021_alter_income_daily_alter_income_date_created_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2024, 8, 10, 8, 32, 6, 49178, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2024, 8, 10, 8, 32, 6, 49178, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.CreateModel(
-            name='PaymentSlip',
+            name="PaymentSlip",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=15)),
-                ('payment_date', models.DateField(auto_now_add=True)),
-                ('is_verified', models.BooleanField(default=True)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='customer.customer')),
-                ('shop_no', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shop.shop')),
-                ('uploaded_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=15)),
+                ("payment_date", models.DateField(auto_now_add=True)),
+                ("is_verified", models.BooleanField(default=True)),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="customer.customer",
+                    ),
+                ),
+                (
+                    "shop_no",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="shop.shop"
+                    ),
+                ),
+                (
+                    "uploaded_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

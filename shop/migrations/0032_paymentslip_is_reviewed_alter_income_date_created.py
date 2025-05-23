@@ -7,19 +7,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0031_paymentslip_payment_account_and_more'),
+        ("shop", "0031_paymentslip_payment_account_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='paymentslip',
-            name='is_reviewed',
-            field=models.CharField(choices=[('Reviewed', 'Reviewed'), ('Mot Reviewed', 'Not Reviewed')], default='Reviewed', max_length=100),
+            model_name="paymentslip",
+            name="is_reviewed",
+            field=models.CharField(
+                choices=[("Reviewed", "Reviewed"), ("Mot Reviewed", "Not Reviewed")],
+                default="Reviewed",
+                max_length=100,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2024, 11, 10, 14, 5, 33, 521764, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2024, 11, 10, 14, 5, 33, 521764, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]

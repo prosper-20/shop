@@ -7,19 +7,19 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0013_shop_is_approved_alter_shop_no'),
+        ("shop", "0013_shop_is_approved_alter_shop_no"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='rent',
-            name='rent_start',
+            model_name="rent",
+            name="rent_start",
             field=models.DateField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='rent',
-            name='date_paid',
-            field=models.DateTimeField(default='2023-01-05 06:12:15'),
+            model_name="rent",
+            name="date_paid",
+            field=models.DateTimeField(default="2023-01-05 06:12:15"),
             preserve_default=False,
         ),
     ]

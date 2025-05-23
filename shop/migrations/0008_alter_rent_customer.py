@@ -7,14 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('customer', '0005_alter_customer_exitdate'),
-        ('shop', '0007_alter_rent_customer'),
+        ("customer", "0005_alter_customer_exitdate"),
+        ("shop", "0007_alter_rent_customer"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='rent',
-            name='customer',
-            field=models.ForeignKey(limit_choices_to={'is_staff': False}, on_delete=django.db.models.deletion.CASCADE, to='customer.customer'),
+            model_name="rent",
+            name="customer",
+            field=models.ForeignKey(
+                limit_choices_to={"is_staff": False},
+                on_delete=django.db.models.deletion.CASCADE,
+                to="customer.customer",
+            ),
         ),
     ]

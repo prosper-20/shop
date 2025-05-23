@@ -6,25 +6,36 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0002_shop_floor_shop_no_shop_size_shop_status'),
+        ("shop", "0002_shop_floor_shop_no_shop_size_shop_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='shop',
-            name='address',
-            field=models.CharField(default='10 obe street', max_length=300),
+            model_name="shop",
+            name="address",
+            field=models.CharField(default="10 obe street", max_length=300),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='shop',
-            name='type',
-            field=models.CharField(choices=[('A', 'Type A'), ('B', 'Type B'), ('C', 'Type C'), ('D', 'Type D'), ('E', 'Type E'), ('F', 'Type F')], default='Type A', max_length=10),
+            model_name="shop",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("A", "Type A"),
+                    ("B", "Type B"),
+                    ("C", "Type C"),
+                    ("D", "Type D"),
+                    ("E", "Type E"),
+                    ("F", "Type F"),
+                ],
+                default="Type A",
+                max_length=10,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='shop',
-            name='name',
+            model_name="shop",
+            name="name",
             field=models.CharField(max_length=255),
         ),
     ]

@@ -7,19 +7,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0030_paymentslip_uploaded_on_alter_income_date_created_and_more'),
+        ("shop", "0030_paymentslip_uploaded_on_alter_income_date_created_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='paymentslip',
-            name='payment_account',
-            field=models.CharField(choices=[('Nina Sky', 'Nina Sky'), ('Chairman', 'Chairman')], default='Nina Sky', max_length=30),
+            model_name="paymentslip",
+            name="payment_account",
+            field=models.CharField(
+                choices=[("Nina Sky", "Nina Sky"), ("Chairman", "Chairman")],
+                default="Nina Sky",
+                max_length=30,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2024, 11, 9, 23, 0, 15, 73969, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2024, 11, 9, 23, 0, 15, 73969, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]

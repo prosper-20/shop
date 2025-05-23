@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('customer', '0003_alter_customer_exitdate_alter_customer_nextdue'),
+        ("customer", "0003_alter_customer_exitdate_alter_customer_nextdue"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customer',
-            name='nextdue',
+            model_name="customer",
+            name="nextdue",
             field=models.DateField(blank=True, null=True),
         ),
     ]

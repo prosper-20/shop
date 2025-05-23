@@ -7,24 +7,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0029_shop_caution_fee_alter_income_date_created_and_more'),
+        ("shop", "0029_shop_caution_fee_alter_income_date_created_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='paymentslip',
-            name='uploaded_on',
-            field=models.DateTimeField(auto_now_add=True, default='2024-11-11 23:10:1'),
+            model_name="paymentslip",
+            name="uploaded_on",
+            field=models.DateTimeField(auto_now_add=True, default="2024-11-11 23:10:1"),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2024, 11, 6, 8, 21, 4, 152817, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2024, 11, 6, 8, 21, 4, 152817, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='paymentslip',
-            name='payment_date',
+            model_name="paymentslip",
+            name="payment_date",
             field=models.DateField(),
         ),
     ]

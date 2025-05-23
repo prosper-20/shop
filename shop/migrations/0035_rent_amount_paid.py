@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0034_alter_income_date_created'),
+        ("shop", "0034_alter_income_date_created"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='rent',
-            name='amount_paid',
-            field=models.DecimalField(decimal_places=2, default=12000000, max_digits=12),
+            model_name="rent",
+            name="amount_paid",
+            field=models.DecimalField(
+                decimal_places=2, default=12000000, max_digits=12
+            ),
             preserve_default=False,
         ),
     ]

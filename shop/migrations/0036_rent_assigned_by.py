@@ -9,14 +9,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('shop', '0035_rent_amount_paid'),
+        ("shop", "0035_rent_amount_paid"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='rent',
-            name='assigned_by',
-            field=models.ForeignKey(default=7, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="rent",
+            name="assigned_by",
+            field=models.ForeignKey(
+                default=7,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]

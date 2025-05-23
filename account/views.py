@@ -9,12 +9,12 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
     PasswordChangeView,
-    PasswordChangeDoneView
+    PasswordChangeDoneView,
 )
 from .forms import (
     CustomPasswordResetForm,
     CustomSetPasswordForm,
-    CustomPasswordChangeForm
+    CustomPasswordChangeForm,
 )
 from django.views import View
 from django.contrib.auth import get_user_model
@@ -32,25 +32,26 @@ from django.urls import reverse
 
 User = get_user_model()
 
+
 def create_user(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_approved = False  # Default approval status
             user.save()
-            messages.success(request, 'User created successfully! Pending approval.')
-            return redirect('user_list')  # Redirect to user list view
+            messages.success(request, "User created successfully! Pending approval.")
+            return redirect("user_list")  # Redirect to user list view
     else:
         form = CustomUserCreationForm()
-    
-    return render(request, 'account/create_user.html', {'form': form})
+
+    return render(request, "account/create_user.html", {"form": form})
 
 
 class CustomPasswordResetView(View):
     def get(self, request):
         return render(request, "account/password_reset.html")
-    
+
     def post(self, request):
         email = request.POST.get("email")
         if not User.objects.filter(email=email).exists():
@@ -60,19 +61,22 @@ class CustomPasswordResetView(View):
             user = get_object_or_404(User, email=email)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
-            reset_link = f"http://127.0.0.1:8000/accounts/password-reset/confirm/{uid}/{token}/"
+            reset_link = (
+                f"http://127.0.0.1:8000/accounts/password-reset/confirm/{uid}/{token}/"
+            )
             subject = "Password Reset!"
             html_message = render_to_string(
-            "account/password_reset_email.html",
-            {"uid": uid, "token": token, "reset_link": reset_link},
-        )
+                "account/password_reset_email.html",
+                {"uid": uid, "token": token, "reset_link": reset_link},
+            )
             plain_message = strip_tags(html_message)
             from_email = config("DEFAULT_FROM_EMAIL")  # Replace with your email
             to = email
-            send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+            send_mail(
+                subject, plain_message, from_email, [to], html_message=html_message
+            )
             messages.success(request, "A link has been sent to your email")
             return redirect("password_reset_done")
-        
 
 
 # class CustomPasswordResetView(PasswordResetView):
@@ -82,8 +86,9 @@ class CustomPasswordResetView(View):
 #     subject_template_name = 'account/password_reset_subject.txt'
 #     success_url = reverse_lazy('password_reset_done')
 
+
 class CustomPasswordResetDoneView(PasswordResetDoneView):
-    template_name = 'account/password_reset_done.html'
+    template_name = "account/password_reset_done.html"
 
 
 class CustomPasswordResetConfirmView(View):
@@ -95,15 +100,15 @@ class CustomPasswordResetConfirmView(View):
             user = None
 
         if user is not None and default_token_generator.check_token(user, token):
-            return render(request, 'account/password_reset_page.html', {
-                'uidb64': uidb64,
-                'token': token,
-                'validlink': True
-            })
+            return render(
+                request,
+                "account/password_reset_page.html",
+                {"uidb64": uidb64, "token": token, "validlink": True},
+            )
         else:
             messages.error(request, "Password reset link is invalid or has expired")
-            return redirect('password_reset')
-    
+            return redirect("password_reset")
+
     def post(self, request, uidb64, token):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
@@ -114,40 +119,38 @@ class CustomPasswordResetConfirmView(View):
         if user is not None and default_token_generator.check_token(user, token):
             password = request.POST.get("password")
             password2 = request.POST.get("password2")
-            
+
             if password != password2:
                 messages.error(request, "Passwords do not match")
-                return render(request, 'account/password_reset_page.html', {
-                    'uidb64': uidb64,
-                    'token': token,
-                    'validlink': True
-                })
-            
+                return render(
+                    request,
+                    "account/password_reset_page.html",
+                    {"uidb64": uidb64, "token": token, "validlink": True},
+                )
+
             # Set the new password
             user.set_password(password)
             user.save()
-            
+
             messages.success(request, "Password has been reset successfully")
             return redirect("password_reset_complete")
         else:
             messages.error(request, "Password reset link is invalid or has expired")
-            return redirect('password_reset')
+            return redirect("password_reset")
 
-            
-            
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
-    template_name = 'account/password_reset_complete.html'
+    template_name = "account/password_reset_complete.html"
+
 
 class CustomPasswordChangeView(PasswordChangeView):
     form_class = CustomPasswordChangeForm
-    template_name = 'account/password_change.html'
-    success_url = reverse_lazy('password_change_done')
+    template_name = "account/password_change.html"
+    success_url = reverse_lazy("password_change_done")
+
 
 class CustomPasswordChangeDoneView(PasswordChangeDoneView):
-    template_name = 'account/password_change_done.html'
-
-
+    template_name = "account/password_change_done.html"
 
 
 # from .forms import AccountForm, ReceiptForm
@@ -177,10 +180,9 @@ class CustomPasswordChangeDoneView(PasswordChangeDoneView):
 #             messages.success(request, 'Amount received successfully posted  as rent paid by customer.')
 #             return redirect('account')  # Redirect to the same page to show the success message
 #     else:
-        
+
 #         form = ReceiptForm()
 #     return render(request, 'account/account_form.html', {'form': form})
-
 
 
 # views.py

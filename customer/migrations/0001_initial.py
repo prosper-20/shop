@@ -7,29 +7,61 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Customer',
+            name="Customer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('no', models.CharField(max_length=5)),
-                ('name', models.CharField(max_length=100)),
-                ('business', models.CharField(max_length=225)),
-                ('email', models.EmailField(max_length=254, unique=True)),
-                ('phone', models.CharField(max_length=18)),
-                ('dob', models.DateField(default=None)),
-                ('address', models.CharField(max_length=225)),
-                ('state', models.CharField(default='', max_length=225)),
-                ('occupation', models.CharField(max_length=50)),
-                ('nature', models.CharField(choices=[('Supermarket', 'Supermarket'), ('Laundry', 'Laundry'), ('Pharmacy', 'Pharmacy'), ('Courier/Dispatch', 'Courier/Dispatch'), ('Banking/Insurance', 'Banking/Insurance'), ('Barbing/Salon', 'Barbing/Salon')], default='', max_length=25)),
-                ('status', models.CharField(choices=[('new', 'new'), ('renewal', 'renewal'), ('exited', 'exited')], default='', max_length=10)),
-                ('date', models.DateField()),
-                ('approval', models.BooleanField(default=False)),
-                ('exitdate', models.DateField(blank=True, default=None, null=True)),
-                ('nextdue', models.DateField(blank=True, default=None, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("no", models.CharField(max_length=5)),
+                ("name", models.CharField(max_length=100)),
+                ("business", models.CharField(max_length=225)),
+                ("email", models.EmailField(max_length=254, unique=True)),
+                ("phone", models.CharField(max_length=18)),
+                ("dob", models.DateField(default=None)),
+                ("address", models.CharField(max_length=225)),
+                ("state", models.CharField(default="", max_length=225)),
+                ("occupation", models.CharField(max_length=50)),
+                (
+                    "nature",
+                    models.CharField(
+                        choices=[
+                            ("Supermarket", "Supermarket"),
+                            ("Laundry", "Laundry"),
+                            ("Pharmacy", "Pharmacy"),
+                            ("Courier/Dispatch", "Courier/Dispatch"),
+                            ("Banking/Insurance", "Banking/Insurance"),
+                            ("Barbing/Salon", "Barbing/Salon"),
+                        ],
+                        default="",
+                        max_length=25,
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("new", "new"),
+                            ("renewal", "renewal"),
+                            ("exited", "exited"),
+                        ],
+                        default="",
+                        max_length=10,
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("approval", models.BooleanField(default=False)),
+                ("exitdate", models.DateField(blank=True, default=None, null=True)),
+                ("nextdue", models.DateField(blank=True, default=None, null=True)),
             ],
         ),
     ]

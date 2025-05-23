@@ -6,13 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0006_delete_profile'),
+        ("account", "0006_delete_profile"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='role',
-            field=models.CharField(choices=[('Data Entry Officer', 'Data Entry Officer'), ('Manager', 'Manager'), ('Admin', 'Admin')], default='Data Entry Officer', max_length=40),
+            model_name="customuser",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("Data Entry Officer", "Data Entry Officer"),
+                    ("Manager", "Manager"),
+                    ("Admin", "Admin"),
+                ],
+                default="Data Entry Officer",
+                max_length=40,
+            ),
         ),
     ]

@@ -7,13 +7,13 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0033_alter_income_date_created'),
+        ("shop", "0033_alter_income_date_created"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
+            model_name="income",
+            name="date_created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]

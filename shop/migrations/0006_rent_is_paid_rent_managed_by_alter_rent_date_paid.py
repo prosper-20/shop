@@ -9,24 +9,30 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('shop', '0005_rent'),
+        ("shop", "0005_rent"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='rent',
-            name='is_paid',
+            model_name="rent",
+            name="is_paid",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='rent',
-            name='managed_by',
-            field=models.ForeignKey(default=1, limit_choices_to={'is_staff': True}, on_delete=django.db.models.deletion.CASCADE, related_name='rents_managed', to=settings.AUTH_USER_MODEL),
+            model_name="rent",
+            name="managed_by",
+            field=models.ForeignKey(
+                default=1,
+                limit_choices_to={"is_staff": True},
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="rents_managed",
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='rent',
-            name='date_paid',
+            model_name="rent",
+            name="date_paid",
             field=models.DateTimeField(auto_now_add=True, null=True),
         ),
     ]

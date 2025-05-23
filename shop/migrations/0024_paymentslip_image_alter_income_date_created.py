@@ -8,18 +8,27 @@ import shop.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0023_alter_income_date_created_and_more'),
+        ("shop", "0023_alter_income_date_created_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='paymentslip',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='payment_receipts', validators=[shop.models.validate_image_size]),
+            model_name="paymentslip",
+            name="image",
+            field=models.ImageField(
+                blank=True,
+                null=True,
+                upload_to="payment_receipts",
+                validators=[shop.models.validate_image_size],
+            ),
         ),
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2024, 8, 10, 8, 43, 53, 76471, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2024, 8, 10, 8, 43, 53, 76471, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]

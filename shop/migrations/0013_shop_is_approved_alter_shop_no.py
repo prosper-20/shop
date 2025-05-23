@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0012_remove_shop_owner'),
+        ("shop", "0012_remove_shop_owner"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='shop',
-            name='is_approved',
+            model_name="shop",
+            name="is_approved",
             field=models.BooleanField(default=False),
         ),
         migrations.AlterField(
-            model_name='shop',
-            name='no',
+            model_name="shop",
+            name="no",
             field=models.CharField(max_length=5, unique=True),
         ),
     ]

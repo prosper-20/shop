@@ -4,7 +4,17 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Rate, Shop, Rent, Income, PaymentSlip
 from django.db.models import Count
-from .forms import ShopForm, IncomeForm, MyShopForm, PaymentSlipEditForm, PaymentSlipForm, EditMyShopForm, AdminEditMyShopForm, EditMyRentForm, CreateRentForm
+from .forms import (
+    ShopForm,
+    IncomeForm,
+    MyShopForm,
+    PaymentSlipEditForm,
+    PaymentSlipForm,
+    EditMyShopForm,
+    AdminEditMyShopForm,
+    EditMyRentForm,
+    CreateRentForm,
+)
 from django.core.paginator import Paginator
 from django.contrib import messages
 import pandas as pd
@@ -26,77 +36,78 @@ def generate_shops(request):
         shop_id = row[0]
         floor_level = row[1]
         size = row[2]
-        rent = float(row[3].replace(',', ''))
+        rent = float(row[3].replace(",", ""))
 
         # Create the Shop instance
         shop = Shop.objects.create(
             name=shop_id,
-            type='A',  # Default or inferred type
+            type="A",  # Default or inferred type
             price=rent,
             no=shop_id,
             address=f"{floor_level}, {shop_id}",
             floor=floor_level[0],  # Extract the floor identifier
             size=size,
-            status='vacant',  # Default status
+            status="vacant",  # Default status
             is_paid=False,  # Default value
-            is_approved=False  # Default value
+            is_approved=False,  # Default value
         )
 
         # Save the shop instance to the database
         shop.save()
     return HttpResponse("DONE")
 
+
 def home(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
+
 
 @login_required
-def shop (request):
-    count = Rate.objects.exclude(status='active').count()
-    
-    allocated_count = Rate.objects.filter(status='active').count()
-    vacant_count = Rate.objects.filter(status='vacant').count()
-    shoplist = Rate.objects.all().order_by('no')
+def shop(request):
+    count = Rate.objects.exclude(status="active").count()
+
+    allocated_count = Rate.objects.filter(status="active").count()
+    vacant_count = Rate.objects.filter(status="vacant").count()
+    shoplist = Rate.objects.all().order_by("no")
 
     p = Paginator(Rate.objects.all(), 5)
-    page = request.GET.get('page')
+    page = request.GET.get("page")
     shops = p.get_page(page)
 
     context = {
-        'count': count,
-        'allocated_count': allocated_count,
-        'vacant_count' : vacant_count,
-        'shoplist' : shoplist,
-        'shops': shops,
-
+        "count": count,
+        "allocated_count": allocated_count,
+        "vacant_count": vacant_count,
+        "shoplist": shoplist,
+        "shops": shops,
     }
 
-    return render(request, 'shop/shop.html', context)
+    return render(request, "shop/shop.html", context)
 
 
 @login_required
 def myshops(request):
     all_shops = Shop.objects.all().order_by("no")
-    
-    search_query = request.GET.get('search', '')
+
+    search_query = request.GET.get("search", "")
     shop_list = Shop.objects.all()
 
     if search_query:
         shop_list = shop_list.filter(
-            Q(no__icontains=search_query) |
-            Q(address__icontains=search_query) |
-            Q(size__icontains=search_query) 
-            
+            Q(no__icontains=search_query)
+            | Q(address__icontains=search_query)
+            | Q(size__icontains=search_query)
         )
 
     paginator = Paginator(shop_list, 10)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    
-    context = {"all_shops": all_shops,  'search_query': search_query, "page_obj": page_obj}
+
+    context = {
+        "all_shops": all_shops,
+        "search_query": search_query,
+        "page_obj": page_obj,
+    }
     return render(request, "shop/myshop.html", context)
-
-
-    
 
 
 @login_required
@@ -107,7 +118,7 @@ def shop_form(request, id=0):
         else:
             rate = Rate.objects.get(pk=id)
             form = ShopForm(instance=rate)
-        return render(request, 'shop/shop_form.html', {'form':form})
+        return render(request, "shop/shop_form.html", {"form": form})
     else:
         if id == 0:
             form = ShopForm(request.POST)
@@ -116,15 +127,14 @@ def shop_form(request, id=0):
             form = ShopForm(request.POST, instance=rate)
         if form.is_valid():
             form.save()
-        return redirect('shop')
-    
+        return redirect("shop")
+
 
 @login_required
 def shop_detail(request, shop_no):
     shop = get_object_or_404(Shop, no=shop_no)
 
     return render(request, "shop/detail.html", {"shop": shop, "title": "Shop Detail"})
-    
 
 
 @login_required
@@ -136,8 +146,8 @@ def new_shop_form(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Shop Creation Successful")
-            return redirect('all-shops')
-    return render(request, 'shop/new_shop_form.html', {'form':form})
+            return redirect("all-shops")
+    return render(request, "shop/new_shop_form.html", {"form": form})
 
 
 @login_required
@@ -145,19 +155,21 @@ def edit_shop_form(request, shop_no):
     # Fetch the Shop instance using the shop number
     shop = get_object_or_404(Shop, no=shop_no)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = EditMyShopForm(request.POST, instance=shop)
         if form.is_valid():
             form.save()
             messages.success(request, "Shop details updated successfully")
-            return redirect('all-shops')  # Redirect to the shop list or detail view
+            return redirect("all-shops")  # Redirect to the shop list or detail view
     else:
         form = EditMyShopForm(instance=shop)
 
-    return render(request, 'shop/edit_shop_form.html', {'form': form})
+    return render(request, "shop/edit_shop_form.html", {"form": form})
+
 
 def is_admin(user):
     return user.is_superuser or user.is_staff
+
 
 @user_passes_test(is_admin)
 def admin_edit_shop_form(request, shop_no):
@@ -165,16 +177,16 @@ def admin_edit_shop_form(request, shop_no):
     shop = get_object_or_404(Shop, no=shop_no)
     print(shop.price)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AdminEditMyShopForm(request.POST, instance=shop)
         if form.is_valid():
             form.save()
             messages.success(request, "Shop details updated successfully")
-            return redirect('all-shops')  # Redirect to the shop list or detail view
+            return redirect("all-shops")  # Redirect to the shop list or detail view
     else:
         form = AdminEditMyShopForm(instance=shop)
 
-    return render(request, 'shop/admin_edit_shop_form.html', {'form': form})
+    return render(request, "shop/admin_edit_shop_form.html", {"form": form})
 
 
 @login_required
@@ -185,7 +197,6 @@ def create_rent(request):
         print("abdbd", due_date_str)
         # print(type(due_date))
         due_date = datetime.strptime(due_date_str, "%Y-%m-%d").date()
-
 
         if form.is_valid():
             form.save(commit=False)
@@ -206,19 +217,18 @@ def create_rent(request):
 
 def list_rents(request):
     rents = Rent.objects.all()
-    search_query = request.GET.get('search', '')
+    search_query = request.GET.get("search", "")
     if search_query:
         rents = rents.filter(
-            Q(shop__no__icontains=search_query) |
-            Q(customer__name__icontains=search_query) |
-            Q(rent_type__icontains=search_query) |
-            Q(date_paid__icontains=search_query) 
-            
+            Q(shop__no__icontains=search_query)
+            | Q(customer__name__icontains=search_query)
+            | Q(rent_type__icontains=search_query)
+            | Q(date_paid__icontains=search_query)
         )
     paginator = Paginator(rents, 10)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"rents": rents, 'page_obj': page_obj, 'search_query': search_query}
+    context = {"rents": rents, "page_obj": page_obj, "search_query": search_query}
     return render(request, "rent/list_rents.html", context)
 
 
@@ -235,25 +245,26 @@ def edit_rents(request, shop_no):
             return redirect(reverse("edit-shop-rent", args=[shop]))
     else:
         form = EditMyRentForm(instance=rent)
-    return render(request, "rent/edit_rent_form.html", {'form': form})
+    return render(request, "rent/edit_rent_form.html", {"form": form})
 
 
 def send_rent_reminder(request, shop_no):
     rent = get_object_or_404(Rent, shop__no=shop_no)
-    subject = 'Rent Reminder'
-    message = f'Dear {rent.customer.name}, \n\n'\
-              f'We hope this email finds you well. \n' \
-              f'This is a friendly reminder that your rent for the month of is due on {rent.date_due}. Your payment is greatly appreciated and helps maintain the upkeep of our property.\n'\
-              f'To avoid any late fees, please ensure your payment is received by the due date. You can make your payment through FCMB 9201562019 NINA SKY INNOVATIONS LTD.\n'\
-              f"If you have any questions or require assistance, please don't hesitate to contact our office at (Phone Number)or (Email Address). \n"\
-              f"Thank you for being a valued tenant.\n"\
-              f"Sincerely,\n"\
-              f"Nina Sky Innovation Limited"
+    subject = "Rent Reminder"
+    message = (
+        f"Dear {rent.customer.name}, \n\n"
+        f"We hope this email finds you well. \n"
+        f"This is a friendly reminder that your rent for the month of is due on {rent.date_due}. Your payment is greatly appreciated and helps maintain the upkeep of our property.\n"
+        f"To avoid any late fees, please ensure your payment is received by the due date. You can make your payment through FCMB 9201562019 NINA SKY INNOVATIONS LTD.\n"
+        f"If you have any questions or require assistance, please don't hesitate to contact our office at (Phone Number)or (Email Address). \n"
+        f"Thank you for being a valued tenant.\n"
+        f"Sincerely,\n"
+        f"Nina Sky Innovation Limited"
+    )
     sender = settings.EMAIL_HOST_USER
     recipient = [rent.customer.email]
     send_mail(subject, message, sender, recipient, fail_silently=False)
     return HttpResponse("Email Successfully sent!")
-
 
 
 @login_required
@@ -262,7 +273,9 @@ def upload_receipts(request):
         form = IncomeForm(request.POST)
         if form.is_valid:
             form.save()
-            existing_income = Income.objects.filter(name=form.cleaned_data["name"]).last()
+            existing_income = Income.objects.filter(
+                name=form.cleaned_data["name"]
+            ).last()
             if form.cleaned_data["new_daily"] is not None:
                 print("exisig", existing_income.daily)
                 existing_income.daily += form.cleaned_data["new_daily"]
@@ -293,9 +306,7 @@ def upload_receipts(request):
             return redirect(reverse("income-upload"))
     else:
         form = IncomeForm()
-    context = {
-        "form": form
-    }
+    context = {"form": form}
     return render(request, "customer/upload_income.html", context)
 
 
@@ -305,47 +316,59 @@ def view_payment_receipts(request):
     context = {"all_payments": all_payments}
     return render(request, "customer/all_income_uploads.html", context)
 
+
 @login_required
 def list_all_payment_receipts(request):
     all_receipts = PaymentSlip.objects.filter(is_verified=False)
-    context = {
-        "all_receipts": all_receipts
-    }
+    context = {"all_receipts": all_receipts}
     return render(request, "customer/list_all_receipts.html", context)
+
 
 @login_required
 def create_payment_slip(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PaymentSlipForm(request.POST, request.FILES)
         if form.is_valid():
             payment_slip = form.save(commit=False)
             payment_slip.uploaded_by = request.user
             payment_slip.save()
             messages.success(request, "Receipt Upload Successful!")
-            return redirect(reverse('list-all-uploaded-receipts'))
+            return redirect(reverse("list-all-uploaded-receipts"))
         else:
             return HttpResponse(form.errors)
     else:
         form = PaymentSlipForm()
-    
-    return render(request, 'customer/upload_customer_receipts.html', {'form': form})
+
+    return render(request, "customer/upload_customer_receipts.html", {"form": form})
+
 
 @login_required
 def receipt_list(request):
     """View to display all uploaded payment receipts."""
     # Get all payment receipts
-    payment_account_filter = request.GET.get('payment_account', None)
+    payment_account_filter = request.GET.get("payment_account", None)
 
     # Get all payment receipts, optionally filtered by payment account
     if payment_account_filter:
-        payment_slips = PaymentSlip.objects.filter(payment_account=payment_account_filter).order_by("-payment_date")
+        payment_slips = PaymentSlip.objects.filter(
+            payment_account=payment_account_filter
+        ).order_by("-payment_date")
     else:
         payment_slips = PaymentSlip.objects.all().order_by("-payment_date")
 
     # Pass the payment slips to the template
-    return render(request, 'receipts/receipts_list.html', {'payment_slips': payment_slips,
-                                                           'payment_account_choices': dict(PaymentSlip.PAYMENT_ACCOUNT_CHOICES).items(),
-                                                           'selected_payment_account': payment_account_filter,})
+    return render(
+        request,
+        "receipts/receipts_list.html",
+        {
+            "payment_slips": payment_slips,
+            "payment_account_choices": dict(
+                PaymentSlip.PAYMENT_ACCOUNT_CHOICES
+            ).items(),
+            "selected_payment_account": payment_account_filter,
+        },
+    )
+
 
 @login_required
 def verify_payment_receipt(request, pk):
@@ -364,24 +387,26 @@ def review_payment_receipt(request, pk):
     messages.success(request, "Payment has been reviewed successfully")
     return redirect("list-all-uploaded-receipts")
 
+
 @login_required
 def edit_payment_slip(request, pk):
     payment_slip = get_object_or_404(PaymentSlip, pk=pk)
-    
-    if request.method == 'POST':
+
+    if request.method == "POST":
         form = PaymentSlipEditForm(request.POST, request.FILES, instance=payment_slip)
         if form.is_valid():
             form.save()
             messages.success(request, "Payment Data Saved")
-            return redirect('all-receipts')
+            return redirect("all-receipts")
         else:
             messages.error(request, "Error saving payment data")
-            return redirect(reverse("edit-uploaded-customer-payment", kwargs={"pk":pk}))
+            return redirect(
+                reverse("edit-uploaded-customer-payment", kwargs={"pk": pk})
+            )
     else:
         form = PaymentSlipEditForm(instance=payment_slip)
 
-    return render(request, 'customer/edit_customer_receipts.html', {'form': form})
-
+    return render(request, "customer/edit_customer_receipts.html", {"form": form})
 
 
 @login_required
@@ -389,13 +414,13 @@ def generate_payment_advice(request, shop_no):
     shop = get_object_or_404(Shop, no=shop_no)
     return render(request, "shop/generate_shop_payment_advice.html", {"shop": shop})
 
+
 @login_required
 def generate_payment_advice_pdf(request, shop_no):
     shop = get_object_or_404(Shop, no=shop_no)
-    html = render_to_string('shop/shop_pdf.html',
-    {'shop': shop})
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'filename=payment_advice_{shop_no}.pdf'
+    html = render_to_string("shop/shop_pdf.html", {"shop": shop})
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f"filename=payment_advice_{shop_no}.pdf"
     weasyprint.HTML(string=html).write_pdf(response)
     return response
 
@@ -403,14 +428,6 @@ def generate_payment_advice_pdf(request, shop_no):
 @login_required
 def generate_payment_advice_old(request, shop_no):
     shop = get_object_or_404(Shop, no=shop_no)
-    return render(request, "shop/generate_shop_payment_advice_old_customer.html", {"shop": shop})
-
-
-
-
-
-
-
-
-
-    
+    return render(
+        request, "shop/generate_shop_payment_advice_old_customer.html", {"shop": shop}
+    )

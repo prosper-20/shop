@@ -9,13 +9,17 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('shop', '0006_rent_is_paid_rent_managed_by_alter_rent_date_paid'),
+        ("shop", "0006_rent_is_paid_rent_managed_by_alter_rent_date_paid"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='rent',
-            name='customer',
-            field=models.ForeignKey(limit_choices_to={'is_staff': False}, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="rent",
+            name="customer",
+            field=models.ForeignKey(
+                limit_choices_to={"is_staff": False},
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

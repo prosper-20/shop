@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 # from .models import Profile
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -21,7 +22,7 @@ User = get_user_model()
 # @receiver(post_save, sender=Customer)
 # def send_approval_email(sender, instance, **kwargs):
 #     if instance.approval:
-#         message = f""" 
+#         message = f"""
 #                         Hi {instance.name}, your account has been approved. """
 #         mail = mt.Mail(
 #             sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
@@ -42,7 +43,6 @@ User = get_user_model()
 #         Profile.objects.create(user=instance)
 
 
-
 # @receiver(post_save, sender=User)
 # def save_user_profile(sender, instance, **kwargs):
 #     instance.profile.save()
@@ -51,7 +51,7 @@ User = get_user_model()
 # @receiver(post_save, sender=User)
 # def send_approval_email(sender, instance, **kwargs):
 #     if instance.is_approved:
-#         message = f""" 
+#         message = f"""
 #                             Hi {instance.username}, your account has been approved"""
 #         mail = mt.Mail(
 #                 sender=mt.Address(email="mailtrap@demomailtrap.com", name="Mailtrap Test"),
@@ -68,7 +68,7 @@ User = get_user_model()
 # @receiver(post_save, sender=User)
 # def send_creation_email(sender, created, instance, **kwargs):
 #     if created:
-#         message = f""" 
+#         message = f"""
 #                         Hi {instance.username}, your account has been created. Kindly wait for an
 #                         approval email"""
 #         mail = mt.Mail(
@@ -81,17 +81,17 @@ User = get_user_model()
 
 #         client = mt.MailtrapClient(token=config("MAILTRAP_TOKEN"))
 #         client.send(mail)
-    
-    # mail = mt.Mail(
-    #     sender=mt.Address(email="mailtrap@example.com", name="Mailtrap Test"),
-    #     to=[mt.Address(email="your@email.com")],
-    #     subject="You are awesome!",
-    #     text="Congrats for sending test email with Mailtrap!",
-    # )
 
-    # # create client and send
-    # client = mt.MailtrapClient(token="your-api-key")
-    # client.send(mail)
+# mail = mt.Mail(
+#     sender=mt.Address(email="mailtrap@example.com", name="Mailtrap Test"),
+#     to=[mt.Address(email="your@email.com")],
+#     subject="You are awesome!",
+#     text="Congrats for sending test email with Mailtrap!",
+# )
+
+# # create client and send
+# client = mt.MailtrapClient(token="your-api-key")
+# client.send(mail)
 
 
 # YOU COMMENTE THIS TWO ON SUNDAY
@@ -106,7 +106,6 @@ User = get_user_model()
 #         from_email = settings.EMAIL_HOST_USER
 #         to_email = instance.email
 #         send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
-
 
 
 # @receiver(post_save, sender=Customer)

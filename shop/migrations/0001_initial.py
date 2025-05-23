@@ -8,27 +8,77 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Shop',
+            name="Shop",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(choices=[('A', 'Type A'), ('B', 'Type B'), ('C', 'Type C'), ('D', 'Type D'), ('E', 'Type E'), ('F', 'Type F')], max_length=10)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        choices=[
+                            ("A", "Type A"),
+                            ("B", "Type B"),
+                            ("C", "Type C"),
+                            ("D", "Type D"),
+                            ("E", "Type E"),
+                            ("F", "Type F"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
             ],
         ),
         migrations.CreateModel(
-            name='Rate',
+            name="Rate",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('no', models.CharField(default=0, max_length=5)),
-                ('floor', models.CharField(choices=[('G', 'Ground Floor'), ('1', 'First Floor'), ('2', 'Second Floor')], max_length=20)),
-                ('size', models.IntegerField()),
-                ('status', models.CharField(choices=[('vacant', 'Vacant'), ('active', 'Allocated')], default='vacant', max_length=10)),
-                ('price', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shop.shop')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("no", models.CharField(default=0, max_length=5)),
+                (
+                    "floor",
+                    models.CharField(
+                        choices=[
+                            ("G", "Ground Floor"),
+                            ("1", "First Floor"),
+                            ("2", "Second Floor"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                ("size", models.IntegerField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("vacant", "Vacant"), ("active", "Allocated")],
+                        default="vacant",
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "price",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="shop.shop"
+                    ),
+                ),
             ],
         ),
     ]

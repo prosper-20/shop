@@ -14,8 +14,6 @@ class Role(models.Model):
 
     def __str__(self):
         return self.name
-    
-
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -34,6 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
 
 # class Account(models.Model):
 
@@ -69,19 +68,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 #         if self.shop.status != 'active':  # Check if status is not already 'active'
 #             self.shop.status = 'active'
 #             self.shop.save()
-    
+
 #     def calculate_outstanding_balance(self):
 #         total_received = self.receipt_set.aggregate(total=models.Sum('amount'))['total'] or 0
 #         return self.rent_invoice - total_received
 
 #     def __str__(self):
 #         return f'{self.customer.no}-{self.shop.no}-{self.description}'
-    
+
 # class Receipt(models.Model):
 
 #     ACCOUNT = [
 #         ('Nina Sky', 'Nina'),
-#         ('Chairman', 'Chairman'),   
+#         ('Chairman', 'Chairman'),
 #     ]
 
 #     date = models.DateField()
@@ -98,7 +97,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 #         self.rent_invoice_amount = self.invoice.rent_invoice
 #         total_received = self.invoice.receipt_set.aggregate(total=models.Sum('amount'))['total'] or 0
 #         self.outstanding = self.rent_invoice_amount - self.amount
-        
+
 #         super(Receipt, self).save(*args, **kwargs)
 
 #         # Update Account status to 'Paid' if fully paid
@@ -107,24 +106,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 #             self.invoice.save()
 
 
-
-
-
 NATURE = [
-        ('Supermarket', 'Supermarket'),
-        ('Laundry', 'Laundry'),
-        ('Pharmacy', 'Pharmacy'),
-        ('Courier/Dispatch', 'Courier/Dispatch'),
-        ('Banking/Insurance', 'Banking/Insurance'),
-        ('Barbing/Salon', 'Barbing/Salon'),
-        
-    ]
+    ("Supermarket", "Supermarket"),
+    ("Laundry", "Laundry"),
+    ("Pharmacy", "Pharmacy"),
+    ("Courier/Dispatch", "Courier/Dispatch"),
+    ("Banking/Insurance", "Banking/Insurance"),
+    ("Barbing/Salon", "Barbing/Salon"),
+]
 
 STATUS = [
-        ('new', 'new'),
-        ('renewal', 'renewal'),   
-        ('exited', 'exited'),    
-    ]
+    ("new", "new"),
+    ("renewal", "renewal"),
+    ("exited", "exited"),
+]
 
 # class Profile(models.Model):
 #     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -141,5 +136,3 @@ STATUS = [
 
 #     def __str__(self):
 #         return self.user.username
-
-    

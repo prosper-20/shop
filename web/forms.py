@@ -1,4 +1,3 @@
-
 # from django import forms
 # from account.models import Profile
 
@@ -26,7 +25,6 @@
 #             profile.user.save()
 #             profile.save()
 #         return profile
-    
 
 
 # class RetrieveCustomerProfileForm(forms.Form):

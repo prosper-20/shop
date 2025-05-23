@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0019_income_date_created'),
+        ("shop", "0019_income_date_created"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='income',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2024, 8, 8, 4, 21, 10, 600456, tzinfo=datetime.timezone.utc)),
+            model_name="income",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2024, 8, 8, 4, 21, 10, 600456, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='income',
-            name='name',
-            field=models.CharField(choices=[('Nina', 'Nina'), ('Chairman', 'Chariman')], max_length=200),
+            model_name="income",
+            name="name",
+            field=models.CharField(
+                choices=[("Nina", "Nina"), ("Chairman", "Chariman")], max_length=200
+            ),
         ),
     ]

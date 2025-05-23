@@ -6,23 +6,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0016_alter_shop_no'),
+        ("shop", "0016_alter_shop_no"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Income',
+            name="Income",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200)),
-                ('daily', models.DecimalField(decimal_places=2, max_digits=15)),
-                ('weekly', models.DecimalField(decimal_places=2, max_digits=15)),
-                ('yearly', models.DecimalField(decimal_places=2, max_digits=15)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=200)),
+                ("daily", models.DecimalField(decimal_places=2, max_digits=15)),
+                ("weekly", models.DecimalField(decimal_places=2, max_digits=15)),
+                ("yearly", models.DecimalField(decimal_places=2, max_digits=15)),
             ],
         ),
         migrations.AlterField(
-            model_name='shop',
-            name='type',
-            field=models.CharField(choices=[('Platinum', 'Platinum'), ('Titanium', 'Titanium'), ('Diamond', 'Diamond'), ('Premium', 'Premium'), ('Gold', 'Gold'), ('Silver', 'Silver')], max_length=10),
+            model_name="shop",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("Platinum", "Platinum"),
+                    ("Titanium", "Titanium"),
+                    ("Diamond", "Diamond"),
+                    ("Premium", "Premium"),
+                    ("Gold", "Gold"),
+                    ("Silver", "Silver"),
+                ],
+                max_length=10,
+            ),
         ),
     ]
