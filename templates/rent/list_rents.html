@@ -2,8 +2,99 @@
 
 {% block content %}
 
+<style>
+    /* Default styles for desktop */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Media queries for tablets */
+    @media (max-width: 991.98px) {
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        .col-md-9, .col-md-3 {
+            width: 100%;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        table {
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Media queries for mobile devices */
+    @media (max-width: 767.98px) {
+        .container {
+            padding: 0 10px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        table {
+            font-size: 0.8rem;
+        }
+        
+        table td, table th {
+            padding: 0.5rem;
+        }
+        
+        .pagination {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .pagination a {
+            margin: 5px;
+            font-size: 0.8rem;
+        }
+    }
+    
+    /* Very small screens */
+    @media (max-width: 575.98px) {
+        table {
+            font-size: 0.7rem;
+        }
+        
+        table td, table th {
+            padding: 0.3rem;
+        }
+        
+        .table thead {
+            display: none;
+        }
+        
+        .table tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+        }
+        
+        .table td {
+            display: block;
+            text-align: right;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table td::before {
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+        }
+    }
+</style>
+
 <div class="container ml-3 mr-3">
-    <div class ="row">
+    <div class="row">
       <div class="col-md-9">
           <h3>Rent Management Page</h3>
       </div>
@@ -13,149 +104,77 @@
     </div>
 
     <br><br>
-    <div class ="row">
+    <div class="row">
     <div class="col-md-12">
-        <table class="table  table-hover  table-striped table-borderless">
-          <thead class="table-dark border-bottom font-weight-bold">
-              <tr>
-                  <td>Shop No</td>
-                  <td>Rent Type</td>
-                  <td>Customer Name</td>
-                  <td>Amount Paid</td>
-                  <td>Rent Start Date</td>
-                  <td>Rent Due Date</td>
-                  
-                  <!-- <td>Generate Advice |Old|New</td>
-                  <td>Action</td> -->
-                  
-                  <!-- <td>Shop Rent</td> -->
-                    <!-- {% if user.is_superuser %}
-                  <td>  <a href="{% url 'shop-create' %}" class="btn btn-success">Add Shop</a></td>
-                  {% endif %} -->
+        <div class="table-responsive">
+            <div class="col-md-12">   <!--You changed this to 12 from 10-->
+                    <!-- Search Form -->
+                        <form method="get" class="float-end">
+                            <div class="input-group mb-3">
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="search" 
+                                    placeholder="Search rents..." 
+                                    value="{{ search_query|default:'' }}">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                                {% if search_query %}
+                                    <a href="{% url 'customer' %}" class="btn btn-outline-danger">
+                                        <i class="bi bi-x"></i> Clear
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </form>
+            <table class="table table-hover table-striped table-borderless">
+              <thead class="table-dark border-bottom font-weight-bold">
+                  <tr>
+                      <td>Shop No</td>
+                      <td>Rent Type</td>
+                      <td>Customer Name</td>
+                      <td>Amount Payable</td>
+                      <td>Amount Paid</td>
+                      <td>Rent Start Date</td>
+                      <td>Rent Due Date</td>
+                  </tr>
+              </thead>
 
-              </tr>
-          </thead>
-
-        <tbody>
-            {% for rent in rents %}
-            <tr>
-
-            <td><a style="color: black;" href="">{{rent.shop.no}}</a></td>
-            <td>{{rent.rent_type}}</td>
-            <td>{{rent.customer.name}}</td>
-            <td>₦ {{ rent.amount_paid }}</td>
-            <td>{{rent.rent_start}}</td>
-            <td>{{rent.date_due}}</td>
-            <!-- {% if shop.is_approved %}
-            <td>Approved</td>
-            {% else %}
-            <td>Pending</td>
-            {% endif %}
-            
-                </td>
-            <td>
-                <a href="" class="btn btn-outline-success btn-sm">
-                View Advice (New)
-                </a>
-                </td>
-
-            <td>
-                <a href="" class="btn btn-outline-success btn-sm">
-                Shop Info
-                </a>
-                </td>
-            <td>
-            
-            </tr> -->
-            {% endfor %}
-                
-            </tbody>
-            
-            
+            <tbody>
+                {% for rent in rents %}
+                <tr>
+                    <td data-label="Shop No"><a style="color: black;" href="">{{rent.shop.no}}</a></td>
+                    <td data-label="Rent Type">{{rent.rent_type}}</td>
+                    <td data-label="Customer Name">{{rent.customer.title}} {{rent.customer.name|title}}</td>
+                    <td data-label="Amount Payable">₦ {{ rent.shop.new_total_rent_payable }}</td>
+                    <td data-label="Amount Paid">₦ {{ rent.amount_paid }}</td>
+                    <td data-label="Rent Start Date">{{rent.rent_start}}</td>
+                    <td data-label="Rent Due Date">{{rent.date_due}}</td>
+                </tr>
+                {% endfor %}
+                    
+                </tbody>
             </table>
-            <br/></br>
-          
+        </div>
+        <br/><br>
+      
 
+        <div class="pagination justify-content-center">
             {% if shops.has_previous %}
-                <a href="?page=1"&laquo First<< </a>
-                <a href="?page={{ shops.previous_page_numer }}">Previous</a>
+                <a href="?page=1" class="page-link">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_numer }}" class="page-link">Previous</a>
             {% endif %}
-            Page {{ shops.number }} of {{ shops.pagintor.num_pages }}
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
 
             {% if shops.has_next %}
-                <a href="?page={{shops.next_page_number }}">next</a>
-                <a href="?page={{ shops.paginator.num_pages }}">Last &raquo </a>
+                <a href="?page={{page_obj.next_page_number }}" class="page-link">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Last &raquo;</a>
             {% endif %}
         </div>
-        </div>
+    </div>
+    </div>
 
-      </div>
+  </div>
 
 </div>
-</div>
-
-
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var ctx = document.getElementById('allocationChart').getContext('2d');
-        var allocationChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Allocated', 'Vacant'],
-                datasets: [{
-                    data: [{{ allocated_count }}, {{ vacant_count }}],
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
 
 {% endblock content %}
-
-
-
-    <!-- {% for rent in rents %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ rent.rent_type }}</a>
-              <small class="text-muted" style="justify-content: right;">Due Date: {{ rent.date_due }}</small>
-            </div>
-            <h2><a class="article-title" href="#">{{ rent.shop.no }}</a></h2>
-            <p class="article-content">Rented by {{ rent.customer.name }}</p>
-            {% if user.is_superuser %}
-            <div>
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" style="justify-content: right; text-align: end;" href="{% url 'edit-shop-rents' rent.shop.no %}">More Details</a>
-              <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'send-rent-reminder' rent.shop.no %}">Send Rent Reminder</a>
-            </div>
-          {% endif %}
-          </div>
-        </article>
-    {% endfor %} -->

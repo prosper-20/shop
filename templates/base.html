@@ -31,8 +31,13 @@
          
             {% if user.is_authenticated %}
             <div class="navbar-nav me-auto">
-
+              {% if not user.is_staff %}
+              <a class="nav-item nav-link" href="{% url 'data-entry-dashboard' %}">Dashboard</a>
+              {% elif user.is_staff and not user.is_superuser %}
+              <a class="nav-item nav-link" href="{% url 'review-officer-dashboard' %}">Dashboard</a>
+              {% else %}
               <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              {% endif %}
               <a class="nav-item nav-link" href="{% url 'customer' %}">Customer</a>
               <a class="nav-item nav-link" href="{% url 'all-shops' %}">Shop</a>
               <a class="nav-item nav-link" href="{% url 'create-shop-rent' %}">Allocation</a>

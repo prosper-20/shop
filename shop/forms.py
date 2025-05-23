@@ -74,15 +74,17 @@ class EditMyShopForm(forms.ModelForm):
 class AdminEditMyShopForm(forms.ModelForm):
     class Meta:
         model = Shop
-        fields = ('no', 'type', 'floor', 'price', 'size', 'is_approved')
+        fields = ('no', 'type', 'floor', 'price', 'size', 'address', 'is_approved')
         labels = {
             'no': 'Shop No',
             'type': 'Shop Type',
             'floor': 'Shop Floor',
             'price': 'Shop Price',
             'size' : 'Shop Size',
+            'address': 'Shop Address',
             'is_approved': 'is Approved'
         }
+        
 
 
 

@@ -24,7 +24,7 @@ def is_admin(user):
 def customer (request):
     count = Customer.objects.exclude(status='exited').count()
     search_query = request.GET.get('search', '')
-    customer_list = Customer.objects.all().order_by('-created_at')
+    customer_list = Customer.objects.all().order_by('no')
     
     if search_query:
         customer_list = customer_list.filter(

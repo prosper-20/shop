@@ -78,7 +78,6 @@ def myshops(request):
     all_shops = Shop.objects.all().order_by("no")
     
     search_query = request.GET.get('search', '')
-    print("asdfg", search_query)
     shop_list = Shop.objects.all()
 
     if search_query:
@@ -164,6 +163,7 @@ def is_admin(user):
 def admin_edit_shop_form(request, shop_no):
     # Fetch the Shop instance using the shop number
     shop = get_object_or_404(Shop, no=shop_no)
+    print(shop.price)
 
     if request.method == 'POST':
         form = AdminEditMyShopForm(request.POST, instance=shop)
@@ -206,7 +206,19 @@ def create_rent(request):
 
 def list_rents(request):
     rents = Rent.objects.all()
-    context = {"rents": rents}
+    search_query = request.GET.get('search', '')
+    if search_query:
+        rents = rents.filter(
+            Q(shop__no__icontains=search_query) |
+            Q(customer__name__icontains=search_query) |
+            Q(rent_type__icontains=search_query) |
+            Q(date_paid__icontains=search_query) 
+            
+        )
+    paginator = Paginator(rents, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"rents": rents, 'page_obj': page_obj, 'search_query': search_query}
     return render(request, "rent/list_rents.html", context)
 
 

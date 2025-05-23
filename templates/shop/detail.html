@@ -20,32 +20,50 @@
             <!-- YOU FOR THIS TEMPLATE FROM GENERATE_SHOP_PAYMENT_ADVICE -->
             
           <tr>
-            <th scope="row">Net Rent</th>
-            <td>0</td>
+            <th scope="row">Net annual rent</th>
+            <td>{{ shop.rent }}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
           <tr>
             <th scope="row">7.5% VAT</th>
-            <td>0</td>
+            <td>{{ shop.vat }}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Annual Rent (VAT Inclusive)</th>
+            <td>{{ shop.annual_rent }}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
           <tr>
             <th scope="row">5% VAT</th>
-            <td>0</td>
+            <td>{{ shop.wht}}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
           <tr>
             <th scope="row">Gross annual rent</th>
-            <td>0</td>
+            <td>{{ shop.gross_rent }}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
           <tr>
+            <th scope="row">Shop Agency (15%)</th>
+            <td>{{ shop.new_shop_agency }}</td>
+            <!-- <td>the Bird</td>
+            <td>@twitter</td> -->
+          </tr>
+          <tr>
+            <th scope="row">Shop Legal (5%)</th>
+            <td>{{ shop.new_shop_legal }}</td>
+            <!-- <td>the Bird</td>
+            <td>@twitter</td> -->
+          </tr>
+          <tr>
             <th scope="row">Service Charge (25%)</th>
-            <td>0</td>
+            <td>{{ shop.new_service_charge}}</td>
             <!-- <td>Otto</td>
             <td>@mdo</td> -->
           </tr>
@@ -61,9 +79,15 @@
             <td>the Bird</td>
             <td>@twitter</td>
           </tr> -->
+           <tr>
+            <th scope="row">Caution Fee</th>
+            <td>{{ shop.caution_fee }}</td>
+            <!-- <td>Otto</td>
+            <td>@mdo</td> -->
+          </tr>
           <tr>
             <th scope="row"><strong><h4>Total Rent Payable</h4></strong></th>
-            <td><strong>0</strong></td>
+            <td><strong>₦ {{ shop.new_total_rent_payable }}</strong></td>
             <!-- <td>the Bird</td>
             <td>@twitter</td> -->
           </tr>
@@ -104,7 +128,7 @@
         </tbody>
       </table>
       <br>
-      <a href="{% url 'generate-shop-payment-advice-pdf' shop.no %}" class="btn btn-outline-primary">Print Advice</a>
+      <a href="{% url 'generate-shop-payment-advice-pdf' shop.no %}" class="btn btn-outline-primary">Print Details</a>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 "use strict";
+$.notify = function() { return false; };
 
 const modalShowcase = `
 <!-- Demo Showcase -->

@@ -39,7 +39,14 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
+              {% if not user.is_staff %}
+              <a class="nav-item nav-link" href="{% url 'data-entry-dashboard' %}">Dashboard</a>
+              {% elif user.is_staff and not user.is_superuser %}
+              <a class="nav-item nav-link" href="{% url 'review-officer-dashboard' %}">Dashboard</a>
+              {% else %}
               <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              {% endif %}
+              <!-- <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a> -->
               <a class="nav-item nav-link" href="{% url 'create-shop-rent' %}">Create Allocation</a>
             </div>
             <!-- Navbar Right Side -->

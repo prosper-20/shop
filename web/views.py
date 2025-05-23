@@ -184,7 +184,7 @@ def review_officer_dashboard(request):
     all_customers = Customer.objects.all()
     allocated_shops = Shop.allocated_shops_count
     expected_rent_fees = Shop.expected_rent_fees
-    sum_of_paid_rents = Shop.total_paid_shops_price()
+    sum_of_paid_rents = Rent.total_paid_shops_price()
     owing_customers = Rent.objects.filter(is_paid=False, shop__status="allocated")
     customers_awaiting_review = Customer.objects.filter(is_reviewed=False)
     customers_awaiting_approval = Customer.objects.filter(approval=False)

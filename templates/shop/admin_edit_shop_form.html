@@ -36,6 +36,10 @@
                                 </div>
                             </div>
                             <div class="col">
+                            {{form.address|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="col">
                                 {{form.is_approved|as_crispy_field}}
                                     </div>
                                 </div>
@@ -72,12 +76,12 @@
         const priceField = document.getElementById('id_price');
 
         const TYPE_PRICES = {
-            'A': 32000.00,
-            'B': 29000.00,
-            'C': 28000.00,
-            'D': 25000.00,
-            'E': 22000.00,
-            'F': 19000.00,
+            'Platinum': 40000.00,
+            'Titanium': 36000.00,
+            'Diamond': 35000.00,
+            'Premium': 32000.00,
+            'Gold': 27000.00,
+            'Silver': 24000.00,
         };
 
         function updatePrice() {
