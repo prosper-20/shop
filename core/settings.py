@@ -102,7 +102,7 @@ DATABASES = {
     }
 }
 
-# DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
+DATABASES["default"] = dj_database_url.parse(config("NEW_DATABASE_URL"))
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
