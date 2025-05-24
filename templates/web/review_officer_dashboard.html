@@ -978,7 +978,7 @@
                       </div>
                     </div>
                     <p class="card-category">
-                      Table showing staff contribution in numbers
+                      Table showing shop rent payment accounts
                     </p>
                   </div>
                   <div class="card-body">
@@ -995,14 +995,15 @@
                                       alt="indonesia"
                                     />
                                   </div> -->
-                                  <strong>Receipts</strong>
+                                  <strong>Shop No.</strong>
                                 </td>
                                 
-                                <td><strong>Nina(₦)</strong></td>
-                                <td class="text-end"><strong>Chairman(₦)</strong></td>
-                                <td class="text-end"><strong>Total Receipts(₦)</strong></td>
+                                <td><strong>Total Rent Payable(₦)</strong></td>
+                                <td class="text-end"><strong>Amount Paid(₦)</strong></td>
+                                <td class="text-end"><strong>Balance(₦)</strong></td>
       
                               </tr>
+                              {% for rent in paid_rents %}
                               <tr>
                                 <td>
                                   <!-- <div class="flag">
@@ -1011,42 +1012,14 @@
                                       alt="united states"
                                     />
                                   </div> -->
-                                  <p><strong>Daily</strong></p>
+                                 <p><strong>{{ rent.shop.no }}</strong></p>
                                 </td>
 
-                                <td><strong>{{ nina_daily_income }}</strong></td>
-                                <td class="text-end"><strong>{{ chairman_daily_income }}</strong></td>
-                                <td class="text-end"><strong>{{ daily_income_total }}</strong></td>
+                                <td><strong>₦ {{ rent.shop.new_total_rent_payable }}</strong></td>
+                                <td class="text-end"><strong>₦ {{ rent.amount_paid }}</strong></td>
+                                <td class="text-end"><strong>₦ {{ rent.balance }}</strong></td>
                               </tr>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/au.png' %}"
-                                      alt="australia"
-                                    />
-                                  </div> -->
-                                  
-                                  <strong>Weekly</strong>
-                                </td>
-                                <td><strong>{{ nina_weekly_income }}</strong></td>
-                                <td class="text-end"><strong>{{ chairman_weekly_income }}</strong></td>
-                                <td class="text-end"><strong>{{ weekly_income_total }}</strong></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <!-- <div class="flag">
-                                    <img
-                                      src="{% static 'web/web_dashboard/assets/img/flags/ru.png' %}"
-                                      alt="russia"
-                                    />
-                                  </div> -->
-                                  <strong>Yearly</strong>
-                                </td>
-                                <td><strong>{{ nina_yearly_income }}</strong></td>
-                                <td class="text-end"><strong>{{ chairman_yearly_income }} </strong></td>
-                                <td class="text-end"><strong>{{ yearly_income_total}}</strong></td>
-                              </tr>
+                              {% endfor %}
                               <tr>
                                 <td>
                                   <!-- <div class="flag">
@@ -1055,11 +1028,11 @@
                                       alt="china"
                                     />
                                   </div> -->
-                                  <strong>Year-to-date</strong>
+                                  <strong>Total</strong>
                                 </td>
-                                <td><strong>110,234,346.70</strong> </td>
-                                <td class="text-end"><strong>200,000,345.21</strong> </td>
-                                <td class="text-end"><strong>400,000,000.23</strong></td>
+                                <td><strong>₦ {{expected_rent_fees|intcomma }}</strong> </td>
+                                <td class="text-end"><strong>₦ {{ sum_of_paid_rents|intcomma }}</strong> </td>
+                                <td class="text-end"><strong>₦ {{ grand_balance}} </strong></td>
                               </tr>
                               <!-- <tr>
                                 <td>
