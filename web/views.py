@@ -202,12 +202,14 @@ def data_entry_dashbaord(request):
 
 @user_passes_test(is_review_officer)
 def review_officer_dashboard(request):
+    rents = Rent.objects.all()
     users = User.objects.filter(is_staff=False)
     users_count = User.objects.filter(is_staff=False).count()
     no_of_due_rents = Rent.rents_due_count()
     no_of_paid_rents = Rent.rents_paid_count()
     no_of_shops = Shop.objects.all().count()
     all_customers = Customer.objects.all()
+    grand_balance = sum(rent.balance for rent in rents)
     allocated_shops = Shop.allocated_shops_count
     expected_rent_fees = Shop.expected_rent_fees
     sum_of_paid_rents = Rent.total_paid_shops_price()
@@ -220,15 +222,7 @@ def review_officer_dashboard(request):
 
     context = {
         "users": users,
-        "daily_income_total": 0,
-        "weekly_income_total": 0,
-        "yearly_income_total": 0,
-        "nina_daily_income": 0,
-        "nina_weekly_income": 0,
-        "nina_yearly_income": 0,
-        "chairman_daily_income": 0,
-        "chairman_weekly_income": 0,
-        "chairman_yearly_income": 0,
+        "grand_balance": grand_balance,
         "users_count": users_count,
         "no_of_owing_shop_customers": no_of_owing_shop_customers,
         "customers_awaiting_approval": customers_awaiting_approval,
@@ -265,7 +259,6 @@ def dashboard(request):
         allocated_shops = Shop.allocated_shops_count
         expected_rent_fees = Shop.expected_rent_fees
         sum_of_paid_rents = Rent.total_paid_shops_price()
-        # grand_balance = Rent.balance
         grand_balance = sum(rent.balance for rent in rents)
         owing_customers = Rent.objects.filter(
             is_expired=True, is_paid=True, shop__status="allocated"
@@ -275,34 +268,6 @@ def dashboard(request):
         no_of_owing_shop_customers = Shop.objects.filter(
             status="allocated", is_paid=False
         ).count()
-        # all_income = Income.objects.all()
-        # nina_daily_income = get_object_or_404(Income, name="Nina").daily
-        # nina_weekly_income = get_object_or_404(Income, name="Nina").weekly
-        # nina_yearly_income = get_object_or_404(Income, name="Nina").yearly
-        # chairman_daily_income = get_object_or_404(Income, name="Chairman").daily
-        # chairman_weekly_income = get_object_or_404(Income, name="Chairman").weekly
-        # chairman_yearly_income = get_object_or_404(Income, name="Chairman").yearly
-        # daily_income_total = Income.total_daily_receipts()
-        # weekly_income_total = Income.total_weekly_receipts()
-        # yearly_income_total = Income.total_yearly_receipts()
-        # context = {"users": users, "daily_income_total": daily_income_total,
-        #         "weekly_income_total": weekly_income_total,
-        #         "yearly_income_total": yearly_income_total,
-        #             "nina_daily_income": nina_daily_income, "nina_weekly_income":nina_weekly_income,
-        #             "nina_yearly_income": nina_yearly_income,
-        #             "chairman_daily_income": chairman_daily_income,
-        #             "chairman_weekly_income": chairman_weekly_income,
-        #             "chairman_yearly_income": chairman_yearly_income,
-        #             "users_count": users_count, "no_of_owing_shop_customers": no_of_owing_shop_customers,
-        #             "customers_awaiting_approval": customers_awaiting_approval,
-        #             "customers_awaiting_approval_count": customers_awaiting_approval_count,
-        #             "all_customers": all_customers, "no_of_due_rents": no_of_due_rents,
-        #             "no_of_paid_rents": no_of_paid_rents, "no_of_shops": no_of_shops,
-        #             "allocated_shops": allocated_shops, "expected_rent_fees": expected_rent_fees,
-        #             "sum_of_paid_rents": sum_of_paid_rents,
-        #             "owing_customers": owing_customers, "owing_customers_count": owing_customers_count,
-        #             "all_customers_count": all_customers_count,
-        #             "current_user": request.user, "all_income": 0}
 
         context = {
             "users": users,
