@@ -211,7 +211,7 @@ def send_email_on_shop_creation(sender, instance, created, **kwargs):
         plain_message = strip_tags(html_message)
         from_email = config("EMAIL_HOST_USER")  # Replace with your email
         to_emails = [user.email for user in User.objects.filter(is_superuser=True)]
-        to = [user.email for user in User.objects.all() if user.is_superuser == True]
+        # to = [user.email for user in User.objects.all() if user.is_superuser == True]
         send_mail(
             subject, plain_message, from_email, to_emails, html_message=html_message
         )
