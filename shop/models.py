@@ -537,6 +537,38 @@ class PaymentSlip(models.Model):
 
     def __str__(self) -> str:
         return self.customer.name
+    
+    @classmethod
+    def get_total_nina_sky_payments(cls):
+        """
+        Returns the sum of all payments made to Nina Sky account
+        """
+        total = cls.objects.filter(
+            payment_account="Nina Sky"
+        ).aggregate(
+            total_amount=models.Sum('amount')
+        )['total_amount'] or 0
+        return total
+
+    @classmethod
+    def get_total_chairman_payments(cls):
+        """
+        Returns the sum of all payments made to Chairman account
+        """
+        total = cls.objects.filter(
+            payment_account="Chairman"
+        ).aggregate(
+            total_amount=models.Sum('amount')
+        )['total_amount'] or 0
+        return total
+    
+    @classmethod
+    def get_total_combined_payments(cls):
+        """
+        Returns the sum of all payments made to both Nina Sky and Chairman accounts
+        by reusing the existing methods
+        """
+        return cls.get_total_nina_sky_payments() + cls.get_total_chairman_payments()
 
 
 # 32,000.00

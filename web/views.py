@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from account.decorators import admin_required
-from shop.models import Shop, Rent, Income
+from shop.models import Shop, Rent, Income, PaymentSlip
 from customer.forms import CustomerForm
 from customer.models import Customer
 
@@ -251,6 +251,7 @@ def dashboard(request):
         rents = Rent.objects.all()
         users = User.objects.filter(is_staff=False)
         users_count = User.objects.filter(is_staff=False).count()
+        paymentslips = PaymentSlip.objects.all()
         no_of_due_rents = Rent.rents_due_count()
         no_of_paid_rents = Rent.rents_paid_count()
         paid_rents = Rent.objects.filter(is_paid=True, is_expired=False)
@@ -268,24 +269,20 @@ def dashboard(request):
         no_of_owing_shop_customers = Shop.objects.filter(
             status="allocated", is_paid=False
         ).count()
+        
 
         context = {
             "users": users,
-            "daily_income_total": 0,
-            "weekly_income_total": 0,
-            "yearly_income_total": 0,
-            "nina_daily_income": 0,
-            "nina_weekly_income": 0,
-            "nina_yearly_income": 0,
-            "chairman_daily_income": 0,
-            "chairman_weekly_income": 0,
-            "chairman_yearly_income": 0,
+            "paymentslips": paymentslips,
             "paid_rents": paid_rents,
             "grand_balance": grand_balance,
             "users_count": users_count,
             "no_of_owing_shop_customers": no_of_owing_shop_customers,
             "customers_awaiting_approval": customers_awaiting_approval,
             "customers_awaiting_review": customers_awaiting_review,
+            'nina_sky_total': PaymentSlip.get_total_nina_sky_payments(),
+            'chairman_total': PaymentSlip.get_total_chairman_payments(),
+            'combined_total': PaymentSlip.get_total_combined_payments(),
             "all_customers": all_customers,
             "no_of_due_rents": no_of_due_rents,
             "no_of_paid_rents": no_of_paid_rents,

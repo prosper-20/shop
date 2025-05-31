@@ -1070,6 +1070,122 @@
                 </div>
               </div>
             </div>
+
+            <!-- YOU JUST CREATED THIS ONE TO KEEP TRACK OF THE ACCOUNT MONEY IS BEING PAID INTO -->
+             <div class="row">
+              <div class="col-md-12">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row card-tools-still-right">
+                      <h4 class="card-title">Cash Inflow into the company</h4>
+                      <div class="card-tools">
+                        <button
+                          class="btn btn-icon btn-link btn-primary btn-xs"
+                        >
+                          <span class="fa fa-angle-down"></span>
+                        </button>
+                        <button
+                          class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"
+                        >
+                          <span class="fa fa-sync-alt"></span>
+                        </button>
+                        <button
+                          class="btn btn-icon btn-link btn-primary btn-xs"
+                        >
+                          <span class="fa fa-times"></span>
+                        </button>
+                      </div>
+                    </div>
+                    <p class="card-category">
+                      Table showing total payments into accounts
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="table-responsive table-hover table-sales">
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <!-- <div class="flag">
+                                    <img
+                                      src="{% static 'web/web_dashboard/assets/img/flags/id.png' %}"
+                                      alt="indonesia"
+                                    />
+                                  </div> -->
+                                  <strong>No. of payment(s)</strong>
+                                </td>
+                                
+                                <td><strong>Nina Sky(₦)</strong></td>
+                                <td class="text-end"><strong>Chairman(₦)</strong></td>
+                                <td class="text-end"><strong>Total(₦)</strong></td>
+      
+                              </tr>
+                              <!-- {% for rent in paid_rents %}
+                              <tr>
+                                <td>
+                                  <div class="flag">
+                                    <img
+                                      src="{% static 'web/web_dashboard/assets/img/flags/us.png' %}"
+                                      alt="united states"
+                                    />
+                                  </div> 
+                                  <p><strong>{{ rent.shop.no }}</strong></p>
+                                </td>
+
+                                <td><strong>₦ {{ rent.shop.new_total_rent_payable }}</strong></td>
+                                <td class="text-end"><strong>₦ {{ rent.amount_paid }}</strong></td>
+                                <td class="text-end"><strong>₦ {{ rent.balance }}</strong></td>
+                              </tr>
+                              {% endfor %} -->
+                           
+                               <tr>
+                                <td>
+                                  <!-- <div class="flag">
+                                    <img
+                                      src="{% static 'web/web_dashboard/assets/img/flags/cn.png' %}"
+                                      alt="china"
+                                    />
+                                  </div> -->
+                                  <strong>{{ paymentslips| length }}</strong>
+                                </td>
+                                <td><strong>₦ {{ nina_sky_total }}</strong> </td>
+                                <td class="text-end"><strong>₦ {{ chairman_total }}</strong> </td>
+                                <td class="text-end"><strong>₦ {{ combined_total }} </strong></td>
+                              </tr>
+                              <!-- <tr>
+                                <td>
+                                  <div class="flag">
+                                    <img
+                                      src="{% static 'web/web_dashboard/assets/img/flags/br.png' %}"
+                                      alt="brazil"
+                                    />
+                                  </div>
+                                </td>
+                                <td>Brasil</td>
+                                <td class="text-end">640</td>
+                                <td class="text-end">11.63%</td>
+                              </tr> -->
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-6">
+                        <div class="mapcontainer">
+                          <div
+                            id="world-map"
+                            class="w-100"
+                            style="height: 300px"
+                          ></div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END OF THE NEW TABLE -->
             
             <div class="row">
               <div class="col-md-4">
