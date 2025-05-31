@@ -297,7 +297,6 @@ class Rent(models.Model):
 
         # Calculate sum for allocated shops
         for rent in Rent.objects.filter(is_paid=True):
-            print("rterere", rent.amount_paid)
             total += Decimal(str(rent.amount_paid))
 
         # Format to 2 decimal places

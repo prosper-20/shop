@@ -17,9 +17,12 @@ successfully received and processed. As a result, we have allocated the followin
 shop to you:</p>
         <p>Details of the New Shop:</p>
         <p>Shop number: {{ shop.no }}</p>
-        <p>Shop Type: {{ shop.type }}</p>
+        <p>Shop type: {{ shop.type }}</p>
         <p>Shop size: {{ shop.size }}</p>
         <p>Shop address: {{ shop.address }}</p>
+        <p>Total rent payable: {{ rent.shop.new_total_rent_payable }}</p>
+        <p>Total rent paid: {{ rent.amount_paid }}</p>
+        <p>Rent balance: {{ rent.balance }}</p>
         <p>Allocation Date: {{ rent.rent_start }}</p>
 <p>Your new shop is now officially assigned to you, and you can start utilizing it
 immediately. Should you have any questions or require further assistance, please feel free to
